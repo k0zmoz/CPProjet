@@ -90,13 +90,8 @@ Game::run ()
 						
 								hero_->look(Up);
 								hero_->move(Up);
-<<<<<<< HEAD
-								
 								trash_mob_->look(Up);
-=======
 								trash_mob_->look(Up);
-								
->>>>>>> objects
 							}
 							if(event.Key.Code == Key::Q)
 							{
@@ -130,16 +125,9 @@ Game::run ()
 
 	win_->Clear(white);
 	
-<<<<<<< HEAD
 	elapsed_time_atk = clk_atk->GetElapsedTime();
 	hero_->display(*win_, elapsed_time_atk, true);
 	trash_mob_->display(*win_, elapsed_time_atk, false);
-=======
-	elapsed_time = clk_->GetElapsedTime();
-	hero_->display(*win_, elapsed_time, true);
-	trash_mob_->display(*win_, elapsed_time, false);
->>>>>>> objects
-
 	if(elapsed_time_atk > 1.0 / ATK_SPEED)
 	{
 		clk_atk->Reset();

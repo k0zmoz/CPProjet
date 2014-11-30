@@ -15,12 +15,7 @@ Npc::Npc () : Character ()
 	 	general_atks_ = new sf::Image; 
 
 		//instanciation des sprites de déplacement
-	  
-<<<<<<< HEAD
-		if(! general_dir_->LoadFromFile("./sprite/Mob/mob_walking.png")){
-=======
 		if(! general_dir_->LoadFromFile("./sprite/mob/mob_walking.png")){
->>>>>>> objects
 			cerr << "Error Loading Walk Image" << endl;
 			exit(EXIT_FAILURE);
 		}
@@ -42,12 +37,7 @@ Npc::Npc () : Character ()
 		}
 	
 		//instanciation des sprites d'attaques
-	
-<<<<<<< HEAD
-		 if(! general_atks_->LoadFromFile("./sprite/Mob/mob_atk.png")){
-=======
 		 if(! general_atks_->LoadFromFile("./sprite/mob/mob_atk.png")){
->>>>>>> objects
 			cerr << "Error Loading Atk Image" << endl;
 			exit(EXIT_FAILURE);
 		}
@@ -84,12 +74,7 @@ Npc::Npc (int x, int y) : Character ()
 	 	general_atks_ = new sf::Image; 
 
 		//instanciation des sprites de déplacement
-	  
-<<<<<<< HEAD
-		if(! general_dir_->LoadFromFile("./sprite/Mob/mob_atk.png")){
-=======
 		if(! general_dir_->LoadFromFile("./sprite/mob/mob_walking.png")){
->>>>>>> objects
 			cerr << "Error Loading Walk Image" << endl;
 			exit(EXIT_FAILURE);
 		}
@@ -111,12 +96,7 @@ Npc::Npc (int x, int y) : Character ()
 		}
 	
 		//instanciation des sprites d'attaques
-	
-<<<<<<< HEAD
-		 if(! general_atks_->LoadFromFile("./sprite/Mob/mob_atk.png")){
-=======
 		 if(! general_atks_->LoadFromFile("./sprite/mob/mob_atk.png")){
->>>>>>> objects
 			cerr << "Error Loading Atk Image" << endl;
 			exit(EXIT_FAILURE);
 		}

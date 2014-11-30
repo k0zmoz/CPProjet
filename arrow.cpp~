@@ -2,30 +2,12 @@
 #include <iostream>
 #include "main.hpp"
 #include "object.hpp"
-<<<<<<< HEAD
-=======
 #include "arrow.hpp"
->>>>>>> objects
-
 
 Arrow::Arrow (Direction dir)
 {
-<<<<<<< HEAD
-	arrow_img = new sf::Image;
-=======
-	arrow_img_ = new sf::Image;
->>>>>>> objects
+	arrow_img = new sf::Image;	
 	
-	
-	//instanciation des sprites de déplacement
-  
-<<<<<<< HEAD
-	if(! general_dir_->LoadFromFile("./sprite/objects/mob_atk.png")){
-		cerr << "Error Loading Walk Image" << endl;
-		exit(EXIT_FAILURE);
-	}
-		
-=======
 	if(! arrow_img_->LoadFromFile("./sprite/items/crystal.png"))
 	{
 		std::cerr << "Error Loading Walk Image" << std::endl;
@@ -71,7 +53,7 @@ Arrow::Arrow (Direction dir)
 	
 }
 
-Arrow::Arrow (Direction dir)
+Arrow::Arrow (Direction dir, int x, int y)
 {
 	arrow_img_ = new sf::Image;
 	
@@ -161,7 +143,3 @@ void Arrow::display (sf::RenderTarget &rt)
 		arrow_sprite_->SetPosition(x_, y_);
 		rt.Draw(*arrow_sprite_);
 	}
-	
-	
-	
->>>>>>> objects

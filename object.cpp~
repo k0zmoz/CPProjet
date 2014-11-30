@@ -10,41 +10,20 @@ using namespace std;
 Object::Object ()
   {
     dir_ = Down;
-<<<<<<< HEAD
-    x_ = 150;
-    y_ = 150;
-  	health_ = 0;
-=======
     x_ = INIT_X_OBJ;
     y_ = INIT_Y_OBJ;
   	health_ = INIT_HEALTH_OBJECT;
->>>>>>> objects
   }
 
 Object::~Object()
   {
   }
-  
-<<<<<<< HEAD
-void Character::look (Direction dir)
-  {
-  	if(dir != dir_){
-  		change_look_ = true;
-  	}
-    dir_ = dir;
-  }
-  
-bool Character::isLooking (Direction dir)
-=======
+
 bool Object::isLooking (Direction dir)
->>>>>>> objects
 	{
 		return dir == dir_;
 	}
-
-<<<<<<< HEAD
-bool Character::isAlive ()
-=======
+	
 bool Object::isAlive ()
 >>>>>>> objects
 	{
