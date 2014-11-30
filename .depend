@@ -1,0 +1,5 @@
+main.o: main.cpp game.hpp character.hpp main.hpp playable_char.hpp
+game.o: game.cpp main.hpp game.hpp character.hpp playable_char.hpp
+character.o: character.cpp main.hpp character.hpp
+playable_char.o: playable_char.cpp main.hpp character.hpp \
+ playable_char.hpp

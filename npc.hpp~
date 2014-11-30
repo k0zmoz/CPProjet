@@ -1,0 +1,24 @@
+#ifndef NPC_HPP
+#define NPC_HPP
+
+#include <SFML/Graphics.hpp>
+#include "character.hpp"
+
+
+class Npc: public Character
+{
+public:
+  
+	Npc ();
+	~Npc ();
+	
+	void move (Direction dir);
+	void display (sf::RenderTarget &rt, float elapsed_time);
+	void display_attack (sf::RenderTarget &rt, float elapsed_time);
+  
+private:
+	
+	
+
+};
+#endif // NPC_HPP
