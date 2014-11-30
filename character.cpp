@@ -10,7 +10,6 @@ using namespace std;
 Character::Character ()
   {
     dir_ = Down;
-    health_ = 20;
     x_ = 150;
     y_ = 150;
     change_look_ = true;

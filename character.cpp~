@@ -44,7 +44,7 @@ void Character::attack()
 	}
 
 
-void Character::display_attack (sf::RenderTarget &rt, float elapsed_time, bool isPlayable)
+void Character::display_attack (sf::RenderTarget &rt, float elapsed_time, bool is_playable)
 	{
 		
 		attacks_[dir_][step_atk_]->SetPosition(x_, y_);
@@ -55,7 +55,7 @@ void Character::display_attack (sf::RenderTarget &rt, float elapsed_time, bool i
 			step_atk_++;
 		}	
 		
-		if(isPlayable)
+		if(is_playable)
 		{
 			if(step_atk_ == ATK_AMNT_SPRITE_PC)
 			{
@@ -73,7 +73,7 @@ void Character::display_attack (sf::RenderTarget &rt, float elapsed_time, bool i
 	}
 	}
 	
-void Character::display (sf::RenderTarget &rt, float elapsed_time, bool isPlayable)
+void Character::display (sf::RenderTarget &rt, float elapsed_time, bool is_playable)
 	{
 		if(!attacking_)
 		{
@@ -84,7 +84,7 @@ void Character::display (sf::RenderTarget &rt, float elapsed_time, bool isPlayab
 		}
 		else
 		{
-			display_attack(rt, elapsed_time, isPlayable);
+			display_attack(rt, elapsed_time, is_playable);
 		}
 	}
 

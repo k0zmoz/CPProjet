@@ -62,6 +62,7 @@ Playable_Char::Playable_Char () : Character ()
 		}
 		
 		//Instanciation des membres
+		health_ = HEALTH_PC;
 		escape_disabled_ = false;
 	}
 
@@ -112,39 +113,5 @@ void Playable_Char::escape (Direction dir)
 			case Right:
 			  x_ += ESCAPE_RANGE;
 			  break;
-		}
-	}
-	
-
-	
-void Playable_Char::display_attack (sf::RenderTarget &rt, float elapsed_time)
-	{
-		
-		attacks_[dir_][step_atk_]->SetPosition(x_, y_);
-		rt.Draw(*(attacks_[dir_][step_atk_] ));
-		
-		if(elapsed_time > 1.0 / ATK_SPEED)
-		{
-			step_atk_++;
-		}	
-		if(step_atk_ == ATK_AMNT_SPRITE_PC)
-		{
-			step_atk_ = 0;
-			attacking_ = false;
-		}
-	}
-	
-void Playable_Char::display (sf::RenderTarget &rt, float elapsed_time)
-	{
-		if(!attacking_)
-		{
-
-			directions_[dir_][step_mov_]->SetPosition(x_, y_);
-			
-			rt.Draw(*( directions_[dir_][step_mov_] ));
-		}
-		else
-		{
-			display_attack(rt, elapsed_time);
 		}
 	}

@@ -12,6 +12,7 @@ Game::Game ()
   win_ = new sf::RenderWindow(sf::VideoMode(GAME_WIDTH, GAME_HEIGHT), "VeliTech", Style::Resize|Style::Close);
   clk_ = new Clock();
   hero_ = new Playable_Char ();
+  trash_mob_ = new Npc (500, 500);
 }
 
 Game::~Game ()
@@ -19,6 +20,7 @@ Game::~Game ()
   delete win_;
   delete clk_;
   delete hero_;
+  delete trash_mob_;
 }
 
 void
@@ -31,7 +33,7 @@ Game::run ()
 
 	while (win_->IsOpened())
 	{
-		
+		win_->SetFramerateLimit(30);
 		while (win_->GetEvent(event))
 		{
 			const sf::Input &input = win_->GetInput();
@@ -44,30 +46,6 @@ Game::run ()
 				{
 					if(!hero_->isAttacking())
 					{
-						if(event.Key.Code == Key::Z)
-							{
-						
-								hero_->look(Up);
-								hero_->move(Up);
-							}
-							if(event.Key.Code == Key::Q)
-							{
-								hero_->look(Left);
-								hero_->move(Left);
-							}
-							if(event.Key.Code == Key::S)
-							{
-								hero_->look(Down);
-								hero_->move(Down);
-							}
-					
-							if(event.Key.Code == Key::D)
-							{
-								hero_->look(Right);
-								hero_->move(Right);
-							}
-							
-														
 						switch(event.Key.Code)
 						{
 							case Key::LShift:
@@ -140,6 +118,7 @@ Game::run ()
 	
 	elapsed_time = clk_->GetElapsedTime();
 	hero_->display(*win_, elapsed_time, true);
+	trash_mob_->display(*win_, elapsed_time, true);
 
 	if(elapsed_time > 1.0 / ATK_SPEED)
 	{

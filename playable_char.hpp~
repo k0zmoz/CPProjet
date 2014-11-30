@@ -15,8 +15,6 @@ public:
 
 	void move (Direction dir);
 	void escape (Direction dir);
-	void display (sf::RenderTarget &rt, float elapsed_time);
-	void display_attack (sf::RenderTarget &rt, float elapsed_time);
   
 private:
 	
