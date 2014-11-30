@@ -89,22 +89,30 @@ Game::run ()
 						
 								hero_->look(Up);
 								hero_->move(Up);
+								trash_mob_->look(Up);
+								
 							}
 							if(event.Key.Code == Key::Q)
 							{
 								hero_->look(Left);
 								hero_->move(Left);
+								
+								trash_mob_->look(Left);
 							}
 							if(event.Key.Code == Key::S)
 							{
 								hero_->look(Down);
 								hero_->move(Down);
+								
+								trash_mob_->look(Down);
 							}
 					
 							if(event.Key.Code == Key::D)
 							{
 								hero_->look(Right);
 								hero_->move(Right);
+								
+								trash_mob_->look(Right);
 							}
 					}
 					break;
@@ -118,7 +126,7 @@ Game::run ()
 	
 	elapsed_time = clk_->GetElapsedTime();
 	hero_->display(*win_, elapsed_time, true);
-	trash_mob_->display(*win_, elapsed_time, true);
+	trash_mob_->display(*win_, elapsed_time, false);
 
 	if(elapsed_time > 1.0 / ATK_SPEED)
 	{

@@ -18,8 +18,8 @@
 #define ATK_AMNT_SPRITE_NPC 1 	/*nombre de sprites synthétisant une attaque
 							pour un personnage jouable*/
 #define ATK_CHAR_W 50 //largeur d'un sprite
-#define ATK_CHAR_H 50 //hauteur d'un sprite
-#define ATK_DIFF_CHAR_H 50 //hauteur entre deux sprites
+#define ATK_CHAR_H 67 //hauteur d'un sprite
+#define ATK_DIFF_CHAR_H 35 //hauteur entre deux sprites
 
 #define OFFSET_IMG_W 50 //offset des premiers sprites en largeur
 #define OFFSET_IMG_H 10 //offset des premiers sprites en hauteur
