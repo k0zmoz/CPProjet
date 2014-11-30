@@ -1,6 +1,7 @@
 #ifndef OBJECT_HPP
 #define OBJECT_HPP
 
+<<<<<<< HEAD
 #define OFFSET_IMG_W 50 //offset des premiers sprites en largeur
 #define OFFSET_IMG_H 10 //offset des premiers sprites en hauteur
 
@@ -8,6 +9,14 @@
 #include <SFML/Graphics.hpp>
 #include "main.hpp"
 
+=======
+#include <SFML/Graphics.hpp>
+#include "main.hpp"
+
+#define INIT_X_OBJ 150
+#define INIT_Y_OBJ 150
+#define INIT_HEALTH_OBJECT
+>>>>>>> objects
 
 class Object
 {
@@ -15,8 +24,12 @@ public:
 
 	Object ();
 	~Object ();
+<<<<<<< HEAD
 	
 	void look (Direction dir);
+=======
+
+>>>>>>> objects
 	bool isLooking (Direction dir);
 	bool isAlive ();
 	int getX ();

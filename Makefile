@@ -2,7 +2,7 @@ CC = g++
 CFLAGS := -std=c++11 -Wall -Wfatal-errors -c -ggdb
 LDFLAGS := -lsfml-graphics -lsfml-window -lsfml-system 
 BIN = rpg
-OBJ = main.o game.o character.o playable_char.o npc.o
+OBJ = main.o game.o character.o playable_char.o npc.o object.o arrow.o crystal.o
 
 all: .depend $(BIN)
 
