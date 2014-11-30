@@ -6,3 +6,6 @@ character.o: character.cpp main.hpp character.hpp
 playable_char.o: playable_char.cpp main.hpp character.hpp \
  playable_char.hpp
 npc.o: npc.cpp main.hpp npc.hpp character.hpp
+object.o: object.cpp main.hpp object.hpp
+arrow.o: arrow.cpp main.hpp object.hpp arrow.hpp
+crystal.o: crystal.cpp main.hpp object.hpp crystal.hpp

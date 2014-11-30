@@ -57,7 +57,7 @@ Arrow::Arrow (Direction dir)
 	
 }
 
-Arrow::Arrow (Direction dir, int x, int y)
+Arrow::Arrow (Direction dir)
 {
 	arrow_img_ = new sf::Image;
 	
