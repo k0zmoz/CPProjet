@@ -36,6 +36,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "main.hpp"
+#include "object.hpp"
 
 
 class Arrow : public Object

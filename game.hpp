@@ -3,9 +3,13 @@
 
 #include <list>
 #include <SFML/Graphics.hpp>
+#include "main.hpp"
 #include "character.hpp"
 #include "playable_char.hpp"
 #include "npc.hpp"
+#include "object.hpp"
+#include "arrow.hpp"
+#include "crystal.hpp"
 
 class Game
 {
@@ -21,6 +25,8 @@ private:
 	sf::RenderWindow *win_;
 	Playable_Char *hero_;
 	Npc *trash_mob_;
+	Arrow *arr;
+	Crystal *cryst;
 	sf::Clock *clk_atk;
   
   

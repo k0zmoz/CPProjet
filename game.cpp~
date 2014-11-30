@@ -13,6 +13,8 @@ Game::Game ()
   clk_atk = new Clock();
   hero_ = new Playable_Char ();
   trash_mob_ = new Npc (250, 250);
+ 	arr = new Arrow (Up, 350, 350);
+  cryst = new Crystal(Fire, 250, 350);
 }
 
 Game::~Game ()
@@ -21,6 +23,8 @@ Game::~Game ()
   delete clk_atk;
   delete hero_;
   delete trash_mob_;
+ 	delete arr;
+  delete cryst;
 }
 
 void
@@ -128,10 +132,9 @@ Game::run ()
 	elapsed_time_atk = clk_atk->GetElapsedTime();
 	hero_->display(*win_, elapsed_time_atk, true);
 	trash_mob_->display(*win_, elapsed_time_atk, false);
-	elapsed_time = clk_->GetElapsedTime();
-	hero_->display(*win_, elapsed_time, true);
-	trash_mob_->display(*win_, elapsed_time, false);
-	if(elapsed_time_atk > 1.0 / ATK_SPEED)
+	arr->display(*win_);
+	/*cryst->display(*win_);
+	*/if(elapsed_time_atk > 1.0 / ATK_SPEED)
 	{
 		clk_atk->Reset();
 	}

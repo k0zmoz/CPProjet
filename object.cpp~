@@ -25,43 +25,27 @@ bool Object::isLooking (Direction dir)
 	}
 	
 bool Object::isAlive ()
->>>>>>> objects
 	{
 		return health_ > 0;
 	}
 	
-<<<<<<< HEAD
-int Character::getX ()
-=======
 int Object::getX ()
->>>>>>> objects
 	{
 		return x_;
 	}
-
-<<<<<<< HEAD
-int Character::getY ()
-=======
+	
 int Object::getY ()
->>>>>>> objects
 	{
 		return y_;
 	}
   
-<<<<<<< HEAD
-Direction Character::getDir()
-=======
+
 Direction Object::getDir()
->>>>>>> objects
 	{
 		return dir_;
 	}
 
-<<<<<<< HEAD
-void Character::setPosition (int x, int y)
-=======
 void Object::setPosition (int x, int y)
->>>>>>> objects
 	{
 		x_ = x;
 		y_ = y;

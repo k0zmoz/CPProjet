@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "main.hpp"
+#include "object.hpp"
 
 //Coordonnées des sprites de crystal
 
