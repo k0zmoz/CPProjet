@@ -13,9 +13,6 @@ public:
 	~Npc ();
 	
 	void move (Direction dir);
-  
-private:
-	
 	
 
 };
