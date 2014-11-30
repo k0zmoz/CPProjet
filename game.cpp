@@ -10,7 +10,7 @@ using namespace std;
 Game::Game ()
 {
   win_ = new sf::RenderWindow(sf::VideoMode(GAME_WIDTH, GAME_HEIGHT), "VeliTech", Style::Resize|Style::Close);
-  clk_ = new Clock();
+  clk_atk = new Clock();
   hero_ = new Playable_Char ();
   trash_mob_ = new Npc (250, 250);
 }
@@ -18,7 +18,7 @@ Game::Game ()
 Game::~Game ()
 {
   delete win_;
-  delete clk_;
+  delete clk_atk;
   delete hero_;
   delete trash_mob_;
 }
@@ -28,7 +28,7 @@ Game::run ()
 {
 	Event event;
 	Color white(255, 255, 255);
-	float elapsed_time;
+	float elapsed_time_atk = 0;
 
 
 	while (win_->IsOpened())
@@ -77,6 +77,7 @@ Game::run ()
 							if(event.Key.Code == Key::Space)
 							{
 								hero_->attack();
+								trash_mob_->attack();
 							}
 					
 							if(event.Key.Code == Key::LShift)
@@ -89,22 +90,30 @@ Game::run ()
 						
 								hero_->look(Up);
 								hero_->move(Up);
+								
+								trash_mob_->look(Up);
 							}
 							if(event.Key.Code == Key::Q)
 							{
 								hero_->look(Left);
 								hero_->move(Left);
+								
+								trash_mob_->look(Left);
 							}
 							if(event.Key.Code == Key::S)
 							{
 								hero_->look(Down);
 								hero_->move(Down);
+								
+								trash_mob_->look(Down);
 							}
 					
 							if(event.Key.Code == Key::D)
 							{
 								hero_->look(Right);
 								hero_->move(Right);
+								
+								trash_mob_->look(Right);
 							}
 					}
 					break;
@@ -116,13 +125,13 @@ Game::run ()
 
 	win_->Clear(white);
 	
-	elapsed_time = clk_->GetElapsedTime();
-	hero_->display(*win_, elapsed_time, true);
-	trash_mob_->display(*win_, elapsed_time, true);
+	elapsed_time_atk = clk_atk->GetElapsedTime();
+	hero_->display(*win_, elapsed_time_atk, true);
+	trash_mob_->display(*win_, elapsed_time_atk, false);
 
-	if(elapsed_time > 1.0 / ATK_SPEED)
+	if(elapsed_time_atk > 1.0 / ATK_SPEED)
 	{
-		clk_->Reset();
+		clk_atk->Reset();
 	}
 	
 	win_->Display();

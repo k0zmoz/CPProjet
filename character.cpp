@@ -66,6 +66,7 @@ void Character::display_attack (sf::RenderTarget &rt, float elapsed_time, bool i
 		{
 			if(step_atk_ == ATK_AMNT_SPRITE_NPC)
 			{
+				
 				step_atk_ = 0;
 				attacking_ = false;
 			}
@@ -122,11 +123,6 @@ void Character::setPosition (int x, int y)
 		x_ = x;
 		y_ = y;
 	}
-
-
-
-
-
 
 
 

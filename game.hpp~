@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 #include "character.hpp"
 #include "playable_char.hpp"
+#include "npc.hpp"
 
 class Game
 {
@@ -19,7 +20,7 @@ private:
 
 	sf::RenderWindow *win_;
 	Playable_Char *hero_;
-	//Npc *trash_mob_;
+	Npc *trash_mob_;
 	sf::Clock *clk_;
   
   

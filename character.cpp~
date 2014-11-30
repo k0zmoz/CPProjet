@@ -10,7 +10,6 @@ using namespace std;
 Character::Character ()
   {
     dir_ = Down;
-    health_ = 20;
     x_ = 150;
     y_ = 150;
     change_look_ = true;
@@ -67,6 +66,7 @@ void Character::display_attack (sf::RenderTarget &rt, float elapsed_time, bool i
 		{
 			if(step_atk_ == ATK_AMNT_SPRITE_NPC)
 			{
+				
 				step_atk_ = 0;
 				attacking_ = false;
 			}
@@ -125,8 +125,11 @@ void Character::setPosition (int x, int y)
 	}
 
 
-
-
+//A SUPPRIMER
+int Character::getstep ()
+	{
+		return step_atk_;
+	}
 
 
 

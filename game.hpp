@@ -21,7 +21,7 @@ private:
 	sf::RenderWindow *win_;
 	Playable_Char *hero_;
 	Npc *trash_mob_;
-	sf::Clock *clk_;
+	sf::Clock *clk_atk;
   
   
 };

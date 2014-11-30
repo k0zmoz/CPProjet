@@ -4,7 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include "character.hpp"
 
-#define HEALTH_MOB 3
+#define HEALTH_NPC 3
 
 class Npc: public Character
 {
@@ -16,6 +16,10 @@ public:
 	
 	void move (Direction dir);
 	
+private:
+
+	sf::Clock clk_;
+
 
 };
 #endif // NPC_HPP

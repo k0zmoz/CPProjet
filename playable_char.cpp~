@@ -61,7 +61,7 @@ Playable_Char::Playable_Char () : Character ()
 			}
 		}
 		
-		//Instanciation des membres
+		
 		health_ = HEALTH_PC;
 		escape_disabled_ = false;
 	}
