@@ -61,7 +61,7 @@ Npc::Npc () : Character ()
 		
 		health_ = HEALTH_NPC;
 		
-	}
+
 
 
 //Creation d'un npc à une position donnée
