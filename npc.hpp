@@ -11,8 +11,8 @@ class Npc: public Character
 {
 public:
   
-	Npc (string s);
-	Npc (string s, int x, int y);
+	Npc ();
+	Npc (int x, int y);
 	~Npc ();
 	
 	void move (Direction dir);

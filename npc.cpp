@@ -60,7 +60,7 @@ Npc::Npc () : Character ()
 		
 		
 		health_ = HEALTH_NPC;
-		
+	}	
 
 
 

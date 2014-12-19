@@ -27,6 +27,9 @@
 
 #include <SFML/Graphics.hpp>
 #include "main.hpp"
+//#include <Vector>
+
+using namespace std;
 
 class Character
 {
