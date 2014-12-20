@@ -6,17 +6,21 @@
 #include "character.hpp"
 
 #define HEALTH_NPC 3
+#define HEALTH_MINIBOSS 1
 
 class Npc: public Character
 {
 public:
   
-	Npc ();
-	Npc (string s, int x, int y);
+	Npc (bool is_miniboss);
+	Npc (int x, int y, bool is_miniboss);
 	~Npc ();
 	
 	void move (Direction dir);
 	
+private:
+
+	bool is_miniboss_;
 
 };
 #endif // NPC_HPP

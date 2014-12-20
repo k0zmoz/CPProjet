@@ -18,6 +18,16 @@ public:
 	void escape (Direction dir);
   
 private:
+
+	sf::Sprite *up_dir_[MOV_AMNT_SPRITE_PC];
+	sf::Sprite *down_dir_[MOV_AMNT_SPRITE_PC];
+	sf::Sprite *left_dir_[MOV_AMNT_SPRITE_PC];
+	sf::Sprite *right_dir_[MOV_AMNT_SPRITE_PC];
+	
+	sf::Sprite *up_attacks_[ATK_AMNT_SPRITE_PC];
+	sf::Sprite *down_attacks_[ATK_AMNT_SPRITE_PC];
+	sf::Sprite *left_attacks_[ATK_AMNT_SPRITE_PC];
+	sf::Sprite *right_attacks_[ATK_AMNT_SPRITE_PC];
 	
 	bool escape_disabled_;
 

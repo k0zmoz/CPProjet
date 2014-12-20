@@ -24,9 +24,9 @@ private:
 
 	sf::RenderWindow *win_;
 	Playable_Char *hero_;
-	Npc *trash_mob_;
-	Arrow *arr;
-	Crystal *cryst;
+	Npc *trash_mob_, *miniboss_;
+	Arrow *arr_;
+	Crystal *cryst_;
 	sf::Clock *clk_atk;
   
   

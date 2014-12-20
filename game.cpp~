@@ -12,9 +12,10 @@ Game::Game ()
   win_ = new sf::RenderWindow(sf::VideoMode(GAME_WIDTH, GAME_HEIGHT), "VeliTech", Style::Resize|Style::Close);
   clk_atk = new Clock();
   hero_ = new Playable_Char ();
-  trash_mob_ = new Npc (250, 250);
- 	arr = new Arrow (Up, 350, 350);
-  cryst = new Crystal(Fire, 250, 350);
+  trash_mob_ = new Npc (250, 250, false);
+ 	arr_ = new Arrow (Up, 350, 350);
+  cryst_ = new Crystal(Fire, 250, 350);
+  //miniboss_ = new Npc(350, 250, true);
 }
 
 Game::~Game ()
@@ -23,8 +24,9 @@ Game::~Game ()
   delete clk_atk;
   delete hero_;
   delete trash_mob_;
- 	delete arr;
-  delete cryst;
+ 	delete arr_;
+  delete cryst_;
+ // delete miniboss_;
 }
 
 void
@@ -82,6 +84,7 @@ Game::run ()
 							{
 								hero_->attack();
 								trash_mob_->attack();
+							//	miniboss_->attack();
 							}
 					
 							if(event.Key.Code == Key::LShift)
@@ -95,7 +98,7 @@ Game::run ()
 								hero_->look(Up);
 								hero_->move(Up);
 								trash_mob_->look(Up);
-								trash_mob_->look(Up);
+							//	miniboss_->look(Up);
 							}
 							if(event.Key.Code == Key::Q)
 							{
@@ -103,6 +106,7 @@ Game::run ()
 								hero_->move(Left);
 								
 								trash_mob_->look(Left);
+								//miniboss_->look(Left);
 							}
 							if(event.Key.Code == Key::S)
 							{
@@ -110,6 +114,7 @@ Game::run ()
 								hero_->move(Down);
 								
 								trash_mob_->look(Down);
+							//	miniboss_->look(Down);
 							}
 					
 							if(event.Key.Code == Key::D)
@@ -118,6 +123,7 @@ Game::run ()
 								hero_->move(Right);
 								
 								trash_mob_->look(Right);
+								//miniboss_->look(Right);
 							}
 					}
 					break;
@@ -132,9 +138,10 @@ Game::run ()
 	elapsed_time_atk = clk_atk->GetElapsedTime();
 	hero_->display(*win_, elapsed_time_atk, true);
 	trash_mob_->display(*win_, elapsed_time_atk, false);
-	arr->display(*win_);
-	/*cryst->display(*win_);
-	*/if(elapsed_time_atk > 1.0 / ATK_SPEED)
+	//miniboss_->display(*win_, elapsed_time_atk, false);
+	arr_->display(*win_);
+	cryst_->display(*win_);
+	if(elapsed_time_atk > 1.0 / ATK_SPEED)
 	{
 		clk_atk->Reset();
 	}

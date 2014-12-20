@@ -3,6 +3,7 @@
 
 #include <list>
 #include <SFML/Graphics.hpp>
+#include "main.hpp"
 #include "character.hpp"
 #include "playable_char.hpp"
 #include "npc.hpp"
@@ -24,8 +25,8 @@ private:
 	sf::RenderWindow *win_;
 	Playable_Char *hero_;
 	Npc *trash_mob_;
-	Arrow *arr;
-	Crystal *cryst;
+	Arrow *arr_;
+	Crystal *cryst_;
 	sf::Clock *clk_atk;
   
   

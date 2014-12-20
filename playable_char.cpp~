@@ -68,8 +68,24 @@ Playable_Char::Playable_Char () : Character ()
 
 	
 Playable_Char::~Playable_Char ()
+{
+	for(int i = 0; i < MOV_AMNT_SPRITE_PC; i++)
 	{
+		delete up_dir_[i];
+		delete down_dir_[i];
+		delete left_dir_[i];
+		delete right_dir_[i];
 	}
+
+	for(int i = 0; i < ATK_AMNT_SPRITE_PC; i++)
+	{
+		delete up_attacks_[i];
+		delete down_attacks_[i];
+		delete left_attacks_[i];
+		delete right_attacks_[i];
+	}
+	
+}
 
 
 void Playable_Char::move (Direction dir)

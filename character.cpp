@@ -21,12 +21,16 @@ Character::Character ()
 
 Character::~Character()
   {
-  	for(int i = 0; i < 4; i++){
-		for(int j = 0; j < MOV_AMNT_SPRITE_PC; j++){
-    		delete directions_[i][j];
-    	}
-    }
+  	/*ancienne méthode de delete
+  	for(int i = 0; i < 4; i++)
+  	{
+			for(int j = 0; j < MOV_AMNT_SPRITE_PC; j++)
+			{
+		  	delete directions_[i][j];
+		  }
+    }*/
     delete general_dir_;
+    delete general_atks_;
   }
 
 void Character::look (Direction dir)

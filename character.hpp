@@ -3,26 +3,41 @@
 
 
 //Constantes d'initialisation des sprites de déplacements
-#define MOV_AMNT_SPRITE_PC 6 	/*nombre de sprites synthétisant
-								 un déplacement pour un caractère jouable*/
-#define MOV_AMNT_SPRITE_NPC 1 	/*nombre de sprites synthétisant
-								 un déplacement pour un caractère non jouable*/
+
+	//personnage jouable
+#define MOV_AMNT_SPRITE_PC 6 	//nombre de sprites synthétisant un déplacement
 #define MOV_CHAR_W 35 //largeur d'un sprite
 #define MOV_CHAR_H 67 //hauteur d'un sprite
 #define MOV_DIFF_CHAR_W 15 //largeur entre deux sprites
 #define MOV_DIFF_CHAR_H 35 //hauteur entre deux sprites
 
+	//personnage non jouable
+#define MOV_AMNT_SPRITE_NPC 1 	//nombre de sprites synthétisant un déplacement
+#define MOV_NPC_W 35 //largeur d'un sprite
+#define MOV_NPC_H 70 //hauteur d'un sprite
+#define MOV_DIFF_NPC_W 15 //largeur entre deux sprites
+#define MOV_DIFF_NPC_H 30 //hauteur entre deux sprites
+
+
 //Constantes d'initialisation des sprites d'attaques
-#define ATK_AMNT_SPRITE_PC 4 	/*nombre de sprites synthétisant une attaque
-							pour un personnage jouable*/
-#define ATK_AMNT_SPRITE_NPC 1 	/*nombre de sprites synthétisant une attaque
-							pour un personnage jouable*/
+
+	//personnage jouable
+#define ATK_AMNT_SPRITE_PC 4 	//nombre de sprites synthétisant une attaque
 #define ATK_CHAR_W 50 //largeur d'un sprite
 #define ATK_CHAR_H 67 //hauteur d'un sprite
 #define ATK_DIFF_CHAR_H 35 //hauteur entre deux sprites
 
+	//personnage non jouable
+#define ATK_AMNT_SPRITE_NPC 1 	//nombre de sprites synthétisant une attaque
+#define ATK_NPC_W 50 //largeur d'un sprite
+#define ATK_NPC_H 70 //hauteur d'un sprite
+#define ATK_DIFF_NPC_H 30 //hauteur entre deux sprites
+
+
+//Offset général sur les images
 #define OFFSET_IMG_W 50 //offset des premiers sprites en largeur
 #define OFFSET_IMG_H 10 //offset des premiers sprites en hauteur
+#define OFFSET_MINIBOSS_W 100 //Offset en largeur spécifique aux sprites de miniboss
 
 
 #include <SFML/Graphics.hpp>
@@ -54,16 +69,6 @@ protected:
 	
 	sf::Image *general_dir_;
 	sf::Image *general_atks_;
-	
-	sf::Sprite *up_dir_[MOV_AMNT_SPRITE_PC];
-	sf::Sprite *down_dir_[MOV_AMNT_SPRITE_PC];
-	sf::Sprite *left_dir_[MOV_AMNT_SPRITE_PC];
-	sf::Sprite *right_dir_[MOV_AMNT_SPRITE_PC];
-	
-	sf::Sprite *up_attacks_[ATK_AMNT_SPRITE_PC];
-	sf::Sprite *down_attacks_[ATK_AMNT_SPRITE_PC];
-	sf::Sprite *left_attacks_[ATK_AMNT_SPRITE_PC];
-	sf::Sprite *right_attacks_[ATK_AMNT_SPRITE_PC];
 	
 	sf::Sprite **directions_[4];
 	sf::Sprite **attacks_[4];

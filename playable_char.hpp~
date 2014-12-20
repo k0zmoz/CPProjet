@@ -5,6 +5,7 @@
 #include "character.hpp"
 
 #define ESCAPE_RANGE 100
+#define HEALTH_PC 20
 
 class Playable_Char: public Character
 {
