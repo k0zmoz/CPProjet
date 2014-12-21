@@ -10,6 +10,8 @@
 #include "object.hpp"
 #include "arrow.hpp"
 #include "crystal.hpp"
+#include "map.hpp"
+#include "musique.hpp"
 
 class Game
 {
@@ -28,7 +30,8 @@ private:
 	Arrow *arr_;
 	Crystal *cryst_;
 	sf::Clock *clk_atk;
-  
+  	Map *map_;
+	Musique *musique_;
   
 };
 

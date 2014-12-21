@@ -3,6 +3,8 @@
 #include "main.hpp"
 #include "game.hpp"
 #include "character.hpp"
+#include "map.hpp"
+#include "musique.hpp"
 
 using namespace sf;
 using namespace std;
@@ -16,6 +18,9 @@ Game::Game ()
  	arr_ = new Arrow (Up, 350, 350);
   cryst_ = new Crystal(Fire, 250, 350);
   miniboss_ = new Npc(350, 250, true);
+  	map_ = new Map();
+	musique_ = new Musique();
+	map_->run();
 }
 
 Game::~Game ()
@@ -27,6 +32,8 @@ Game::~Game ()
  	delete arr_;
   delete cryst_;
   delete miniboss_;
+  	delete map_;
+  	delete musique_;
 }
 
 void
@@ -36,6 +43,7 @@ Game::run ()
 	Color white(255, 255, 255);
 	float elapsed_time_atk = 0;
 
+musique_->play();
 
 	while (win_->IsOpened())
 	{
@@ -96,14 +104,18 @@ Game::run ()
 							{
 						
 								hero_->look(Up);
-								hero_->move(Up);
+								//hero_->move(Up);
+								map_->movePos(Up);
+								//map_->movePos(Right);
 								trash_mob_->look(Up);
 								miniboss_->look(Up);
 							}
 							if(event.Key.Code == Key::Q)
 							{
 								hero_->look(Left);
-								hero_->move(Left);
+								//hero_->move(Left);
+								map_->movePos(Left);
+								//map_->movePos(Left);
 								
 								trash_mob_->look(Left);
 								miniboss_->look(Left);
@@ -111,8 +123,8 @@ Game::run ()
 							if(event.Key.Code == Key::S)
 							{
 								hero_->look(Down);
-								hero_->move(Down);
-								
+								//hero_->move(Down);
+								map_->movePos(Down);
 								trash_mob_->look(Down);
 								miniboss_->look(Down);
 							}
@@ -120,8 +132,8 @@ Game::run ()
 							if(event.Key.Code == Key::D)
 							{
 								hero_->look(Right);
-								hero_->move(Right);
-								
+								//hero_->move(Right);
+								map_->movePos(Right);
 								trash_mob_->look(Right);
 								miniboss_->look(Right);
 							}
@@ -129,11 +141,13 @@ Game::run ()
 					break;
 			
 				default: break;		
-			}
+			}hero_->setPosition(map_->getPosX(), map_->getPosY());
 		
 		}
 
 	win_->Clear(white);
+	map_->display(*win_);
+	
 	
 	elapsed_time_atk = clk_atk->GetElapsedTime();
 	hero_->display(*win_, elapsed_time_atk, true);
@@ -146,6 +160,7 @@ Game::run ()
 		clk_atk->Reset();
 	}
 	
+	win_->SetView(map_->getView());
 	win_->Display();
   }
 
