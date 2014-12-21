@@ -11,6 +11,8 @@
 #include "arrow.hpp"
 #include "crystal.hpp"
 #include "boss.hpp"
+#include "map.hpp"
+#include "musique.hpp"
 
 class Game
 {
@@ -30,7 +32,8 @@ private:
 	Crystal *cryst_;
 	Boss *duneyrr_;
 	sf::Clock *clk_atk;
-  
+  	Map *map_;
+	Musique *musique_;
   
 };
 

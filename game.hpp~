@@ -10,7 +10,12 @@
 #include "object.hpp"
 #include "arrow.hpp"
 #include "crystal.hpp"
+<<<<<<< HEAD
 #include "boss.hpp"
+=======
+#include "map.hpp"
+#include "musique.hpp"
+>>>>>>> dc0bc131d3ddb653197ae27e2da9fe0edd0901ee
 
 class Game
 {
@@ -28,8 +33,10 @@ private:
 	Npc *trash_mob_, *miniboss_;
 	Arrow *arr_;
 	Crystal *cryst_;
+	Boss *duneyrr_;
 	sf::Clock *clk_atk;
-  
+  	Map *map_;
+	Musique *musique_;
   
 };
 

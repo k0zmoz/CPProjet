@@ -5,8 +5,8 @@
 //enum Action { NoAction, NewGame, Exit };
 typedef enum { Down = 0, Up, Left, Right} Direction;
 
-#define TILE_W 10
-#define TILE_H 10
+#define TILE_W 16
+#define TILE_H 16
 
 #define GAME_WIDTH  1200
 #define GAME_HEIGHT 1000
