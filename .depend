@@ -1,0 +1,15 @@
+main.o: main.cpp game.hpp main.hpp character.hpp playable_char.hpp \
+ npc.hpp object.hpp arrow.hpp crystal.hpp boss.hpp map.hpp musique.hpp
+game.o: game.cpp main.hpp game.hpp character.hpp playable_char.hpp \
+ npc.hpp object.hpp arrow.hpp crystal.hpp boss.hpp map.hpp musique.hpp
+character.o: character.cpp main.hpp character.hpp
+playable_char.o: playable_char.cpp main.hpp character.hpp \
+ playable_char.hpp
+npc.o: npc.cpp main.hpp npc.hpp character.hpp
+object.o: object.cpp main.hpp object.hpp
+arrow.o: arrow.cpp main.hpp object.hpp arrow.hpp
+crystal.o: crystal.cpp main.hpp object.hpp crystal.hpp
+map.o: map.cpp map.hpp main.hpp
+musique.o: musique.cpp main.hpp game.hpp character.hpp playable_char.hpp \
+ npc.hpp object.hpp arrow.hpp crystal.hpp boss.hpp map.hpp musique.hpp
+boss.o: boss.cpp main.hpp character.hpp boss.hpp
