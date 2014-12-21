@@ -10,6 +10,7 @@
 #include "object.hpp"
 #include "arrow.hpp"
 #include "crystal.hpp"
+#include "boss.hpp"
 
 class Game
 {
@@ -27,6 +28,7 @@ private:
 	Npc *trash_mob_, *miniboss_;
 	Arrow *arr_;
 	Crystal *cryst_;
+	Boss *duneyrr_;
 	sf::Clock *clk_atk;
   
   

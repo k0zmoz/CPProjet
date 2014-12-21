@@ -29,8 +29,11 @@ Character::~Character()
 		  	delete directions_[i][j];
 		  }
     }*/
-    delete general_dir_;
-    delete general_atks_;
+    if(general_dir_ != NULL)
+    {
+    	delete general_dir_;
+   	 	delete general_atks_;
+  	}
   }
 
 void Character::look (Direction dir)
@@ -49,28 +52,13 @@ void Character::attack()
 
 void Character::display_attack (sf::RenderTarget &rt, float elapsed_time, bool is_playable)
 	{
-		//static int hold_position = 0;
 		
 		attacks_[dir_][step_atk_]->SetPosition(x_, y_);
 		rt.Draw(*(attacks_[dir_][step_atk_] ));
 		
 		if(elapsed_time > 1.0 / ATK_SPEED)
 		{
-			if(is_playable)
-			{
-				step_atk_++;
-			}
-			else
-			{
-				if(step_atk_ == ATK_AMNT_SPRITE_NPC)
-				{
-					//hold_position++;
-				}
-				else
-				{
-					step_atk_++;
-				}
-			}
+			step_atk_++;
 		}	
 		
 		if(is_playable)
@@ -83,13 +71,14 @@ void Character::display_attack (sf::RenderTarget &rt, float elapsed_time, bool i
 		}
 		else
 		{
-			if(step_atk_ == ATK_AMNT_SPRITE_NPC )
+			if(step_atk_ == ATK_AMNT_SPRITE_NPC)
 			{
+				
 				step_atk_ = 0;
 				attacking_ = false;
 			}
 	}
-}
+	}
 	
 void Character::display (sf::RenderTarget &rt, float elapsed_time, bool is_playable)
 	{
@@ -102,9 +91,7 @@ void Character::display (sf::RenderTarget &rt, float elapsed_time, bool is_playa
 		}
 		else
 		{
-			cout << "disp atk deb" << endl;
 			display_attack(rt, elapsed_time, is_playable);
-			cout << "disp atk fin" << endl;
 		}
 	}
 

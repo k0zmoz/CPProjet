@@ -16,6 +16,7 @@ Game::Game ()
  	arr_ = new Arrow (Up, 350, 350);
   cryst_ = new Crystal(Fire, 250, 350);
   miniboss_ = new Npc(350, 250, true);
+  duneyrr_ = new Boss();
 }
 
 Game::~Game ()
@@ -27,6 +28,7 @@ Game::~Game ()
  	delete arr_;
   delete cryst_;
   delete miniboss_;
+  delete duneyrr_;
 }
 
 void
@@ -97,33 +99,42 @@ Game::run ()
 						
 								hero_->look(Up);
 								hero_->move(Up);
+								duneyrr_->move(Up);
+								
 								trash_mob_->look(Up);
 								miniboss_->look(Up);
+								duneyrr_->look(Up);
 							}
 							if(event.Key.Code == Key::Q)
 							{
 								hero_->look(Left);
 								hero_->move(Left);
+								duneyrr_->move(Left);
 								
 								trash_mob_->look(Left);
 								miniboss_->look(Left);
+								duneyrr_->look(Left);
 							}
 							if(event.Key.Code == Key::S)
 							{
 								hero_->look(Down);
 								hero_->move(Down);
+								duneyrr_->move(Down);
 								
 								trash_mob_->look(Down);
 								miniboss_->look(Down);
+								duneyrr_->look(Down);
 							}
 					
 							if(event.Key.Code == Key::D)
 							{
 								hero_->look(Right);
 								hero_->move(Right);
+								duneyrr_->move(Right);
 								
 								trash_mob_->look(Right);
 								miniboss_->look(Right);
+								duneyrr_->look(Right);
 							}
 					}
 					break;
@@ -139,6 +150,7 @@ Game::run ()
 	hero_->display(*win_, elapsed_time_atk, true);
 	trash_mob_->display(*win_, elapsed_time_atk, false);
 	miniboss_->display(*win_, elapsed_time_atk, false);
+	duneyrr_->display(*win_, elapsed_time_atk, false);
 	arr_->display(*win_);
 	cryst_->display(*win_);
 	if(elapsed_time_atk > 1.0 / ATK_SPEED)

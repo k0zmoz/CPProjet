@@ -30,7 +30,7 @@ Character::~Character()
 		  }
     }*/
     delete general_dir_;
-    delete general_atks_;
+   	delete general_atks_;
   }
 
 void Character::look (Direction dir)

@@ -10,6 +10,7 @@
 #include "object.hpp"
 #include "arrow.hpp"
 #include "crystal.hpp"
+#include "boss.hpp"
 
 class Game
 {
@@ -24,7 +25,7 @@ private:
 
 	sf::RenderWindow *win_;
 	Playable_Char *hero_;
-	Npc *trash_mob_;
+	Npc *trash_mob_, *miniboss_;
 	Arrow *arr_;
 	Crystal *cryst_;
 	sf::Clock *clk_atk;

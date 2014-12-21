@@ -4,6 +4,18 @@
 #include <SFML/Graphics.hpp>
 #include "character.hpp"
 
+//Constantes d'initialisation des sprites de déplacements
+
+#define MOV_CHAR_W 35 //largeur d'un sprite
+#define MOV_CHAR_H 67 //hauteur d'un sprite
+#define MOV_DIFF_CHAR_W 15 //largeur entre deux sprites
+#define MOV_DIFF_CHAR_H 35 //hauteur entre deux sprites
+
+//Constantes d'initialisation des sprites d'attaques
+#define ATK_CHAR_W 50 //largeur d'un sprite
+#define ATK_CHAR_H 67 //hauteur d'un sprite
+#define ATK_DIFF_CHAR_H 35 //hauteur entre deux sprites
+
 #define ESCAPE_RANGE 100
 #define HEALTH_PC 20
 

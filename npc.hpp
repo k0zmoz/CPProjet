@@ -5,8 +5,25 @@
 #include <string.h>
 #include "character.hpp"
 
+//Constantes d'initialisation des sprites de déplacements
+#define MOV_NPC_W 35 //largeur d'un sprite
+#define MOV_NPC_H 70 //hauteur d'un sprite
+#define MOV_DIFF_NPC_W 15 //largeur entre deux sprites
+#define MOV_DIFF_NPC_H 30 //hauteur entre deux sprites
+
+
+//Constantes d'initialisation des sprites d'attaques
+#define ATK_NPC_W 50 //largeur d'un sprite
+#define ATK_NPC_H 70 //hauteur d'un sprite
+#define ATK_DIFF_NPC_H 30 //hauteur entre deux sprites
+
+
+//Offset général sur les images
+#define OFFSET_MINIBOSS_W 100 //Offset en largeur spécifique aux sprites de miniboss
+
 #define HEALTH_NPC 3
 #define HEALTH_MINIBOSS 1
+
 
 class Npc: public Character
 {

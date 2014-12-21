@@ -7,7 +7,7 @@ OBJ = main.o game.o character.o playable_char.o npc.o object.o arrow.o crystal.o
 all: .depend $(BIN)
 
 $(BIN): $(OBJ)
-	$(CC) $(LDFLAGS) $^ -o $@
+	$(CC) $^ -o $@ $(LDFLAGS)
 
 %.o: %.cpp
 	$(CC) $(CFLAGS) $< -o $@
