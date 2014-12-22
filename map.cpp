@@ -180,55 +180,53 @@ void Map::updateView ()
   void Map::movePos (Direction dir)
   {
   	int ligne, colonne;
-    switch (dir) {
-    case Up:
-		if(scan(array, pos_-502) == 0) { cout << "murUp\n"; break; }
-		pos_ -= 502; // deplacement tableau
-    		pos_y_ -= 16; // deplacement camera
-    		//view_->Move(0,-16);
-		ligne = pos_ / 500;
-		colonne = pos_ - ligne*502;
-		cout << "ligne:" << ligne << "\n colonne" << colonne << "\n";
-    	
-    
-    	break;
-    case Down:
-		if(scan(array, pos_+502) == 0) { cout << "murDown\n"; break; }
-    		pos_ += 502;
-    		pos_y_ += 16;
-    		//view_->Move(0,+16);
-		ligne = pos_ / 500;
-		colonne = pos_ - ligne*502;
-		cout << "ligne:" << ligne << "\n colonne" << colonne << "\n";
-    	
-
-      break;
-    case Left:
-		if(scan(array, pos_-1) == 0) { cout << "murLeft\n"; break; }	
-   		    		pos_ -= 1;
-    	pos_x_ -= 16;
-		ligne = pos_ / 500;
-		colonne = pos_ - ligne*502;
-		cout << "ligne:" << ligne << "\n colonne" << colonne << "\n";
-    	
-      
-      break;
-    case Right:
-		if(scan(array, pos_+1) == 0) 
-		{ 
-			cout << "murRight\n"; 
-			break; 
-		}
-   		pos_ += 1;
-    		pos_x_ += 16;
-		ligne = pos_ / 500;
-		colonne = pos_ - ligne*502;
-		cout << "ligne:" << ligne << "\n colonne" << colonne << "\n";
-    	
-      
-      break;
-          default : break;
-    }
+    switch (dir)
+    {
+		  case Up:
+			if(scan(array, pos_-502) == 0) { cout << "murUp\n"; break; }
+			pos_ -= 502; // deplacement tableau
+		  		pos_y_ -= 16; // deplacement camera
+		  		//view_->Move(0,-16);
+			ligne = pos_ / 500;
+			colonne = pos_ - ligne*502;
+			cout << "ligne:" << ligne << "\n colonne" << colonne << "\n";
+		  	
+		  
+		  	break;
+		  case Down:
+				if(scan(array, pos_+502) == 0) { cout << "murDown\n"; break; }
+	  		pos_ += 502;
+	  		pos_y_ += 16;
+	  		//view_->Move(0,+16);
+				ligne = pos_ / 500;
+				colonne = pos_ - ligne*502;
+				cout << "ligne:" << ligne << "\n colonne" << colonne << "\n";
+				break;
+		  case Left:
+			if(scan(array, pos_-1) == 0) { cout << "murLeft\n"; break; }	
+		 		    		pos_ -= 1;
+		  	pos_x_ -= 16;
+			ligne = pos_ / 500;
+			colonne = pos_ - ligne*502;
+			cout << "ligne:" << ligne << "\n colonne" << colonne << "\n";
+		  	
+		    
+		    break;
+		  case Right:
+				if(scan(array, pos_+1) == 0) 
+				{ 
+					cout << "murRight\n"; 
+					break; 
+				}
+		 		pos_ += 1;
+		  	pos_x_ += 16;
+				ligne = pos_ / 500;
+				colonne = pos_ - ligne*502;
+				cout << "ligne:" << ligne << "\n colonne" << colonne << "\n";
+		  	break;
+		  	
+		  	default : break;
+   }
 
     updateView();
   }

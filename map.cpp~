@@ -180,7 +180,8 @@ void Map::updateView ()
   void Map::movePos (Direction dir)
   {
   	int ligne, colonne;
-    switch (dir) {
+    switch (dir)
+    {
     case Up:
 		if(scan(array, pos_-502) == 0) { cout << "murUp\n"; break; }
 		pos_ -= 502; // deplacement tableau
@@ -214,21 +215,20 @@ void Map::updateView ()
       
       break;
     case Right:
-		if(scan(array, pos_+1) == 0) 
-		{ 
-			cout << "murRight\n"; 
-			break; 
-		}
+			if(scan(array, pos_+1) == 0) 
+			{ 
+				cout << "murRight\n"; 
+				break; 
+			}
    		pos_ += 1;
-    		pos_x_ += 16;
-		ligne = pos_ / 500;
-		colonne = pos_ - ligne*502;
-		cout << "ligne:" << ligne << "\n colonne" << colonne << "\n";
+    	pos_x_ += 16;
+			ligne = pos_ / 500;
+			colonne = pos_ - ligne*502;
+			cout << "ligne:" << ligne << "\n colonne" << colonne << "\n";
+    	break;
     	
-      
-      break;
-          default : break;
-    }
+    	default : break;
+   }
 
     updateView();
   }

@@ -33,8 +33,8 @@ public:
 	
 	void look (Direction dir);
 	void attack ();
-	void display(sf::RenderTarget &rt, float elapsed_time, bool is_playable);
-	void display_attack (sf::RenderTarget &rt, float elapsed_time, bool is_playable);
+	void display(sf::RenderTarget &rt, float elapsed_time, bool is_playable, bool is_boss);
+	void display_attack (sf::RenderTarget &rt, float elapsed_time, bool is_playable, bool is_boss);
 	bool isLooking (Direction dir);
 	bool isAlive ();
 	bool isAttacking ();

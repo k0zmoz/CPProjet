@@ -32,7 +32,7 @@ private:
 	Crystal *cryst_;
 	Boss *duneyrr_;
 	sf::Clock *clk_atk;
-  	Map *map_;
+  Map *map_;
 	Musique *musique_;
   
 };

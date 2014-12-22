@@ -9,11 +9,14 @@
 
 #define MOV_AMNT_SPRITE_PC 6 	//nombre de sprites synthétisant un déplacement
 #define ATK_AMNT_SPRITE_PC 4 	//nombre de sprites synthétisant une attaque
+
 #define MOV_AMNT_SPRITE_NPC 1
 #define ATK_AMNT_SPRITE_NPC 1
+
 #define MOV_AMNT_SPRITE_BOSS 8
 #define ATK_AMNT_SPRITE_BOSS 7
 #define DEATH_AMNT_SPRITE_BOSS 7 	//nombre de sprites synthétisant la mort
+
 //Offset général sur les images
 #define OFFSET_IMG_W 50 //offset des premiers sprites en largeur
 #define OFFSET_IMG_H 10 //offset des premiers sprites en hauteur
@@ -30,8 +33,8 @@ public:
 	
 	void look (Direction dir);
 	void attack ();
-	void display(sf::RenderTarget &rt, float elapsed_time, bool is_playable);
-	void display_attack (sf::RenderTarget &rt, float elapsed_time, bool is_playable);
+	void display(sf::RenderTarget &rt, float elapsed_time, bool is_playable, bool isBoss);
+	void display_attack (sf::RenderTarget &rt, float elapsed_time, bool is_playable, bool isBoss);
 	bool isLooking (Direction dir);
 	bool isAlive ();
 	bool isAttacking ();

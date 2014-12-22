@@ -47,37 +47,48 @@ void Character::attack()
 	}
 
 
-void Character::display_attack (sf::RenderTarget &rt, float elapsed_time, bool is_playable)
+void Character::display_attack (sf::RenderTarget &rt, float elapsed_time, bool is_playable, bool is_boss)
+{
+		
+	attacks_[dir_][step_atk_]->SetPosition(x_, y_);
+	rt.Draw(*(attacks_[dir_][step_atk_] ));
+	
+	if(elapsed_time > 1.0 / ATK_SPEED)
 	{
-		
-		attacks_[dir_][step_atk_]->SetPosition(x_, y_);
-		rt.Draw(*(attacks_[dir_][step_atk_] ));
-		
-		if(elapsed_time > 1.0 / ATK_SPEED)
+		step_atk_++;
+	}	
+	
+	if(is_playable)
+	{
+		if(step_atk_ == ATK_AMNT_SPRITE_PC)
 		{
-			step_atk_++;
-		}	
-		
-		if(is_playable)
+			step_atk_ = 0;
+			attacking_ = false;
+		}
+	}
+	else
+	{
+		if(!is_boss)
 		{
-			if(step_atk_ == ATK_AMNT_SPRITE_PC)
+			if(step_atk_ == ATK_AMNT_SPRITE_NPC)
 			{
+			
 				step_atk_ = 0;
 				attacking_ = false;
 			}
 		}
 		else
 		{
-			if(step_atk_ == ATK_AMNT_SPRITE_NPC)
+			if(step_atk_ == ATK_AMNT_SPRITE_BOSS)
 			{
-				
 				step_atk_ = 0;
 				attacking_ = false;
 			}
+		}
 	}
-	}
+}
 	
-void Character::display (sf::RenderTarget &rt, float elapsed_time, bool is_playable)
+void Character::display (sf::RenderTarget &rt, float elapsed_time, bool is_playable, bool is_boss)
 	{
 		if(!attacking_)
 		{
@@ -88,7 +99,7 @@ void Character::display (sf::RenderTarget &rt, float elapsed_time, bool is_playa
 		}
 		else
 		{
-			display_attack(rt, elapsed_time, is_playable);
+			display_attack(rt, elapsed_time, is_playable, is_boss);
 		}
 	}
 
@@ -127,11 +138,3 @@ void Character::setPosition (int x, int y)
 		x_ = x;
 		y_ = y;
 	}
-
-
-
-
-
-
-
-

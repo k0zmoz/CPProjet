@@ -14,13 +14,13 @@ Game::Game ()
   win_ = new sf::RenderWindow(sf::VideoMode(GAME_WIDTH, GAME_HEIGHT), "VeliTech", Style::Resize|Style::Close);
   clk_atk = new Clock();
   hero_ = new Playable_Char ();
-  trash_mob_ = new Npc (159, 83, false);
+  //trash_mob_ = new Npc (159, 83, false);
  	//arr_ = new Arrow (Up, 350, 350);
   //cryst_ = new Crystal(Fire, 250, 350);
   //miniboss_ = new Npc(350, 250, true);
-  //duneyrr_ = new Boss();
+  duneyrr_ = new Boss();
   map_ = new Map();
-	musique_ = new Musique();
+	//musique_ = new Musique();
 	map_->run();
 }
 
@@ -29,13 +29,13 @@ Game::~Game ()
   delete win_;
   delete clk_atk;
   delete hero_;
-  delete trash_mob_;
+  //delete trash_mob_;
  //	delete arr_;
  // delete cryst_;
  // delete miniboss_;
-  //delete duneyrr_;
- delete map_;
-  delete musique_;
+  delete duneyrr_;
+// 	delete map_;
+ // delete musique_;
 }
 
 void
@@ -93,8 +93,9 @@ Game::run ()
 							if(event.Key.Code == Key::Space)
 							{
 								hero_->attack();
-								trash_mob_->attack();
+								//trash_mob_->attack();
 								//miniboss_->attack();
+								duneyrr_->attack();
 							}
 					
 							if(event.Key.Code == Key::LShift)
@@ -107,63 +108,69 @@ Game::run ()
 						
 								hero_->look(Up);
 								hero_->move(Up);
-								//duneyrr_->move(Up);
+								duneyrr_->look(Up);
+								duneyrr_->move(Up);
 								map_->movePos(Up);
-								//map_->movePos(Right);
-								trash_mob_->look(Up);
+								//trash_mob_->look(Up);
 								//miniboss_->look(Up);
-								//duneyrr_->look(Up);
 							}
 							if(event.Key.Code == Key::Q)
 							{
 								hero_->look(Left);
 								hero_->move(Left);
-								//duneyrr_->move(Left);
+								duneyrr_->look(Left);
+								duneyrr_->move(Left);
 								map_->movePos(Left);
-								//map_->movePos(Left);
-								
-								trash_mob_->look(Left);
+								//trash_mob_->look(Left);
 								//miniboss_->look(Left);
-								//duneyrr_->look(Left);
 							}
 							if(event.Key.Code == Key::S)
 							{
 								hero_->look(Down);
 								hero_->move(Down);
-								//duneyrr_->move(Down);
+								duneyrr_->look(Down);
+								duneyrr_->move(Down);
 								map_->movePos(Down);
-								trash_mob_->look(Down);
+								//trash_mob_->look(Down);
 								//miniboss_->look(Down);
-								//duneyrr_->look(Down);
+								
 							}
 					
 							if(event.Key.Code == Key::D)
 							{
 								hero_->look(Right);
 								hero_->move(Right);
-								//duneyrr_->move(Right);
+								duneyrr_->look(Right);
+								duneyrr_->move(Right);
 								map_->movePos(Right);
-								trash_mob_->look(Right);
+								//trash_mob_->look(Right);
 								//miniboss_->look(Right);
-								//duneyrr_->look(Right);
 							}
 					}
 					break;
 			
 				default: break;		
-			}hero_->setPosition(map_->getPosX(), map_->getPosY());
+			}
+			hero_->setPosition(map_->getPosX(), map_->getPosY());
 		
 		}
 
 	win_->Clear(white);
-	map_->display(*win_);
+	//map_->display(*win_);
 	
 	
 	elapsed_time_atk = clk_atk->GetElapsedTime();
-	hero_->display(*win_, elapsed_time_atk, true);
-	trash_mob_->display(*win_, elapsed_time_atk, false);
+	hero_->display(*win_, elapsed_time_atk, true, false);
+	//trash_mob_->display(*win_, elapsed_time_atk, false, false);
 	//miniboss_->display(*win_, elapsed_time_atk, false);
-	//duneyrr_->display(*win_, elapsed_time_atk, false);
+	if(duneyrr_->isAlive())
+	{
+		duneyrr_->display(*win_, elapsed_time_atk, false, true);
+	}
+	else
+	{
+		duneyrr_->display_death(*win_);
+	}
 	//arr_->display(*win_);
 	//cryst_->display(*win_);
 	if(elapsed_time_atk > 1.0 / ATK_SPEED)
@@ -171,7 +178,7 @@ Game::run ()
 		clk_atk->Reset();
 	}
 	
-	win_->SetView(map_->getView());
+	//win_->SetView(map_->getView());
 	win_->Display();
   }
 
