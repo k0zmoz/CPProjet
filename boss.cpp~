@@ -9,173 +9,174 @@ using namespace sf;
 using namespace std;
 
 Boss::Boss () : Character ()
-	{
-		int i, j;
-  
-		general_dir_ = new sf::Image;
-		general_atks_ = new sf::Image;
-		general_deaths_ = new sf::Image;
-			  
-		if(! general_dir_->LoadFromFile("./sprite/boss/Duneyrr_walking.png")){
-			cerr << "Error Loading boss walk Image" << endl;
-			exit(EXIT_FAILURE);
-		}
-	
-		//instanciation des sprites de déplacement
-		directions_[Down] = down_dir_;
-		directions_[Up] = up_dir_;
-		directions_[Right] = right_dir_;
-		directions_[Left] = left_dir_;
-	
-		for( i = 0; i < 4; i++){		//4 directions
-			for(j = 0; j < MOV_AMNT_SPRITE_BOSS; j++){
-				directions_[i][j] = new sf::Sprite(*general_dir_);
-				if(i < 2)
-				{
-					if(i == 0)
-					{
-						directions_[i][j]->SetSubRect(sf::IntRect(
-						OFFSET_IMG_W + j * (MOV_DOWN_LEFT_BOSS_W),
-						OFFSET_IMG_H + (i % 2) * (MOV_DOWN_LEFT_BOSS_H + MOV_DIFF_BOSS_H),
-						OFFSET_IMG_W + j * (MOV_DOWN_LEFT_BOSS_W) + MOV_DOWN_LEFT_BOSS_W,
-						OFFSET_IMG_H + (i % 2) * (MOV_DOWN_LEFT_BOSS_H + MOV_DIFF_BOSS_H) + MOV_DOWN_LEFT_BOSS_H));
-					}
-					else
-					{
-						directions_[i][j]->SetSubRect(sf::IntRect(
-						OFFSET_MOV_BOSS_W + j * (MOV_UP_RIGHT_BOSS_W + MOV_DIFF_BOSS_W),
-						OFFSET_IMG_H + (i % 2) * (MOV_UP_RIGHT_BOSS_H),
-						OFFSET_MOV_BOSS_W + j * (MOV_UP_RIGHT_BOSS_W + MOV_DIFF_BOSS_W) + MOV_UP_RIGHT_BOSS_W,
-						OFFSET_IMG_H + (i % 2) * (MOV_UP_RIGHT_BOSS_H) + MOV_UP_RIGHT_BOSS_H));
-					}
-				}
-				else
-				{
-					*(directions_[i][j]) = copyandflipSprite(directions_[i - 2][j]);
-				}
-			}
-		}
-		
-		if(! general_atks_->LoadFromFile("./sprite/boss/Duneyrr_atking2.png")){
-			cerr << "Error Loading boss walk Image" << endl;
-			exit(EXIT_FAILURE);
-		}
-		
-		//instanciation des sprites d'attaques
-	
-		attacks_[Down] = down_attacks_;
-		attacks_[Up] = up_attacks_;
-		attacks_[Right] = right_attacks_;
-		attacks_[Left] = left_attacks_;
-	
-		for( i = 0; i < 4; i++){		//4 directions
-			for(j = 0; j < ATK_AMNT_SPRITE_BOSS; j++){
-				attacks_[i][j] = new sf::Sprite(*general_atks_);
-				if(i < 2)
-				{
-					if(i == 0)
-					{
-						if(j < 4) //Condition due aux propriétés de l'image du seul boss actuel du jeu
-						{
-							attacks_[i][j]->SetSubRect(sf::IntRect(
-							OFFSET_IMG_W + j * (ATK_DOWN_LEFT_BOSS_W),
-							OFFSET_IMG_H + (i % 2) * (ATK_DOWN_LEFT_BOSS_H + ATK_DIFF_BOSS_H),
-							OFFSET_IMG_W + j * (ATK_DOWN_LEFT_BOSS_W) + ATK_DOWN_LEFT_BOSS_W,
-							OFFSET_IMG_H + (i % 2) * (ATK_DOWN_LEFT_BOSS_H + ATK_DIFF_BOSS_H) + ATK_DOWN_LEFT_BOSS_H));
-						}
-						else
-						{
-							attacks_[i][j]->SetSubRect(sf::IntRect(
-							OFFSET_IMG_W + j * (ATK_DOWN_LEFT_BOSS_W)
-							+ (j % 4) * (ATK_XL_DOWN_LEFT_BOSS_W - ATK_DOWN_LEFT_BOSS_W),
-							
-							OFFSET_IMG_H + (i % 2) * (ATK_DOWN_LEFT_BOSS_H + ATK_DIFF_BOSS_H),
-							
-							OFFSET_IMG_W + j * (ATK_DOWN_LEFT_BOSS_W) 
-							+ (j % 4) * (ATK_XL_DOWN_LEFT_BOSS_W - ATK_DOWN_LEFT_BOSS_W) + ATK_XL_DOWN_LEFT_BOSS_W,
-							
-							OFFSET_IMG_H + (i % 2) * (ATK_DOWN_LEFT_BOSS_H + ATK_DIFF_BOSS_H) + ATK_DOWN_LEFT_BOSS_H));
-						}
-					}
-					else
-					{
-						if(j != 4) //Condition due aux propriétés de l'image du seul boss actuel du jeu
-						{
-						attacks_[i][j]->SetSubRect(sf::IntRect(
-						OFFSET_ATK_BOSS_W + j * (ATK_UP_RIGHT_BOSS_W)
-						+ (j / 4) * (ATK_XL_UP_RIGHT_BOSS_W - ATK_UP_RIGHT_BOSS_W),
-						
-						OFFSET_IMG_H + (i % 2) * (ATK_DOWN_LEFT_BOSS_H + ATK_DIFF_BOSS_H),
-						
-						OFFSET_ATK_BOSS_W + j * (ATK_UP_RIGHT_BOSS_W)
-						+ (j / 4) * (ATK_XL_UP_RIGHT_BOSS_W - ATK_UP_RIGHT_BOSS_W) + ATK_UP_RIGHT_BOSS_W,
-						
-						OFFSET_IMG_H + (i % 2) * (ATK_DOWN_LEFT_BOSS_H + ATK_DIFF_BOSS_H) + ATK_UP_RIGHT_BOSS_H));
-						}
-						else
-						{
-						attacks_[i][j]->SetSubRect(sf::IntRect(
-						OFFSET_ATK_BOSS_W + j * (ATK_UP_RIGHT_BOSS_W),
-						OFFSET_IMG_H + (i % 2) * (ATK_DOWN_LEFT_BOSS_H + ATK_DIFF_BOSS_H),
-						OFFSET_ATK_BOSS_W + j * (ATK_UP_RIGHT_BOSS_W) + ATK_XL_UP_RIGHT_BOSS_W,
-						OFFSET_IMG_H + (i % 2) * (ATK_DOWN_LEFT_BOSS_H + ATK_DIFF_BOSS_H) + ATK_UP_RIGHT_BOSS_H));
-						}
-					}
-				}
-				else
-				{
-					*(attacks_[i][j]) = copyandflipSprite(attacks_[i - 2][j]);
-				}
-			}
-		}
-		
-		if(! general_deaths_->LoadFromFile("./sprite/boss/Duneyrr_dying2.png")){
-			cerr << "Error Loading boss walk Image" << endl;
-			exit(EXIT_FAILURE);
-		}
-		
-		//instanciation des sprites de mort
-	
-		deaths_[Down] = down_deaths_;
-		deaths_[Up] = up_deaths_;
-		deaths_[Right] = right_deaths_;
-		deaths_[Left] = left_deaths_;
-	
-		for( i = 0; i < 4; i++){		//4 directions
-			for(j = 0; j < DEATH_AMNT_SPRITE_BOSS; j++){
-				deaths_[i][j] = new sf::Sprite(*general_deaths_);
-				if(i < 2)
-				{
-					if(i == 0)
-					{
-						deaths_[i][j]->SetSubRect(sf::IntRect(
-						OFFSET_DEATH_BOSS_W + j * (DEATH_DOWN_LEFT_BOSS_W),
-						OFFSET_IMG_H + (i % 2) * (DEATH_DOWN_LEFT_BOSS_H + DEATH_DIFF_BOSS_H),
-						OFFSET_DEATH_BOSS_W + j * (DEATH_DOWN_LEFT_BOSS_W) + DEATH_DOWN_LEFT_BOSS_W,
-						OFFSET_IMG_H + (i % 2) * (DEATH_DOWN_LEFT_BOSS_H + DEATH_DIFF_BOSS_H) + DEATH_DOWN_LEFT_BOSS_H));
-					}
-					else
-					{
-						deaths_[i][j]->SetSubRect(sf::IntRect(
-						OFFSET_DEATH_BOSS_W + j * (DEATH_UP_RIGHT_BOSS_W),
-						OFFSET_IMG_H + (i % 2) * (DEATH_UP_RIGHT_BOSS_H + DEATH_DIFF_BOSS_H),
-						OFFSET_DEATH_BOSS_W + j * (DEATH_UP_RIGHT_BOSS_W) + DEATH_UP_RIGHT_BOSS_W,
-						OFFSET_IMG_H + (i % 2) * (DEATH_UP_RIGHT_BOSS_H + DEATH_DIFF_BOSS_H) + DEATH_UP_RIGHT_BOSS_H));
-					}
-				}
-				else
-				{
-					*(deaths_[i][j]) = copyandflipSprite(deaths_[i - 2][j]);
-				}
-			}
-		}
-		
-		health_ = HEALTH_BOSS;
-		x_ =  SPAWN_BOSS_X;
-		y_ =  SPAWN_BOSS_Y;
-		step_death_ = 0;
-		clk_death_ = new Clock();
+{
+	int i, j;
+
+	general_dir_ = new sf::Image;
+	general_atks_ = new sf::Image;
+	general_deaths_ = new sf::Image;
+		  
+	if(! general_dir_->LoadFromFile("./sprite/boss/Duneyrr_walking.png")){
+		cerr << "Error Loading boss walk Image" << endl;
+		exit(EXIT_FAILURE);
 	}
+
+	//instanciation des sprites de déplacement
+	directions_[Down] = down_dir_;
+	directions_[Up] = up_dir_;
+	directions_[Right] = right_dir_;
+	directions_[Left] = left_dir_;
+
+	for( i = 0; i < 4; i++){		//4 directions
+		for(j = 0; j < MOV_AMNT_SPRITE_BOSS; j++){
+			directions_[i][j] = new sf::Sprite(*general_dir_);
+			if(i < 2)
+			{
+				if(i == 0)
+				{
+					directions_[i][j]->SetSubRect(sf::IntRect(
+					OFFSET_IMG_W + j * (MOV_DOWN_LEFT_BOSS_W),
+					OFFSET_IMG_H + (i % 2) * (MOV_DOWN_LEFT_BOSS_H + MOV_DIFF_BOSS_H),
+					OFFSET_IMG_W + j * (MOV_DOWN_LEFT_BOSS_W) + MOV_DOWN_LEFT_BOSS_W,
+					OFFSET_IMG_H + (i % 2) * (MOV_DOWN_LEFT_BOSS_H + MOV_DIFF_BOSS_H) + MOV_DOWN_LEFT_BOSS_H));
+				}
+				else
+				{
+					directions_[i][j]->SetSubRect(sf::IntRect(
+					OFFSET_MOV_BOSS_W + j * (MOV_UP_RIGHT_BOSS_W + MOV_DIFF_BOSS_W),
+					OFFSET_IMG_H + (i % 2) * (MOV_DOWN_LEFT_BOSS_H + MOV_DIFF_BOSS_H),
+					OFFSET_MOV_BOSS_W + j * (MOV_UP_RIGHT_BOSS_W + MOV_DIFF_BOSS_W) + MOV_UP_RIGHT_BOSS_W,
+					OFFSET_IMG_H + (i % 2) * (MOV_DOWN_LEFT_BOSS_H + MOV_DIFF_BOSS_H) + MOV_UP_RIGHT_BOSS_H));
+				}
+			}
+			else
+			{
+				*(directions_[i][j]) = copyandflipSprite(directions_[i - 2][j]);
+			}
+		}
+	}
+	
+	if(! general_atks_->LoadFromFile("./sprite/boss/Duneyrr_atking2.png")){
+		cerr << "Error Loading boss walk Image" << endl;
+		exit(EXIT_FAILURE);
+	}
+	
+	//instanciation des sprites d'attaques
+
+	attacks_[Down] = down_attacks_;
+	attacks_[Up] = up_attacks_;
+	attacks_[Right] = right_attacks_;
+	attacks_[Left] = left_attacks_;
+
+	for( i = 0; i < 4; i++){		//4 directions
+		for(j = 0; j < ATK_AMNT_SPRITE_BOSS; j++){
+			attacks_[i][j] = new sf::Sprite(*general_atks_);
+			if(i < 2)
+			{
+				if(i == 0)
+				{
+					if(j < 4) //Condition due aux propriétés de l'image du seul boss actuel du jeu
+					{
+						attacks_[i][j]->SetSubRect(sf::IntRect(
+						OFFSET_IMG_W + j * (ATK_DOWN_LEFT_BOSS_W),
+						OFFSET_IMG_H + (i % 2) * (ATK_DOWN_LEFT_BOSS_H + ATK_DIFF_BOSS_H),
+						OFFSET_IMG_W + j * (ATK_DOWN_LEFT_BOSS_W) + ATK_DOWN_LEFT_BOSS_W,
+						OFFSET_IMG_H + (i % 2) * (ATK_DOWN_LEFT_BOSS_H + ATK_DIFF_BOSS_H) + ATK_DOWN_LEFT_BOSS_H));
+					}
+					else
+					{
+						attacks_[i][j]->SetSubRect(sf::IntRect(
+						OFFSET_IMG_W + j * (ATK_DOWN_LEFT_BOSS_W)
+						+ (j % 4) * (ATK_XL_DOWN_LEFT_BOSS_W - ATK_DOWN_LEFT_BOSS_W),
+						
+						OFFSET_IMG_H + (i % 2) * (ATK_DOWN_LEFT_BOSS_H + ATK_DIFF_BOSS_H),
+						
+						OFFSET_IMG_W + j * (ATK_DOWN_LEFT_BOSS_W) 
+						+ (j % 4) * (ATK_XL_DOWN_LEFT_BOSS_W - ATK_DOWN_LEFT_BOSS_W) + ATK_XL_DOWN_LEFT_BOSS_W,
+						
+						OFFSET_IMG_H + (i % 2) * (ATK_DOWN_LEFT_BOSS_H + ATK_DIFF_BOSS_H) + ATK_DOWN_LEFT_BOSS_H));
+					}
+				}
+				else
+				{
+					if(j != 4) //Condition due aux propriétés de l'image du seul boss actuel du jeu
+					{
+					attacks_[i][j]->SetSubRect(sf::IntRect(
+					OFFSET_ATK_BOSS_W + j * (ATK_UP_RIGHT_BOSS_W)
+					+ (j / 4) * (ATK_XL_UP_RIGHT_BOSS_W - ATK_UP_RIGHT_BOSS_W),
+					
+					OFFSET_IMG_H + (i % 2) * (ATK_DOWN_LEFT_BOSS_H + ATK_DIFF_BOSS_H),
+					
+					OFFSET_ATK_BOSS_W + j * (ATK_UP_RIGHT_BOSS_W)
+					+ (j / 4) * (ATK_XL_UP_RIGHT_BOSS_W - ATK_UP_RIGHT_BOSS_W) + ATK_UP_RIGHT_BOSS_W,
+					
+					OFFSET_IMG_H + (i % 2) * (ATK_DOWN_LEFT_BOSS_H + ATK_DIFF_BOSS_H) + ATK_UP_RIGHT_BOSS_H));
+					}
+					else
+					{
+					attacks_[i][j]->SetSubRect(sf::IntRect(
+					OFFSET_ATK_BOSS_W + j * (ATK_UP_RIGHT_BOSS_W),
+					OFFSET_IMG_H + (i % 2) * (ATK_DOWN_LEFT_BOSS_H + ATK_DIFF_BOSS_H),
+					OFFSET_ATK_BOSS_W + j * (ATK_UP_RIGHT_BOSS_W) + ATK_XL_UP_RIGHT_BOSS_W,
+					OFFSET_IMG_H + (i % 2) * (ATK_DOWN_LEFT_BOSS_H + ATK_DIFF_BOSS_H) + ATK_UP_RIGHT_BOSS_H));
+					}
+				}
+			}
+			else
+			{
+				*(attacks_[i][j]) = copyandflipSprite(attacks_[i - 2][j]);
+			}
+		}
+	}
+	
+	if(! general_deaths_->LoadFromFile("./sprite/boss/Duneyrr_dying2.png")){
+		cerr << "Error Loading boss walk Image" << endl;
+		exit(EXIT_FAILURE);
+	}
+	
+	//instanciation des sprites de mort
+
+	deaths_[Down] = down_deaths_;
+	deaths_[Up] = up_deaths_;
+	deaths_[Right] = right_deaths_;
+	deaths_[Left] = left_deaths_;
+
+	for( i = 0; i < 4; i++){		//4 directions
+		for(j = 0; j < DEATH_AMNT_SPRITE_BOSS; j++){
+			deaths_[i][j] = new sf::Sprite(*general_deaths_);
+			if(i < 2)
+			{
+				if(i == 0)
+				{
+					deaths_[i][j]->SetSubRect(sf::IntRect(
+					OFFSET_DEATH_BOSS_W + j * (DEATH_DOWN_LEFT_BOSS_W),
+					OFFSET_IMG_H + (i % 2) * (DEATH_DOWN_LEFT_BOSS_H + DEATH_DIFF_BOSS_H),
+					OFFSET_DEATH_BOSS_W + j * (DEATH_DOWN_LEFT_BOSS_W) + DEATH_DOWN_LEFT_BOSS_W,
+					OFFSET_IMG_H + (i % 2) * (DEATH_DOWN_LEFT_BOSS_H + DEATH_DIFF_BOSS_H) + DEATH_DOWN_LEFT_BOSS_H));
+				}
+				else
+				{
+					deaths_[i][j]->SetSubRect(sf::IntRect(
+					OFFSET_DEATH_BOSS_W + j * (DEATH_UP_RIGHT_BOSS_W),
+					OFFSET_IMG_H + (i % 2) * (DEATH_DOWN_LEFT_BOSS_H + DEATH_DIFF_BOSS_H),
+					OFFSET_DEATH_BOSS_W + j * (DEATH_UP_RIGHT_BOSS_W) + DEATH_UP_RIGHT_BOSS_W,
+					OFFSET_IMG_H + (i % 2) * (DEATH_DOWN_LEFT_BOSS_H + DEATH_DIFF_BOSS_H) + DEATH_UP_RIGHT_BOSS_H));
+				}
+			}
+			else
+			{
+				*(deaths_[i][j]) = copyandflipSprite(deaths_[i - 2][j]);
+			}
+		}
+	}
+	
+	health_ = HEALTH_BOSS;
+	x_ =  SPAWN_BOSS_X;
+	y_ =  SPAWN_BOSS_Y;
+	step_death_ = 0;
+	room_ = new Rect<int>(LEFT_COORD_ROOM, TOP_COORD_ROOM, RIGHT_COORD_ROOM, BOTTOM_COORD_ROOM);
+	clk_death_ = new Clock();
+}
 
 	
 Boss::~Boss ()
@@ -205,6 +206,7 @@ Boss::~Boss ()
 	}
 
 	delete general_deaths_;
+	delete room_;
 	delete clk_death_;
 	
 }
@@ -212,7 +214,8 @@ Boss::~Boss ()
 
 void Boss::move (Direction dir)
 {
-	switch (dir) {
+	switch (dir)
+	{
 		case Up:
 		  y_ -= BOSS_SPEED;
 		  break;
@@ -235,8 +238,103 @@ void Boss::move (Direction dir)
 	}
 
 }
+
+void Boss::charge(Direction dir)
+{
+	switch(dir)
+	{
+		case Down:
+			if(isInRoom(x_, y_ + DIST_CHARGE))
+			{
+				y_ += DIST_CHARGE;
+			}
+			break;
+			
+		case Up:
+			if(isInRoom(x_, y_ - DIST_CHARGE))
+			{
+				y_ -= DIST_CHARGE;
+			}
+			break;
+			
+		case Left:
+			if(isInRoom(x_ - DIST_CHARGE, y_))
+			{
+				x_ -= DIST_CHARGE;
+			}
+			break;
+			
+		case Right:
+			if(isInRoom(x_ + DIST_CHARGE, y_))
+			{
+				x_ += DIST_CHARGE;
+			}
+			break;
+			
+		default : break;
+	}
+}
+
+void Boss::displayDeath (sf::RenderTarget &rt)
+{
+	float elapsed_time = clk_death_->GetElapsedTime();
 	
+	deaths_[dir_][step_death_]->SetPosition(x_, y_);
+	rt.Draw(*( deaths_[dir_][step_death_] ));
 	
+	if(step_death_ < DEATH_AMNT_SPRITE_BOSS && elapsed_time > (1 / DEATH_SPEED))
+	{
+		step_death_++;
+		clk_death_->Reset();
+	}
+}
+
+void Boss::display_attack (sf::RenderTarget &rt, bool is_playable)
+{		
+	float elapsed_time = clk_atk_->GetElapsedTime();
+	attacks_[dir_][step_atk_]->SetPosition(x_, y_);
+	rt.Draw(*(attacks_[dir_][step_atk_] ));
+	if(elapsed_time > 1.0 / ATK_SPEED)
+	{
+		step_atk_++;
+		clk_atk_->Reset();
+	}	
+	
+	charge(dir_); //fait charger le boss dans la direction où il regarde
+	
+	if(step_atk_ == ATK_AMNT_SPRITE_BOSS)
+	{
+		step_atk_ = 0;
+		attacking_ = false;
+	}
+}
+
+void Boss::display (sf::RenderTarget &rt, bool is_playable)
+{
+	if(!attacking_)
+	{
+
+		directions_[dir_][step_mov_]->SetPosition(x_, y_);
+		rt.Draw(*( directions_[dir_][step_mov_] ));
+	}
+	else
+	{
+		display_attack(rt, is_playable);
+	}
+}
+
+bool Boss::isInRoom(int x, int y)
+{
+	return room_->Contains(x, y);
+}
+
+/******************************************
+Sprite Boss::copyandflipSprite(Sprite *sp)
+Entrée : pointeur sur sprite
+Sortie : sprite
+Fonction qui renvoie le sprite passé en 
+argument retourné horizontalement
+******************************************/
 Sprite Boss::copyandflipSprite(Sprite *sp)
 {
 	Sprite sp_flipped = *sp;
@@ -245,26 +343,3 @@ Sprite Boss::copyandflipSprite(Sprite *sp)
 	
 	return sp_flipped;
 }
-
-void Boss::display_death (sf::RenderTarget &rt)
-{
-	float elapsed_time = clk_death_->GetElapsedTime();
-	
-	/*cout << step_death_ << " | ";
-	cout << x_ << " | " << y_ << endl;
-	*/
-	deaths_[dir_][step_mov_]->SetPosition(x_, y_);
-	rt.Draw(*( deaths_[dir_][step_death_] ));
-	
-	if(step_death_ < DEATH_AMNT_SPRITE_BOSS && elapsed_time > (1 / DEATH_SPEED))
-	{
-		step_death_++;
-		clk_death_->Reset();
-	}
-	
-	if(step_death_ == DEATH_AMNT_SPRITE_BOSS)
-	{
-		step_death_ = 0;
-	}
-}
-

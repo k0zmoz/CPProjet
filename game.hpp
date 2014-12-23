@@ -31,7 +31,6 @@ private:
 	Arrow *arr_;
 	Crystal *cryst_;
 	Boss *duneyrr_;
-	sf::Clock *clk_atk;
   Map *map_;
 	Musique *musique_;
   

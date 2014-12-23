@@ -26,6 +26,7 @@ using namespace std;
 
 class Character
 {
+
 public:
 
 	Character ();
@@ -33,8 +34,8 @@ public:
 	
 	void look (Direction dir);
 	void attack ();
-	void display(sf::RenderTarget &rt, float elapsed_time, bool is_playable, bool is_boss);
-	void display_attack (sf::RenderTarget &rt, float elapsed_time, bool is_playable, bool is_boss);
+	void display(sf::RenderTarget &rt, bool is_playable);
+	void display_attack (sf::RenderTarget &rt, bool is_playable);
 	bool isLooking (Direction dir);
 	bool isAlive ();
 	bool isAttacking ();
@@ -52,6 +53,7 @@ protected:
 	sf::Sprite **attacks_[4];
 	
 	Direction dir_;
+	sf::Clock *clk_atk_;
 	bool change_look_; //permet de déterminer si on doit réinitialiser les étapes de mouvements
 	bool attacking_; //permet de déterminer si le personnage réalise une attaque
 	int step_mov_; //permet de déterminer l'étape de mouvement en cours

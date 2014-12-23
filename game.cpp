@@ -12,7 +12,6 @@ using namespace std;
 Game::Game ()
 {
   win_ = new sf::RenderWindow(sf::VideoMode(GAME_WIDTH, GAME_HEIGHT), "VeliTech", Style::Resize|Style::Close);
-  clk_atk = new Clock();
   hero_ = new Playable_Char ();
   //trash_mob_ = new Npc (159, 83, false);
  	//arr_ = new Arrow (Up, 350, 350);
@@ -27,7 +26,6 @@ Game::Game ()
 Game::~Game ()
 {
   delete win_;
-  delete clk_atk;
   delete hero_;
   //delete trash_mob_;
  //	delete arr_;
@@ -43,7 +41,6 @@ Game::run ()
 {
 	Event event;
 	Color white(255, 255, 255);
-	float elapsed_time_atk = 0;
 
 //musique_->play();
 
@@ -156,29 +153,24 @@ Game::run ()
 		}
 
 	win_->Clear(white);
-	//map_->display(*win_);
+	map_->display(*win_);
 	
 	
-	elapsed_time_atk = clk_atk->GetElapsedTime();
-	hero_->display(*win_, elapsed_time_atk, true, false);
+	hero_->display(*win_, true);
 	//trash_mob_->display(*win_, elapsed_time_atk, false, false);
 	//miniboss_->display(*win_, elapsed_time_atk, false);
 	if(duneyrr_->isAlive())
 	{
-		duneyrr_->display(*win_, elapsed_time_atk, false, true);
+		duneyrr_->display(*win_, false);
 	}
 	else
 	{
-		duneyrr_->display_death(*win_);
+		duneyrr_->displayDeath(*win_);
 	}
 	//arr_->display(*win_);
 	//cryst_->display(*win_);
-	if(elapsed_time_atk > 1.0 / ATK_SPEED)
-	{
-		clk_atk->Reset();
-	}
-	
-	//win_->SetView(map_->getView());
+
+	win_->SetView(map_->getView());
 	win_->Display();
   }
 

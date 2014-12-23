@@ -90,7 +90,7 @@ Playable_Char::~Playable_Char ()
 
 void Playable_Char::move (Direction dir)
 	{
-		switch (dir) {
+		/*switch (dir) {
 			case Up:
 			  y_ -= CHAR_SPEED;
 			  break;
@@ -103,7 +103,7 @@ void Playable_Char::move (Direction dir)
 			case Right:
 			  x_ += CHAR_SPEED;
 			  break;
-		}
+		}*/
 
 		step_mov_++;
 		if(step_mov_ == MOV_AMNT_SPRITE_PC || change_look_ == true){

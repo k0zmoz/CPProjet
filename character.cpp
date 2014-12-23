@@ -10,27 +10,21 @@ using namespace std;
 Character::Character ()
   {
     dir_ = Down;
-    x_ = 150;
-    y_ = 150;
+    x_ = 1500;
+    y_ = 1500;
     change_look_ = true;
     attacking_ = false;
     step_mov_ = 0;
     step_atk_ = 0;
+    clk_atk_ = new Clock();
   
   }
 
 Character::~Character()
   {
-  	/*ancienne méthode de delete
-  	for(int i = 0; i < 4; i++)
-  	{
-			for(int j = 0; j < MOV_AMNT_SPRITE_PC; j++)
-			{
-		  	delete directions_[i][j];
-		  }
-    }*/
     delete general_dir_;
    	delete general_atks_;
+   	delete clk_atk_;
   }
 
 void Character::look (Direction dir)
@@ -47,15 +41,15 @@ void Character::attack()
 	}
 
 
-void Character::display_attack (sf::RenderTarget &rt, float elapsed_time, bool is_playable, bool is_boss)
+void Character::display_attack (sf::RenderTarget &rt, bool is_playable)
 {
-		
+	float elapsed_time = clk_atk_->GetElapsedTime();
 	attacks_[dir_][step_atk_]->SetPosition(x_, y_);
 	rt.Draw(*(attacks_[dir_][step_atk_] ));
-	
 	if(elapsed_time > 1.0 / ATK_SPEED)
 	{
 		step_atk_++;
+		clk_atk_->Reset();
 	}	
 	
 	if(is_playable)
@@ -68,27 +62,16 @@ void Character::display_attack (sf::RenderTarget &rt, float elapsed_time, bool i
 	}
 	else
 	{
-		if(!is_boss)
+		if(step_atk_ == ATK_AMNT_SPRITE_NPC)
 		{
-			if(step_atk_ == ATK_AMNT_SPRITE_NPC)
-			{
-			
-				step_atk_ = 0;
-				attacking_ = false;
-			}
-		}
-		else
-		{
-			if(step_atk_ == ATK_AMNT_SPRITE_BOSS)
-			{
-				step_atk_ = 0;
-				attacking_ = false;
-			}
+		
+			step_atk_ = 0;
+			attacking_ = false;
 		}
 	}
 }
 	
-void Character::display (sf::RenderTarget &rt, float elapsed_time, bool is_playable, bool is_boss)
+void Character::display (sf::RenderTarget &rt, bool is_playable)
 	{
 		if(!attacking_)
 		{
@@ -99,7 +82,7 @@ void Character::display (sf::RenderTarget &rt, float elapsed_time, bool is_playa
 		}
 		else
 		{
-			display_attack(rt, elapsed_time, is_playable, is_boss);
+			display_attack(rt, is_playable);
 		}
 	}
 

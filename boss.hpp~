@@ -38,12 +38,20 @@
 #define OFFSET_DEATH_BOSS_W 40
 //useless #define OFFSET_DEATH_BOSS_H 1600//Offset en hauteur pour la mort
 
-#define HEALTH_BOSS 1
+#define HEALTH_BOSS 10
 
 //Point de spawn
-#define SPAWN_BOSS_X 200
-#define SPAWN_BOSS_Y 200
+#define SPAWN_BOSS_X 150
+#define SPAWN_BOSS_Y 150
 
+//Coordonnées de la salle du boss (rectangulaire)
+#define LEFT_COORD_ROOM 0
+#define TOP_COORD_ROOM 0
+#define RIGHT_COORD_ROOM 1350
+#define BOTTOM_COORD_ROOM 1350
+
+//Distance parcourue entre deux changement de sprites lors d'une charge
+#define DIST_CHARGE 20
 
 class Boss: public Character
 {
@@ -53,7 +61,11 @@ public:
 	~Boss ();
 	
 	void move (Direction dir);
-	void display_death(sf::RenderTarget &rt);
+	void displayDeath(sf::RenderTarget &rt);
+	void display_attack (sf::RenderTarget &rt, bool is_playable);
+	void display (sf::RenderTarget &rt, bool is_playable);
+	void charge(Direction dir);
+	bool isInRoom(int x, int y);
 	sf::Sprite copyandflipSprite (sf::Sprite *sp);
 	
 private:
@@ -76,6 +88,7 @@ private:
 	sf::Image *general_deaths_;	
 	sf::Sprite **deaths_[4];
 	
+	sf::Rect<int> * room_;
 	sf::Clock *clk_death_;
 	
 	int step_death_;
