@@ -112,7 +112,6 @@ void Playable_Char::move (Direction dir)
 		}
 
 	}
-	
 
 void Playable_Char::escape (Direction dir)
 	{

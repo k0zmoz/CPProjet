@@ -13,6 +13,7 @@
 #include "boss.hpp"
 #include "map.hpp"
 #include "musique.hpp"
+#include "combat_manager.hpp"
 
 class Game
 {
@@ -26,11 +27,12 @@ public:
 private:
 
 	sf::RenderWindow *win_;
-	Playable_Char *hero_;
-	Npc *trash_mob_, *miniboss_;
+	PlayableChar *hero_;
+	CombatManager *cm_;
+	/*Npc *trash_mob_, *miniboss_;
 	Arrow *arr_;
 	Crystal *cryst_;
-	Boss *duneyrr_;
+	Boss *duneyrr_;*/
   Map *map_;
 	Musique *musique_;
   

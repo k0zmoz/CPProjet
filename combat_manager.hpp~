@@ -17,6 +17,7 @@
 //Rayon dans lequel chercher un Playable_char
 #define RADIUS_LOCATE_PC 500
 
+
 //Constantes relatives aux Npc
 
 //Vitesse à laquelle un Npc change de direction aléatoirement

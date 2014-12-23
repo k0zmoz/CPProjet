@@ -10,8 +10,8 @@ using namespace std;
 Character::Character ()
   {
     dir_ = Down;
-    x_ = 150;
-    y_ = 150;
+    x_ = 1500;
+    y_ = 1500;
     change_look_ = true;
     attacking_ = false;
     step_mov_ = 0;
@@ -34,6 +34,31 @@ void Character::look (Direction dir)
   	}
     dir_ = dir;
   }
+
+void Character::move (Direction dir)
+	{
+		switch (dir) {
+			case Up:
+			  y_ -= NPC_SPEED;
+			  break;
+			case Down:
+			  y_ += NPC_SPEED;
+			  break;
+			case Left:
+			  x_ -= NPC_SPEED;
+			  break;
+			case Right:
+			  x_ += NPC_SPEED;
+			  break;
+		}
+
+		step_mov_++;
+		if(step_mov_ == MOV_AMNT_SPRITE_NPC || change_look_ == true){
+			step_mov_ = 0;
+			change_look_ = false;
+		}
+
+	}*/
 
 void Character::attack()
 	{

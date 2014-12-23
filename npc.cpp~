@@ -123,8 +123,8 @@ Npc::Npc (int x, int y, bool is_miniboss) : Character ()
 
 	directions_[Down] = down_dir_;
 	directions_[Up] = up_dir_;
-	directions_[Right] = right_dir_;
 	directions_[Left] = left_dir_;
+	directions_[Right] = right_dir_;
 
 	if(!is_miniboss)
 	{
@@ -225,7 +225,7 @@ Npc::~Npc ()
 
 }
 
-
+/*
 void Npc::move (Direction dir)
 	{
 		switch (dir) {
@@ -249,4 +249,4 @@ void Npc::move (Direction dir)
 			change_look_ = false;
 		}
 
-	}
+	}*/
