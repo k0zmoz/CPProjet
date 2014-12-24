@@ -10,8 +10,8 @@ using namespace std;
 Character::Character ()
   {
     dir_ = Down;
-    x_ = 150;
-    y_ = 150;
+    x_ = 159;
+    y_ = 83;
     change_look_ = true;
     attacking_ = false;
     step_mov_ = 0;

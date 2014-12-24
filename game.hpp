@@ -13,6 +13,7 @@
 #include "boss.hpp"
 #include "map.hpp"
 #include "musique.hpp"
+#include "menu.hpp"
 
 class Game
 {
@@ -26,13 +27,18 @@ public:
 private:
 
 	sf::RenderWindow *win_;
+	sf::Clock *clk_atk_;
 	Playable_Char *hero_;
+	Action current_action_;
+	GameState gs_;
 	Npc *trash_mob_, *miniboss_;
-	Arrow *arr_;
+	Map *map_;
+	Menu *menu_start_, *menu_echap_;// *menu_end_;
+/*	Arrow *arr_;
 	Crystal *cryst_;
 	Boss *duneyrr_;
-  Map *map_;
 	Musique *musique_;
+*/
   
 };
 
