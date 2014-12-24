@@ -30,10 +30,6 @@
 #define LEFT_ARROW_RIGHT_COORD 180
 #define LEFT_ARROW_BOTTOM_COORD 110
 
-
-#define ARROW_SPEED 7 //deplacement d'une arrow
-#define LIM_DIST_ARROW 80
-
 #include <SFML/Graphics.hpp>
 #include "main.hpp"
 #include "object.hpp"
@@ -51,13 +47,16 @@ public:
 	void move(Direction dir);
 	void display (sf::RenderTarget &rt);
 	int getDistTraveled();
-
+	bool isLaunched();
+	void setLaunched(bool launched);
+	void setDistTraveled(int dist_traveled);
 
 protected:
 
 	sf::Image *arrow_img_;	
 	sf::Sprite *arrow_sprite_;
 	int dist_traveled_;
+	bool launched_;
 };
 
 #endif // ARROW_HPP

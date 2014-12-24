@@ -150,8 +150,8 @@ Game::run ()
 	
 	
 	hero_->display(*win_, true);
-	cout << "x: " << hero_->getX() << " y: " << hero_->getY() << endl;
 	cm_->getNpc()->display(*win_, false);
+	cm_->displayArrowList(*win_, cm_->getList1());
 	//miniboss_->display(*win_, elapsed_time_atk, false);
 	/*if(duneyrr_->isAlive())
 	{
@@ -161,8 +161,6 @@ Game::run ()
 	{
 		duneyrr_->displayDeath(*win_);
 	}*/
-	//arr_->display(*win_);
-	//cryst_->display(*win_);
 
 	win_->SetView(map_->getView());
 	win_->Display();

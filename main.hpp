@@ -15,6 +15,8 @@ typedef enum { Down = 0, Up, Left, Right} Direction;
 #define CHAR_SPEED 5 //nombre de pixels dont un personnage jouable se déplace
 #define NPC_SPEED 5 //nombre de pixels dont un npc se déplace
 #define BOSS_SPEED 15 //nombre de pixels dont un boss se déplace
+#define ARROW_SPEED 5 //nombre de pixels dont une flèche se déplace
+
 #define MOV_SPEED 30 //nombre d'images à afficher par seconde pour un déplacement
 #define ATK_SPEED 10	 //nombre d'images à afficher par seconde pour une attaque
 #define DEATH_SPEED 0.5	 //nombre d'images à afficher par seconde pour une mort

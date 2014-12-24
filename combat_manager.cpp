@@ -9,18 +9,26 @@ using namespace std;
 CombatManager::CombatManager ()
 {
   trash_mob_ = new Npc (0, -1472, false);
- 	arr_ = new Arrow (Up, 350, 350);
   cryst_ = new Crystal(Fire, 250, 350);
   miniboss_ = new Npc(350, 250, true);
   duneyrr_ = new Boss();
   clk_mov_npc_ = new Clock();
-  
+  clk_launch_arr_list1 = new Clock();
+  for (int i = 0; i < AMNT_ARR_LIST1; i++)
+  {
+		arr_list1_.push_front(new Arrow(Right, SPAWN_LIST1_X, SPAWN_LIST1_Y));
+	}
+
 }
 
 CombatManager::~CombatManager()
 {
 	delete trash_mob_;
-	delete arr_;
+	for(auto arr : arr_list1_){
+		delete arr;
+	}
+	delete clk_mov_npc_;
+	delete clk_launch_arr_list1;
 	delete cryst_;
 	delete miniboss_;
 	delete duneyrr_;
@@ -35,14 +43,12 @@ void CombatManager::run (PlayableChar *pc)
 		//Si le héros est dans un rayon alentour, il essaye de le rejoindre
 		if(isNearHero(trash_mob_, pc))
 		{
-			cout << "npc aggro" << endl;
 			moveNpc(trash_mob_, pc->getX(), pc->getY());
 		}
 		
 		//Sinon si le mob est aux environs du centre de sa salle, il se déplace aléatoirement
 		else if(isInRadius2D(trash_mob_, CENTER_ROOM_NPC_X, CENTER_ROOM_NPC_Y, RADIUS_ROOM_NPC))
 		{
-			cout << "npc wander" << endl;
 			if(clk_mov_npc_->GetElapsedTime() > (1 / SWITCH_DIR_SPEED_NPC) )
 			{
 				moveRandomlyNpc(trash_mob_); 
@@ -57,8 +63,20 @@ void CombatManager::run (PlayableChar *pc)
 		//Sinon le mob retourne au centre de la salle
 		else
 		{
-			cout << "npc centre salle" << endl;
 			moveNpc(trash_mob_, CENTER_ROOM_NPC_X, CENTER_ROOM_NPC_Y);
+		}
+		
+		for(auto arr : arr_list1_)
+		{
+			if(arr->isLaunched())
+			{
+				moveArrow(arr, Left, SPAWN_LIST1_X, SPAWN_LIST1_Y, DIST_LIM_LIST1);
+			}
+			else if(clk_launch_arr_list1->GetElapsedTime() > LAUNCH_DELAY_LIST1)
+			{
+				launchNextArrow(arr_list1_);
+				clk_launch_arr_list1->Reset();
+			}
 		}
 }
 
@@ -71,7 +89,6 @@ void CombatManager::wander(Character *chara)
 	3 => 50 < rand < 75 | 4 => 75 < rand < 100 |*/
 	
 	int rand_reduced = rand < 50 ? (rand < 25 ? 1 : 2) : (rand < 75 ? 3 : 4);
-	cout << "rand reduced : " << rand_reduced << endl;
 	switch(rand_reduced)
 	{
 		case 1 :
@@ -187,15 +204,16 @@ void CombatManager::moveRandomlyNpc (Npc *npc)
 		npc->move(npc->getDir());
 }
 
-void moveArrow(Arrow *arr, Direction dir, int spawn_x, int spawn_y)
+void CombatManager::moveArrow(Arrow *arr, Direction dir, int spawn_x, int spawn_y, int dist_lim)
 {
-	if(arr->getDistTraveled() < LIM_DIST_ARROW)
+	if(arr->getDistTraveled() < dist_lim)
 	{
 		arr->move(dir);
 	}
 	else
 	{
 		arr->setPosition(spawn_x, spawn_y);
+		arr->setDistTraveled(0);
 	}
 }
 
@@ -205,14 +223,37 @@ void CombatManager::moveBoss (Boss *boss, int x, int y)
 		boss->move(boss->getDir());
 }
 
+
+void CombatManager::launchNextArrow(std::list<Arrow *> arr_list)
+{
+	std::list<Arrow *>::iterator it = arr_list.begin();
+	
+	do
+	{
+		it++;
+	}
+	while((*it)->isLaunched() && it != arr_list.end());
+	
+	(*it)->setLaunched(true);
+	
+}
+
+
+void CombatManager::displayArrowList(sf::RenderTarget &rt, std::list<Arrow *> arr_list)
+{
+	std::list<Arrow *>::iterator it = arr_list.begin();
+	
+	while(it != arr_list.end() && (*it)->isLaunched())
+	{
+		(*it)->display(rt);
+		it++;
+	}
+
+}
+
 Npc *CombatManager::getNpc ()
 {
 	return trash_mob_;
-}
-
-Arrow *CombatManager::getArrow ()
-{
-	return arr_;
 }
 
 Crystal *CombatManager::getCrystal ()
@@ -225,10 +266,10 @@ Boss *CombatManager::getBoss ()
 	return duneyrr_;
 }
 
-
-
-
-
+std::list<Arrow *>CombatManager::getList1 ()
+{
+	return arr_list1_;
+}
 
 
 

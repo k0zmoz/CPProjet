@@ -50,6 +50,7 @@ Arrow::Arrow (Direction dir)
 	
 	dist_traveled_ = 0;
 	dir_ = dir;
+	launched_ = false;
 	
 }
 
@@ -103,6 +104,7 @@ Arrow::Arrow (Direction dir, int x, int y)
 	
 	dist_traveled_ = 0;
 	dir_ = dir;
+	launched_ = false;
 		
 	x_ = x;
 	y_ = y;
@@ -117,34 +119,50 @@ Arrow::~Arrow ()
 }
 
 void Arrow::move (Direction dir)
+{
+	switch (dir)
 	{
-		switch (dir) {
-			case Up:
-			  y_ -= ARROW_SPEED;
-			  break;
-			case Down:
-			  y_ += ARROW_SPEED;
-			  break;
-			case Left:
-			  x_ -= ARROW_SPEED;
-			  break;
-			case Right:
-			  x_ += ARROW_SPEED;
-			  break;
-		}
+		case Up:
+		  y_ -= ARROW_SPEED;
+		  break;
+		case Down:
+		  y_ += ARROW_SPEED;
+		  break;
+		case Left:
+		  x_ -= ARROW_SPEED;
+		  break;
+		case Right:
+		  x_ += ARROW_SPEED;
+		  break;
+	}
 
 	dist_traveled_ += ARROW_SPEED;
 
-	}
+}
 
 
 void Arrow::display (sf::RenderTarget &rt)
-	{
-		arrow_sprite_->SetPosition(x_, y_);
-		rt.Draw(*arrow_sprite_);
-	}
+{
+	arrow_sprite_->SetPosition(x_, y_);
+	rt.Draw(*arrow_sprite_);
+}
 	
-int getDistTraveled()
+int Arrow::getDistTraveled()
 {
 	return dist_traveled_;
+}
+
+bool Arrow::isLaunched()
+{
+	return launched_;
+}
+
+void Arrow::setLaunched(bool launched)
+{
+	launched_ = launched;
+}
+
+void Arrow::setDistTraveled(int dist_traveled)
+{
+	dist_traveled_ = dist_traveled;
 }

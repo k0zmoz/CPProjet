@@ -2,6 +2,7 @@
 #define COMBAT_MANAGER_HPP
 
 #include <SFML/Graphics.hpp>
+#include <list>
 #include "map.hpp"
 #include "character.hpp"
 #include "playable_char.hpp"
@@ -33,7 +34,12 @@
 
 //Constantes relatives aux Boss
 
-
+//Constantes relatives aux Arrow
+#define AMNT_ARR_LIST1 1 //nombre de flèches dans list1
+#define SPAWN_LIST1_X 0 // abscisse du spawn des flèches de list1
+#define SPAWN_LIST1_Y -1472 //ordonnée du spawn des flèches de list1
+#define LAUNCH_DELAY_LIST1 2 //délai (en s) avant de lancer une autre flèche de list1
+#define DIST_LIM_LIST1 40
 
 using namespace std;
 
@@ -56,13 +62,17 @@ public:
 	bool isNearHero (Character * chara, PlayableChar *pc);
 	void moveNpc(Npc *npc, int x, int y);
 	void moveRandomlyNpc(Npc *npc);
-	void moveArrow(Arrow *arr);
+	void moveArrow(Arrow *arr, Direction dir, int spawn_x, int spawn_y, int dist_lim);
 	void moveBoss(Boss *boss, int x, int y);
+	void launchNextArrow(std::list<Arrow *> arr_list);
+	
+	void displayArrowList(sf::RenderTarget &rt, std::list<Arrow *> arr_list);
 	
 	Npc *getNpc ();
 	Arrow *getArrow ();
 	Crystal *getCrystal ();
 	Boss *getBoss ();
+	std::list<Arrow *> getList1();
 	
 	//Gestion des attaques
 	//bool IsInRangeAtk(string typeid(Character).name())
@@ -70,10 +80,11 @@ public:
 private:
 	
 	Npc *trash_mob_, *miniboss_;
-	Arrow *arr_;
+	std::list<Arrow *> arr_list1_;
 	Crystal *cryst_;
 	Boss *duneyrr_;
 	sf::Clock *clk_mov_npc_;
+	sf::Clock *clk_launch_arr_list1;
 
 };
 
