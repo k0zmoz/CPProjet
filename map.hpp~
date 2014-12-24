@@ -24,12 +24,16 @@ void updateView ();
 void movePos (Direction dir);
 int getPosX ();
 int getPosY ();
+int getInitLine ();
+int getInitColumn ();
+char * getArray();
 int getPos();
 int isWall (int);
 int scan(char *,int);
 
 private:
-   	Sprite *map1_;
+  
+  Sprite *map1_;
 	Image *imap_;
 
 	int w_ = 500, h_ = 500;
@@ -38,9 +42,10 @@ private:
  	bool walled;
 	std::list<std::pair<int, int>> walls_;
 	View *view_;
-	
 	char * array;
 	int pos;
+	
+	int init_line_, init_column_;
 	
 };
 

@@ -6,13 +6,14 @@ using namespace sf;
 using namespace std;
 
 
-CombatManager::CombatManager ()
+CombatManager::CombatManager (Map *map)
 {
-  trash_mob_ = new Npc (159, 83, false);
+  trash_mob_ = new Npc (0, -1472, false);
  	arr_ = new Arrow (Up, 350, 350);
   cryst_ = new Crystal(Fire, 250, 350);
   miniboss_ = new Npc(350, 250, true);
   duneyrr_ = new Boss();
+  map_ = map;
   clk_mov_npc_ = new Clock();
   
 }
@@ -36,7 +37,7 @@ void CombatManager::run (PlayableChar *pc)
 		if(isNearHero(trash_mob_, pc))
 		{
 			cout << "npc aggro" << endl;
-			moveNpc(trash_mob_, pc->getX(), pc->getY());
+			moveNpc(trash_mob_, pc->getX(), pc->getY(), map_);
 		}
 		
 		//Sinon si le mob est aux environs du centre de sa salle, il se déplace aléatoirement
@@ -45,7 +46,7 @@ void CombatManager::run (PlayableChar *pc)
 			cout << "npc wander" << endl;
 			if(clk_mov_npc_->GetElapsedTime() > (1 / SWITCH_DIR_SPEED_NPC) )
 			{
-				moveRandomlyNpc(trash_mob_); 
+				moveRandomlyNpc(trash_mob_, map_); 
 				clk_mov_npc_->Reset();
 			}
 			else
@@ -58,7 +59,7 @@ void CombatManager::run (PlayableChar *pc)
 		else
 		{
 			cout << "npc centre salle" << endl;
-			moveNpc(trash_mob_, CENTER_ROOM_NPC_X, CENTER_ROOM_NPC_Y);
+			moveNpc(trash_mob_, CENTER_ROOM_NPC_X, CENTER_ROOM_NPC_Y, map_);
 		}
 }
 
@@ -175,19 +176,47 @@ bool CombatManager::isNearHero (Character *chara, PlayableChar *pc)
 	return isInRadius2D (chara, pc->getX(), pc->getY(), RADIUS_LOCATE_PC);
 }
 
-void CombatManager::moveNpc (Npc *npc, int x, int y)
+void CombatManager::moveNpc (Npc *npc, int x, int y, Map *map)
 {
 		headToCoord(npc, x, y);
 		npc->move(npc->getDir());
 }
 
-void CombatManager::moveRandomlyNpc (Npc *npc)
+void CombatManager::moveRandomlyNpc (Npc *npc, Map * map)
 {
 		wander(npc);
-		npc->move(npc->getDir());
+		switch(npc->getDir())
+		{
+			case Down:
+				if(map->scan(map->getArray(), npc->getX(), npc->getY() + (1 * TILE_H)) == 1)
+				{
+					npc->move(Down);
+				}
+				break;
+			case Up:
+				if(map->scan(map->getArray(), npc->getX(), npc->getY() - (1 * TILE_H)) == 1)
+				{
+					npc->move(Up);
+				}
+				break;
+			case Left:
+				if(map->scan(map->getArray, npc->getX()  - (1 * TILE_W), npc->getY()) == 1)
+				{
+					npc->move(Left);
+				}
+				break;
+			case Right:
+				if(map->scan(map->getArray(), npc->getX()  + (1 * TILE_W), npc->getY()) == 1)
+				{
+					npc->move(Right);
+				}
+				break;
+		
+		
+		}
 }
 
-void CombatManager::moveBoss (Boss *boss, int x, int y)
+void CombatManager::moveBoss (Boss *boss, int x, int y, Map *map)
 {
 		headToCoord(boss, x, y);
 		boss->move(boss->getDir());

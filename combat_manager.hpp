@@ -10,6 +10,7 @@
 #include "arrow.hpp"
 #include "arrow.hpp"
 #include "crystal.hpp"
+#include "map.hpp"
 
 //Rayon dans lequel chercher un Character par rapport à un point fixe quelconque
 #define RADIUS_LOCATE_COORD 10
@@ -41,7 +42,7 @@ class CombatManager
 
 public:
 
-	CombatManager ();
+	CombatManager (Map *map);
 	~CombatManager ();
 	
 	void run(PlayableChar * pc);
@@ -53,9 +54,9 @@ public:
 	bool isInRadius1D (Character *chara, int coord, int radius, bool test_absciss);
 	bool isInRadius2D (Character *chara, int x, int y, int radius);
 	bool isNearHero (Character * chara, PlayableChar *pc);
-	void moveNpc(Npc *npc, int x, int y);
-	void moveRandomlyNpc(Npc *npc);
-	void moveBoss(Boss *boss, int x, int y);
+	void moveNpc(Npc *npc, int x, int y, Map *map);
+	void moveRandomlyNpc(Npc *npc, Map *map);
+	void moveBoss(Boss *boss, int x, int y, Map *map);
 	
 	Npc *getNpc ();
 	Arrow *getArrow ();
@@ -71,7 +72,7 @@ private:
 	Arrow *arr_;
 	Crystal *cryst_;
 	Boss *duneyrr_;
-	
+	Map *map_;
 	sf::Clock *clk_mov_npc_;
 
 };

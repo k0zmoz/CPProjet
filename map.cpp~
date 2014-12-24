@@ -26,42 +26,45 @@ Map::Map()
 	map1_->SetSubRect(IntRect(0, 0, 8000, 8000));
 	//ofstream fichier ("test.txt", ios::out);
    
-  int array_size = 500*500; // define the size of character array
-	array = new char[array_size]; // allocating an array 
-	int position = 0; //this will be used incremently to fill characters in the array 
+  int array__size = 500*502; // define the size of character array_
+	array_ = new char[array__size]; // allocating an array_ 
+	int position = 0; //this will be used incremently to fill characters in the array_ 
   
 	ifstream fin("carte23.txt");
  	if(fin.is_open())
 	{
-		while(!fin.eof() && position < array_size)
+		while(!fin.eof() && position < array__size)
 		{
-			fin.get(array[position]); //reading one character from file to array
+			fin.get(array_[position]); //reading one character from file to array_
 			position++;
 		}
-		array[position-1] = '\0'; //placing character array terminating character
+		array_[position-1] = '\0'; //placing character array_ terminating character
     
 	cout << "Displaying Array..." << endl << endl;
 	//ofstream fichier ("test.txt", ios::out);
 
-	//this loop display all the charaters in array till \0 
-		for(int i = 0; array[i] != '\0'; i++)
+	//this loop display all the charaters in array_ till \0 
+		for(int i = 0; array_[i] != '\0'; i++)
 		{			
-			switch (array[i])
+			switch (array_[i])
 			{
 			
 			int ligne, colonne;
 
-				case '@' : 
+				case '@' :
           ligne = i / 500;
 					colonne = i - ligne*502;
+					init_line_ = ligne;
+					init_column_ = colonne;
+					
 					map1_->SetPosition(-(colonne*16),-(ligne*16));
 						
 					//fichier << "ligne:" << ligne << "\n colonne" << colonne << "\n";
 					walled = false;
 					pos_ = i;
-					char_ = array[i];
+					char_ = array_[i];
 
-					cout << "test:"<<array[i]<<"\n";
+					cout << "test:"<<array_[i]<<"\n";
 					
           				break;
 				case '1' : 
@@ -84,7 +87,7 @@ Map::Map()
 	}
   
 // rectangle dont le coin en haut à gauche est en (0,0), de taille 1x1
-    view_ = new sf::View(sf::FloatRect(0, 0, TILE_W * 5, TILE_H * 5));
+    view_ = new sf::View(sf::FloatRect(0, 0, TILE_W * 10, TILE_H * 10));
 
 }
 
@@ -103,7 +106,7 @@ Map::~Map()
 void Map::run ()
 {
 	//view_ = new sf::View(sf::FloatRect(0, 0, TILE_W * w_, TILE_H * h_));
-    	view_->SetHalfSize(100 * TILE_W, 100 * TILE_H); // Zoom cadre camera
+    	view_->SetHalfSize(60 * TILE_W, 60 * TILE_H); // Zoom cadre camera
     	updateView();
 }
 
@@ -118,7 +121,7 @@ bool Map::isFree (int x, int y)
 	return !walled_[y][x];
 }
 
-int Map::isWall (int array)
+int Map::isWall (int array_)
 {
 
 	if(walled == true)
@@ -127,8 +130,6 @@ int Map::isWall (int array)
 	}
 	return 0;
 }
-
-
 
 
 int Map::scan(char * tab, int pos)
@@ -179,58 +180,58 @@ void Map::updateView ()
 
   void Map::movePos (Direction dir)
   {
-  	int ligne, colonne;
-    switch (dir)
-    {
-		  case Up:
-			if(scan(array, pos_-502) == 0) { cout << "murUp\n"; break; }
-			pos_ -= 502; // deplacement tableau
-		  		pos_y_ -= 16; // deplacement camera
-		  		//view_->Move(0,-16);
-			ligne = pos_ / 500;
-			colonne = pos_ - ligne*502;
-			cout << "ligne:" << ligne << "\n colonne" << colonne << "\n";
-		  	
-		  
-		  	break;
-		  case Down:
-				if(scan(array, pos_+502) == 0) { cout << "murDown\n"; break; }
-	  		pos_ += 502;
-	  		pos_y_ += 16;
-	  		//view_->Move(0,+16);
-				ligne = pos_ / 500;
-				colonne = pos_ - ligne*502;
-				cout << "ligne:" << ligne << "\n colonne" << colonne << "\n";
-				break;
-		  case Left:
-			if(scan(array, pos_-1) == 0) { cout << "murLeft\n"; break; }	
-		 		    		pos_ -= 1;
-		  	pos_x_ -= 16;
-			ligne = pos_ / 500;
-			colonne = pos_ - ligne*502;
-			cout << "ligne:" << ligne << "\n colonne" << colonne << "\n";
-		  	
-		    
-		    break;
-		  case Right:
-				if(scan(array, pos_+1) == 0) 
-				{ 
-					cout << "murRight\n"; 
-					break; 
-				}
-		 		pos_ += 1;
-		  	pos_x_ += 16;
-				ligne = pos_ / 500;
-				colonne = pos_ - ligne*502;
-				cout << "ligne:" << ligne << "\n colonne" << colonne << "\n";
-		  	break;
-		  	
-		  	default : break;
-   }
-
-    updateView();
-  }
   
+  int ligne = 0, colonne = 0;
+  switch (dir)
+  {
+	  case Up:
+		if(scan(array_, pos_-502) == 0) { cout << "murUp\n"; break; }
+		pos_ -= 502; // deplacement tableau
+	  pos_y_ -= 16; // deplacement camera
+		ligne = pos_ / 500;
+		colonne = pos_ - ligne*502;
+		cout << "ligne:" << ligne << "\n colonne" << colonne << "\n";
+	  	
+	  
+	  	break;
+	  case Down:
+			if(scan(array_, pos_+502) == 0) { cout << "murDown\n"; break; }
+  		pos_ += 502;
+  		pos_y_ += 16;
+  		//view_->Move(0,+16);
+			ligne = pos_ / 500;
+			colonne = pos_ - ligne*502;
+			cout << "ligne:" << ligne << "\n colonne" << colonne << "\n";
+			break;
+	  case Left:
+		if(scan(array_, pos_-1) == 0) { cout << "murLeft\n"; break; }	
+	 		    		pos_ -= 1;
+	  	pos_x_ -= 16;
+		ligne = pos_ / 500;
+		colonne = pos_ - ligne*502;
+		cout << "ligne:" << ligne << "\n colonne" << colonne << "\n";
+	  	
+	    
+	    break;
+	  case Right:
+			if(scan(array_, pos_+1) == 0) 
+			{ 
+				cout << "murRight\n"; 
+				break; 
+			}
+	 		pos_ += 1;
+	  	pos_x_ += 16;
+			ligne = pos_ / 500;
+			colonne = pos_ - ligne*502;
+			cout << "ligne:" << ligne << "\n colonne" << colonne << "\n";
+	  	break;
+	  	
+	  	default : break;
+ }
+
+  updateView();
+}
+
   int Map::getPos()
   {
   	return pos_;
@@ -246,4 +247,19 @@ void Map::updateView ()
     return pos_y_;
   }
 
+	int Map::getInitLine ()
+  {
+    return init_line_;
+  }
 
+  int Map::getInitColumn ()
+  {
+    return init_column_;
+  }
+  
+  char * getArray()
+  {
+  	return array_;
+  }
+  
+  

@@ -13,8 +13,8 @@ Game::Game ()
 {
   win_ = new sf::RenderWindow(sf::VideoMode(GAME_WIDTH, GAME_HEIGHT), "VeliTech", Style::Resize|Style::Close);
   hero_ = new PlayableChar ();
-  cm_ = new CombatManager();
   map_ = new Map();
+  cm_ = new CombatManager(map_);
 	//musique_ = new Musique();
 	map_->run();
 }
@@ -150,6 +150,7 @@ Game::run ()
 	
 	
 	hero_->display(*win_, true);
+	cout << "x: " << hero_->getX() << " y: " << hero_->getY() << endl;
 	cm_->getNpc()->display(*win_, false);
 	//miniboss_->display(*win_, elapsed_time_atk, false);
 	/*if(duneyrr_->isAlive())

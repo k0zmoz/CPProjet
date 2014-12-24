@@ -39,7 +39,7 @@ Game::run ()
 	while (win_->IsOpened())
 	{
 		win_->SetFramerateLimit(30);
-		cm_->run(hero_)
+		cm_->run(hero_);
 		while (win_->GetEvent(event))
 		{
 			const sf::Input &input = win_->GetInput();
@@ -150,6 +150,7 @@ Game::run ()
 	
 	
 	hero_->display(*win_, true);
+	cout << "x: " << hero_->getX() << " y: " << hero_->getY() << endl;
 	cm_->getNpc()->display(*win_, false);
 	//miniboss_->display(*win_, elapsed_time_atk, false);
 	/*if(duneyrr_->isAlive())
