@@ -232,34 +232,32 @@ void Map::updateView ()
   updateView();
 }
 
-  int Map::getPos()
-  {
-  	return pos_;
-  }
-  
-  int Map::getPosX ()
-  {
-    return pos_x_;
-  }
+int Map::getPos()
+{
+	return pos_;
+}
 
-  int Map::getPosY ()
-  {
-    return pos_y_;
-  }
+int Map::getPosX ()
+{
+  return pos_x_;
+}
 
-	int Map::getInitLine ()
-  {
-    return init_line_;
-  }
+int Map::getPosY ()
+{
+  return pos_y_;
+}
 
-  int Map::getInitColumn ()
-  {
-    return init_column_;
-  }
-  
-  char * getArray()
-  {
-  	return array_;
-  }
-  
-  
+int Map::getInitLine ()
+{
+  return init_line_;
+}
+
+int Map::getInitColumn ()
+{
+  return init_column_;
+}
+
+char * getArray()
+{
+	return array_;
+}

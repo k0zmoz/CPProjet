@@ -143,3 +143,8 @@ void Arrow::display (sf::RenderTarget &rt)
 		arrow_sprite_->SetPosition(x_, y_);
 		rt.Draw(*arrow_sprite_);
 	}
+	
+int getDistTraveled()
+{
+	return dist_traveled_;
+}

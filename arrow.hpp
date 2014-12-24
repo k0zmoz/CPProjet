@@ -50,6 +50,7 @@ public:
 
 	void move(Direction dir);
 	void display (sf::RenderTarget &rt);
+	int getDistTraveled();
 
 
 protected:

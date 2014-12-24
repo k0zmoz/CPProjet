@@ -14,7 +14,7 @@ Game::Game ()
   win_ = new sf::RenderWindow(sf::VideoMode(GAME_WIDTH, GAME_HEIGHT), "VeliTech", Style::Resize|Style::Close);
   hero_ = new PlayableChar ();
   map_ = new Map();
-  cm_ = new CombatManager(map_);
+  cm_ = new CombatManager();
 	//musique_ = new Musique();
 	map_->run();
 }

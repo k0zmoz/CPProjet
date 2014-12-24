@@ -2,6 +2,7 @@
 #define COMBAT_MANAGER_HPP
 
 #include <SFML/Graphics.hpp>
+#include <list>
 #include "map.hpp"
 #include "character.hpp"
 #include "playable_char.hpp"
@@ -42,7 +43,7 @@ class CombatManager
 
 public:
 
-	CombatManager (Map *map);
+	CombatManager ();
 	~CombatManager ();
 	
 	void run(PlayableChar * pc);
@@ -54,9 +55,10 @@ public:
 	bool isInRadius1D (Character *chara, int coord, int radius, bool test_absciss);
 	bool isInRadius2D (Character *chara, int x, int y, int radius);
 	bool isNearHero (Character * chara, PlayableChar *pc);
-	void moveNpc(Npc *npc, int x, int y, Map *map);
-	void moveRandomlyNpc(Npc *npc, Map *map);
-	void moveBoss(Boss *boss, int x, int y, Map *map);
+	void moveNpc(Npc *npc, int x, int y);
+	void moveRandomlyNpc(Npc *npc);
+	void moveArrow(Arrow *arr);
+	void moveBoss(Boss *boss, int x, int y);
 	
 	Npc *getNpc ();
 	Arrow *getArrow ();
@@ -72,7 +74,6 @@ private:
 	Arrow *arr_;
 	Crystal *cryst_;
 	Boss *duneyrr_;
-	Map *map_;
 	sf::Clock *clk_mov_npc_;
 
 };

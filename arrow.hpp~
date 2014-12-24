@@ -35,6 +35,9 @@
 #define LIM_DIST_ARROW 80
 
 #include <SFML/Graphics.hpp>
+#include "main.hpp"
+#include "object.hpp"
+
 
 class Arrow : public Object
 {

@@ -6,7 +6,7 @@
 
 Arrow::Arrow (Direction dir)
 {
-	arrow_img = new sf::Image;	
+	arrow_img_ = new sf::Image;	
 	
 	if(! arrow_img_->LoadFromFile("./sprite/items/crystal.png"))
 	{

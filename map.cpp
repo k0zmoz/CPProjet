@@ -257,7 +257,3 @@ int Map::getInitColumn ()
   return init_column_;
 }
 
-char * getArray()
-{
-	return array_;
-}
