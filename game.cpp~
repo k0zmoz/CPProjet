@@ -17,11 +17,14 @@ Game::Game ()
   hero_ = new PlayableChar ();
   map_ = new Map();
   cm_ = new CombatManager();
-	//musique_ = new Musique();
+
 	menu_start_ = new Menu(Start);
-	menu_echap_ = new Menu(Echap);
-	/*menu_end_ = new Menu(End);
-*/
+	menu_echap_ = new Menu(Pause);
+	menu_end_ = new Menu(Finish);
+	
+	//musique_ = new Musique();
+	clk_finish_ = new Clock();
+		
 	gs_ = Start;
 	current_action_ = NoAction;
 }
@@ -29,14 +32,17 @@ Game::Game ()
 Game::~Game ()
 {
   delete win_;
+  
   delete hero_;
  	delete map_;
   delete cm_;
- // delete musique_;
- delete menu_start_;
- delete menu_echap_;
- /*delete menu_end_;
-*/
+  
+	delete menu_start_;
+	delete menu_echap_;
+	delete menu_end_;
+
+	// delete musique_;
+	delete clk_finish_;
 }
 
 void
@@ -44,13 +50,12 @@ Game::run ()
 {
 	Event event;
 	Color white(255, 255, 255);
-
+	bool map_initiated = false;
 //musique_->play();
 
 	while (win_->IsOpened())
 	{
 		win_->SetFramerateLimit(30);
-		cm_->run(hero_);
 		while (win_->GetEvent(event))
 		{
 			const sf::Input &input = win_->GetInput();
@@ -82,13 +87,13 @@ Game::run ()
 					win_->Close();
 					break;
 				case sf::Event::MouseMoved:
-					if (current_action_ == NoAction || current_action_ == Pause)
+					if (current_action_ == NoAction)
 					{
 						if(gs_ == Start)
 						{
 							menu_start_->setCurrentButton(input.GetMouseX(), input.GetMouseY());
 						}
-						else if(gs_ == Echap )
+						else if(gs_ == Pause )
 						{
 							menu_echap_->setCurrentButton(input.GetMouseX(), input.GetMouseY());
 						}
@@ -101,49 +106,47 @@ Game::run ()
 						{
 							switch (menu_start_->getAction())
 							{
-							case NewGame: // NewGame et pas Play ici
+							case Play:
 							  current_action_ = Play;
+							  gs_ = Run;
 							  break;
 							case Exit:
 							 current_action_ = Exit;
+							 gs_ = Quit;
 							  break;
 							default: break;
 							}
 						}
 					}
-					else if(gs_ == Echap)
+					else if(gs_ == Pause)
 					{
 						switch (menu_echap_->getAction())
 						{
 							case Resume:
 								current_action_ = Resume;
+								gs_ = Run;
 							  break;
-							case Exit2:
-								current_action_ = Exit2;
+							case ExitThroughPause:
+								current_action_ = ExitThroughPause;
+								gs_ = Quit;
 								break;
 							default : break;
 						}
 					}
-					else
-					{
-					}
 					break;
 				case Event::KeyPressed :					
 					
-					if(event.Key.Code == Key::Escape)
+					if(event.Key.Code == Key::Escape
+					&& gs_ != Start && gs_ != Finish && gs_ != Quit)
 					{
-						current_action_ = Pause; cout << "pause selected\n";
-						gs_ = Echap;
+						gs_ = Pause;
 					}	
+					
 					if(!hero_->isAttacking())
 					{
-			
 							if(event.Key.Code == Key::Space)
 							{
 								hero_->attack();
-								//trash_mob_->attack();
-								//miniboss_->attack();
-								//duneyrr_->attack();
 							}
 					
 							if(event.Key.Code == Key::LShift)
@@ -156,43 +159,26 @@ Game::run ()
 						
 								hero_->look(Up);
 								hero_->move(Up);
-								//duneyrr_->look(Up);
-								//duneyrr_->move(Up);
 								map_->movePos(Up);
-								//trash_mob_->look(Up);
-								//miniboss_->look(Up);
 							}
 							if(event.Key.Code == Key::Q)
 							{
 								hero_->look(Left);
 								hero_->move(Left);
-								//duneyrr_->look(Left);
-								//duneyrr_->move(Left);
 								map_->movePos(Left);
-								//trash_mob_->look(Left);
-								//miniboss_->look(Left);
 							}
 							if(event.Key.Code == Key::S)
 							{
 								hero_->look(Down);
 								hero_->move(Down);
-								//duneyrr_->look(Down);
-								//duneyrr_->move(Down);
 								map_->movePos(Down);
-								//trash_mob_->look(Down);
-								//miniboss_->look(Down);
-								
 							}
 					
 							if(event.Key.Code == Key::D)
 							{
 								hero_->look(Right);
 								hero_->move(Right);
-								//duneyrr_->look(Right);
-								//duneyrr_->move(Right);
 								map_->movePos(Right);
-								//trash_mob_->look(Right);
-								//miniboss_->look(Right);
 							}
 					}
 					break;
@@ -202,20 +188,22 @@ Game::run ()
 		}
 
 	win_->Clear(white);
-	/*map_->display(*win_);
-	hero_->setPosition(map_->getPosX(), map_->getPosY());
-*/
-	if(current_action_ == NoAction)
-	{ 
-		menu_start_->display(win_, gs_);
-	}
 
-	else if(current_action_ == Play)
+	if(gs_ == Start)
 	{
-		map_->run();
+			menu_start_->display(win_, gs_);
+	}
+	else if(gs_ == Run)
+	{
+		if(!map_initiated)
+		{
+			map_->run();
+			map_initiated = true;
+		}
 		map_->display(*win_);
 		hero_->setPosition(map_->getPosX(), map_->getPosY());
 		hero_->display(*win_, true);
+		cm_->run(hero_);
 		if(cm_->getNpc("trash_mob")->isAlive())
 		{
 			cm_->getNpc("trash_mob")->display(*win_, false);
@@ -224,42 +212,34 @@ Game::run ()
 		{
 			cm_->getBoss()->display(*win_, true);
 		}
+		else
+		{
+			gs_ = Finish;
+			clk_finish_->Reset();
+		}
 		cm_->displayArrowList(*win_, cm_->getList1());
 		win_->SetView(map_->getView());
 	}
-	
-	else if(current_action_ == Exit || current_action_ == Exit2)
-	{  
-		win_->Close();
-	}
-
-	else if(current_action_ == Pause)
+	else if(gs_ == Pause)
 	{  
 		//cout << "exit" << "\nTest";
 		win_->Clear();
 		win_->SetView(sf::View(sf::FloatRect(0, 0, 800, 600)));
-		cout << "gs: " << gs_ << endl;
-		menu_echap_->display(win_, gs_);
-		
+		menu_echap_->display(win_, gs_);	
 	}
-	
-	else if(current_action_ == Resume)
-	{  
-		map_->display(*win_);
-		hero_->setPosition(map_->getPosX(), map_->getPosY());
-		hero_->display(*win_, true);
-		if(cm_->getNpc("trash_mob")->isAlive())
+	else if(gs_ == Finish)
+	{
+		cout << "finish" << endl;
+		menu_end_->display(win_, gs_); 
+		if(clk_finish_->GetElapsedTime() > DISPLAY_FINISH)
 		{
-			cm_->getNpc("trash_mob")->display(*win_, false);
+			gs_ = Quit;
 		}
-		if(cm_->getBoss()->isAlive())
-		{
-			cm_->getBoss()->display(*win_, true);
-		}
-		cm_->displayArrowList(*win_, cm_->getList1());
-		win_->SetView(map_->getView());
 	}
-
+	else if(gs_ == Quit)
+	{
+		win_->Close();
+	}
 	
 	/*cm_->getCrystal("mob")->display(*win_);
 	cm_->getCrystal("trap1")->display(*win_);

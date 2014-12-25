@@ -19,15 +19,16 @@ public:
   void setCurrentButton (int mouse_x, int mouse_y);
   Action getAction ();
   
-private:
   void displayButtons (sf::RenderTarget *rt);
+
+private:
 
   Action current_button_;
   std::list<Button *> buttons_;
   sf::String title_;
   
   Image *background_img_;
-   Sprite *background_spr_;
+  Sprite *background_spr_;
 	
 	Image *play_exit_red_img_;
 	Sprite *play_exit_red_spr_;
@@ -45,14 +46,8 @@ private:
 	
 	Image *princess_img_;
 	Sprite *princess_spr_;
-	/*Image *resumesel_exit_img_;
-	Sprite *resumesel_exit_spr_;
 	
-	Image *resume_exitsel_img_;
-	Sprite *resume_exitsel_spr_;
-	
-	
-	*/	
+	GameState menu_state_;
 	
 };
 

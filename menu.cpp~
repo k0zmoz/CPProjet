@@ -1,7 +1,6 @@
 #include <list>
 #include <SFML/Graphics.hpp>
 #include "main.hpp"
-//#include "board.hpp"
 #include "menu.hpp"
 #include <cstdlib>
 #include <iostream>
@@ -25,7 +24,7 @@ Menu::Menu (GameState state)
   	switch(state)
   	{
   		case Start:
-		  buttons_.push_front(new Button(NewGame));
+		  buttons_.push_front(new Button(Play));
 			buttons_.push_front(new Button(Exit));
 		
 			play_exit_red_img_ = new sf::Image;
@@ -53,9 +52,9 @@ Menu::Menu (GameState state)
 		cout << "CASE START OK\n";
 			break;
 			
-			case Echap :
+			case Pause :
 			buttons_.push_front(new Button(Resume));
-		  buttons_.push_front(new Button(Exit2));
+		  buttons_.push_front(new Button(ExitThroughPause));
 		  
 		  resume_exit_red_img_ = new sf::Image;
 			resume_exit_red_spr_ = new sf::Sprite(*resume_exit_red_img_);
@@ -82,7 +81,7 @@ Menu::Menu (GameState state)
 		  	cout << "CASE ECHAP OK";
 			break;
 			
-			case End :
+			case Finish :
 			
 			princess_img_ = new sf::Image;
 			princess_spr_ = new sf::Sprite(*princess_img_);
@@ -98,47 +97,7 @@ Menu::Menu (GameState state)
   	default : break;
   }
   	
-  	/*play_exitsel_img_ = new sf::Image;
-	play_exitsel_spr_ = new sf::Sprite(*play_exitsel_img_);
-	if (!play_exitsel_img_->LoadFromFile("Menu/menu_exitsel.png")) // Si le chargement a échoué
-	{
-		cout<<"Erreur durant le chargement de l'image"<<endl;
-		exit(EXIT_FAILURE); // On ferme le programme
-	}
-  	play_exitsel_spr_->SetSubRect(IntRect(0, 0, 800, 600));
-  	
-  	
-  	resume_exit_img_ = new sf::Image;
-	resume_exit_spr_ = new sf::Sprite(*resume_exit_img_);
-	if (!resume_exit_img_->LoadFromFile("Menu/resume_exit.png")) // Si le chargement a échoué
-	{
-		cout<<"Erreur durant le chargement de l'image"<<endl;
-		exit(EXIT_FAILURE); // On ferme le programme
-	}
-  	resume_exit_spr_->SetSubRect(IntRect(0, 0, 800, 600));
-  	
-  	
-  	resumesel_exit_img_ = new sf::Image;
-	resumesel_exit_spr_ = new sf::Sprite(*resumesel_exit_img_);
-	if (!resumesel_exit_img_->LoadFromFile("Menu/resume_exitsel.png")) // Si le chargement a échoué
-	{
-		cout<<"Erreur durant le chargement de l'image"<<endl;
-		exit(EXIT_FAILURE); // On ferme le programme
-	}
-  	resumesel_exit_spr_->SetSubRect(IntRect(0, 0, 800, 600));
-  	
-  	
-  	resume_exitsel_img_ = new sf::Image;
-	resume_exitsel_spr_ = new sf::Sprite(*resume_exit_img_);
-	if (!resume_exitsel_img_->LoadFromFile("Menu/resumesel_exit.png")) // Si le chargement a échoué
-	{
-		cout<<"Erreur durant le chargement de l'image"<<endl;
-		exit(EXIT_FAILURE); // On ferme le programme
-	}
-  	resume_exitsel_spr_->SetSubRect(IntRect(0, 0, 800, 600));
-  	*/
-  	
-  	
+  	menu_state_ = state;
   	current_button_ = NoAction;
 }
 
@@ -149,14 +108,29 @@ Menu::~Menu ()
 
 	delete background_img_;
 	delete background_spr_;
-	delete play_exit_red_img_;
-	delete play_exit_red_spr_;
-	delete play_exit_violet_img_;
-	delete startgame_playspr_;
-	delete startgame_exitspr_;
-	delete resume_exit_violet_img_;
-	delete echap_resumespr_;
-	delete echap_exitspr_;
+	
+	switch(menu_state_)
+	{
+		case Start:
+			delete play_exit_red_img_;
+			delete play_exit_red_spr_;
+			delete play_exit_violet_img_;
+			delete startgame_playspr_;
+			delete startgame_exitspr_;
+			break;
+		case Pause:
+			delete resume_exit_red_img_;
+			delete resume_exit_red_spr_;
+			delete resume_exit_violet_img_;
+			delete echap_resumespr_;
+			delete echap_exitspr_;
+			break;
+		case Finish:
+			delete princess_img_;
+			delete princess_spr_;
+			break;
+		default : break;
+	}
 
 }
 
@@ -166,25 +140,23 @@ Menu::display (sf::RenderTarget *rt, GameState gs)
 { 
 	switch(gs)
 	{
-		case Start : 	//cout << "NOACTION OK" << "\n NOACTION"; 
+		case Start :
 					rt->Draw(*background_spr_);
 					rt->Draw(*play_exit_red_spr_);
-				
-					//rt->Draw(title_);
 					break;
 					
-		case Echap : 		cout << "Pause OK" << "\n Pause";
+		case Pause :
 					rt->Draw(*background_spr_);
 					rt->Draw(*resume_exit_red_spr_);
 					
 					break;
 					
-		case End : 		//cout << "End OK" << "\n End"; 
+		case Finish :
 					rt->Draw(*background_spr_);
 					rt->Draw(*princess_spr_);
 					break;
 
-		default :   break; // cout << "default OK" << "\n default";
+		default :   break;
 	}
 												
 	displayButtons(rt);

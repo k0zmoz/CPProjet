@@ -1,9 +1,9 @@
 #ifndef MAIN_HPP
 #define MAIN_HPP
 
-enum Action { NoAction = 0, NewGame, Exit, Play, Pause, Resume, Exit2};
+typedef enum { NoAction = 0, Play, Exit, Resume, ExitThroughPause} Action;
+typedef enum { Start = 0, Run, Pause, Finish, Quit} GameState;
 typedef enum { Down = 0, Up, Left, Right} Direction;
-typedef enum { Start= 0, Echap, End} GameState;
 typedef enum { Mov = 0, Atk, Death} TypeSprite;
 
 #define CELL_WIDTH 150

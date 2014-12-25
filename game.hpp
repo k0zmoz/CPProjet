@@ -16,6 +16,9 @@
 #include "menu.hpp"
 #include "combat_manager.hpp"
 
+//temps (en s) pendant lequel est affiché l'écran de fin
+#define DISPLAY_FINISH 10
+
 class Game
 {
 public:
@@ -28,15 +31,16 @@ public:
 private:
 
 	sf::RenderWindow *win_;
+	
 	PlayableChar *hero_;
-	Action current_action_;
-	GameState gs_;
 	Map *map_;
-	Menu *menu_start_, *menu_echap_;// *menu_end_;
 	CombatManager *cm_;
+	Menu *menu_start_, *menu_echap_, *menu_end_;
 	Musique *musique_;
+	sf::Clock *clk_finish_;
 
-  
+  Action current_action_;
+	GameState gs_;
 };
 
 #endif // GAME_HPP
