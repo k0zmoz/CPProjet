@@ -89,29 +89,16 @@ PlayableChar::~PlayableChar ()
 
 
 void PlayableChar::move (Direction dir)
+{
+
+	step_mov_++;
+	if(step_mov_ == MOV_AMNT_SPRITE_PC || change_look_ == true)
 	{
-		/*switch (dir) {
-			case Up:
-			  y_ -= CHAR_SPEED;
-			  break;
-			case Down:
-			  y_ += CHAR_SPEED;
-			  break;
-			case Left:
-			  x_ -= CHAR_SPEED;
-			  break;
-			case Right:
-			  x_ += CHAR_SPEED;
-			  break;
-		}*/
-
-		step_mov_++;
-		if(step_mov_ == MOV_AMNT_SPRITE_PC || change_look_ == true){
-			step_mov_ = 0;
-			change_look_ = false;
-		}
-
+		step_mov_ = 0;
+		change_look_ = false;
 	}
+
+}
 
 void PlayableChar::escape (Direction dir)
 	{

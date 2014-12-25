@@ -4,6 +4,7 @@
 //enum Player { X, O, None };
 //enum Action { NoAction, NewGame, Exit };
 typedef enum { Down = 0, Up, Left, Right} Direction;
+typedef enum { Mov = 0, Atk, Death} TypeSprite;
 
 #define TILE_W 16
 #define TILE_H 16

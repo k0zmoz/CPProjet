@@ -1,6 +1,11 @@
 #ifndef ARROW_HPP
 #define ARROW_HPP
 
+#include <SFML/Graphics.hpp>
+#include "main.hpp"
+#include "object.hpp"
+
+
 //Coordonnées des sprites de flèches
 
 //Sprite flèche vers le bas
@@ -30,10 +35,7 @@
 #define LEFT_ARROW_RIGHT_COORD 180
 #define LEFT_ARROW_BOTTOM_COORD 110
 
-#include <SFML/Graphics.hpp>
-#include "main.hpp"
-#include "object.hpp"
-
+#define ARROW_DAMAGE 1
 
 class Arrow : public Object
 {

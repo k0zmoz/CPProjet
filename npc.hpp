@@ -21,8 +21,9 @@
 //Offset général sur les images
 #define OFFSET_MINIBOSS_W 100 //Offset en largeur spécifique aux sprites de miniboss
 
-#define HEALTH_NPC 3
+#define HEALTH_NPC 6
 #define HEALTH_MINIBOSS 1
+#define DAMAGE_NPC 1 //Dégâts d'un npc
 
 
 class Npc: public Character
@@ -32,8 +33,6 @@ public:
 	Npc (bool is_miniboss);
 	Npc (int x, int y, bool is_miniboss);
 	~Npc ();
-	
-	void move (Direction dir);
 	
 private:
 

@@ -13,6 +13,7 @@
 #include "boss.hpp"
 #include "map.hpp"
 #include "musique.hpp"
+#include "combat_manager.hpp"
 
 class Game
 {

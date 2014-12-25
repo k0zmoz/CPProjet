@@ -150,19 +150,22 @@ Game::run ()
 	
 	
 	hero_->display(*win_, true);
-	cm_->getNpc()->display(*win_, false);
-	cm_->displayArrowList(*win_, cm_->getList1());
-	//miniboss_->display(*win_, elapsed_time_atk, false);
-	/*if(duneyrr_->isAlive())
+	
+	//Conditions d'affichage à réaliser ici !
+	if(cm_->getNpc("trash_mob")->isAlive())
 	{
-		duneyrr_->display(*win_, false);
+		cm_->getNpc("trash_mob")->display(*win_, false);
 	}
-	else
+	if(cm_->geBoss()->isAlive())
 	{
-		duneyrr_->displayDeath(*win_);
-	}*/
-	//arr_->display(*win_);
-	//cryst_->display(*win_);
+		cm_->getBoss()->display(*win_, true);
+	}
+	cm_->displayArrowList(*win_, cm_->getList1());
+	
+	/*cm_->getCrystal("mob")->display(*win_);
+	cm_->getCrystal("trap1")->display(*win_);
+	cm_->getCrystal("trap2")->display(*win_);
+	*/
 
 	win_->SetView(map_->getView());
 	win_->Display();

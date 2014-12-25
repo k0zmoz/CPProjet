@@ -211,34 +211,6 @@ Boss::~Boss ()
 	
 }
 
-
-void Boss::move (Direction dir)
-{
-	switch (dir)
-	{
-		case Up:
-		  y_ -= BOSS_SPEED;
-		  break;
-		case Down:
-		  y_ += BOSS_SPEED;
-		  break;
-		case Left:
-		  x_ -= BOSS_SPEED;
-		  break;
-		case Right:
-		  x_ += BOSS_SPEED;
-		  break;
-	}
-
-	step_mov_++;
-	if(step_mov_ == MOV_AMNT_SPRITE_BOSS || change_look_ == true)
-	{
-		step_mov_ = 0;
-		change_look_ = false;
-	}
-
-}
-
 void Boss::charge(Direction dir)
 {
 	switch(dir)
@@ -326,6 +298,44 @@ void Boss::display (sf::RenderTarget &rt, bool is_playable)
 bool Boss::isInRoom(int x, int y)
 {
 	return room_->Contains(x, y);
+}
+
+
+int Boss::getStepDeath ()
+{
+	return step_death_;
+}
+
+Sprite Boss::getSprite (TypeSprite typespr, Direction dir, int step)
+{
+	switch(typespr)
+	{
+		case Mov:
+			return *(directions_[dir][step]);
+			break;
+		case Atk:
+			return *(attacks_[dir][step]);
+			break;
+		case Death:
+			return *(deaths_[dir][step]);
+			break;
+		default :
+			cerr << "Error typesprite in getSprite()" << endl;
+			exit(EXIT_FAILURE);
+			break;
+	}
+}
+
+int Boss::getSizeBossSprite(Sprite spr, bool width_requested)
+{
+	if(width_requested)
+	{
+		return spr.GetSize().x;
+	}
+	else
+	{
+		return spr.GetSize().y;
+	}
 }
 
 /******************************************

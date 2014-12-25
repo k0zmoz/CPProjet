@@ -225,7 +225,7 @@ Npc::~Npc ()
 
 }
 
-/*
+
 void Npc::move (Direction dir)
 	{
 		switch (dir) {
@@ -249,4 +249,4 @@ void Npc::move (Direction dir)
 			change_look_ = false;
 		}
 
-	}*/
+	}

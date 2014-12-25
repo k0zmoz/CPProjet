@@ -1,7 +1,9 @@
 #ifndef NPC_HPP
 #define NPC_HPP
 
-
+#include <SFML/Graphics.hpp>
+#include <string.h>
+#include "character.hpp"
 
 //Constantes d'initialisation des sprites de déplacements
 #define MOV_NPC_W 35 //largeur d'un sprite
@@ -21,6 +23,7 @@
 
 #define HEALTH_NPC 3
 #define HEALTH_MINIBOSS 1
+#define DAMAGE_NPC 1 //Dégâts d'un npc
 
 
 class Npc: public Character
@@ -30,8 +33,6 @@ public:
 	Npc (bool is_miniboss);
 	Npc (int x, int y, bool is_miniboss);
 	~Npc ();
-	
-	void move (Direction dir);
 	
 private:
 

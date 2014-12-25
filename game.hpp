@@ -29,10 +29,6 @@ private:
 	sf::RenderWindow *win_;
 	PlayableChar *hero_;
 	CombatManager *cm_;
-	/*Npc *trash_mob_, *miniboss_;
-	Arrow *arr_;
-	Crystal *cryst_;
-	Boss *duneyrr_;*/
   Map *map_;
 	Musique *musique_;
   

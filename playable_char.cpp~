@@ -8,7 +8,7 @@
 using namespace sf;
 using namespace std;
 
-Playable_Char::Playable_Char () : Character ()
+PlayableChar::PlayableChar () : Character ()
 	{
 		int i, j;
   
@@ -67,7 +67,7 @@ Playable_Char::Playable_Char () : Character ()
 	}
 
 	
-Playable_Char::~Playable_Char ()
+PlayableChar::~PlayableChar ()
 {
 	for(int i = 0; i < MOV_AMNT_SPRITE_PC; i++)
 	{
@@ -88,32 +88,19 @@ Playable_Char::~Playable_Char ()
 }
 
 
-void Playable_Char::move (Direction dir)
+void PlayableChar::move (Direction dir)
 	{
-		/*switch (dir) {
-			case Up:
-			  y_ -= CHAR_SPEED;
-			  break;
-			case Down:
-			  y_ += CHAR_SPEED;
-			  break;
-			case Left:
-			  x_ -= CHAR_SPEED;
-			  break;
-			case Right:
-			  x_ += CHAR_SPEED;
-			  break;
-		}*/
 
 		step_mov_++;
-		if(step_mov_ == MOV_AMNT_SPRITE_PC || change_look_ == true){
+		if(step_mov_ == MOV_AMNT_SPRITE_PC || change_look_ == true)
+		{
 			step_mov_ = 0;
 			change_look_ = false;
 		}
 
 	}
 
-void Playable_Char::escape (Direction dir)
+void PlayableChar::escape (Direction dir)
 	{
 		switch (dir) {
 			case Up:

@@ -18,6 +18,7 @@
 
 #define ESCAPE_RANGE 100
 #define HEALTH_PC 20
+#define DAMAGE_PC 5
 
 class PlayableChar: public Character
 {
