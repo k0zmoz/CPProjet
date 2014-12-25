@@ -13,14 +13,10 @@ using namespace std;
 Game::Game ()
 {
   win_ = new sf::RenderWindow(sf::VideoMode(GAME_WIDTH, GAME_HEIGHT), "VeliTech", Style::Resize|Style::Close);
-  clk_atk_ = new Clock();
-  hero_ = new Playable_Char ();
-  trash_mob_ = new Npc (159, 83, false);
- 	//arr_ = new Arrow (Up, 350, 350);
-  //cryst_ = new Crystal(Fire, 250, 350);
-  //miniboss_ = new Npc(350, 250, true);
-  //duneyrr_ = new Boss();
+
+  hero_ = new PlayableChar ();
   map_ = new Map();
+  cm_ = new CombatManager();
 	//musique_ = new Musique();
 	menu_start_ = new Menu(Start);
 	menu_echap_ = new Menu(Echap);
@@ -33,14 +29,9 @@ Game::Game ()
 Game::~Game ()
 {
   delete win_;
-  delete clk_atk_;
   delete hero_;
-  delete trash_mob_;
- //	delete arr_;
- // delete cryst_;
- // delete miniboss_;
-  //delete duneyrr_;
  	delete map_;
+  delete cm_;
  // delete musique_;
  delete menu_start_;
  delete menu_echap_;
@@ -53,13 +44,13 @@ Game::run ()
 {
 	Event event;
 	Color white(255, 255, 255);
-	float elapsed_time_atk = 0;
 
 //musique_->play();
 
 	while (win_->IsOpened())
 	{
 		win_->SetFramerateLimit(30);
+		cm_->run(hero_);
 		while (win_->GetEvent(event))
 		{
 			const sf::Input &input = win_->GetInput();
@@ -225,7 +216,15 @@ Game::run ()
 		map_->display(*win_);
 		hero_->setPosition(map_->getPosX(), map_->getPosY());
 		hero_->display(*win_, true);
-		trash_mob_->display(*win_, false);
+		if(cm_->getNpc("trash_mob")->isAlive())
+		{
+			cm_->getNpc("trash_mob")->display(*win_, false);
+		}
+		if(cm_->getBoss()->isAlive())
+		{
+			cm_->getBoss()->display(*win_, true);
+		}
+		cm_->displayArrowList(*win_, cm_->getList1());
 		win_->SetView(map_->getView());
 	}
 	
@@ -249,26 +248,23 @@ Game::run ()
 		map_->display(*win_);
 		hero_->setPosition(map_->getPosX(), map_->getPosY());
 		hero_->display(*win_, true);
-		//trash_mob_->display(*win_, false);
+		if(cm_->getNpc("trash_mob")->isAlive())
+		{
+			cm_->getNpc("trash_mob")->display(*win_, false);
+		}
+		if(cm_->getBoss()->isAlive())
+		{
+			cm_->getBoss()->display(*win_, true);
+		}
+		cm_->displayArrowList(*win_, cm_->getList1());
 		win_->SetView(map_->getView());
 	}
-	
-	elapsed_time_atk = clk_atk_->GetElapsedTime();
-	
 
-//	hero_->display(*win_, true);
-//	trash_mob_->display(*win_, false);
-	//miniboss_->display(*win_, elapsed_time_atk, false);
-	/*if(duneyrr_->isAlive())
-	{
-		duneyrr_->display(*win_, false);
-	}
-	else
-	{
-		duneyrr_->displayDeath(*win_);
-	}*/
-	//arr_->display(*win_);
-	//cryst_->display(*win_);
+	
+	/*cm_->getCrystal("mob")->display(*win_);
+	cm_->getCrystal("trap1")->display(*win_);
+	cm_->getCrystal("trap2")->display(*win_);
+	*/
 
 	win_->Display();
   }

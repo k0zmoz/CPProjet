@@ -65,7 +65,7 @@
 //Constantes relatives au PlayableChar (PC)
 
 //Distance à laquelle un pc touche le joueur
-#define RANGE_PC_ATK 50
+#define RANGE_PC_ATK 10
 //Rayon dans lequel une attaque de pc fait effet
 #define RADIUS_PC_ATK 100
 

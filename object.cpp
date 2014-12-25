@@ -38,7 +38,11 @@ int Object::getY ()
 	{
 		return y_;
 	}
-  
+ 
+int Object::getHealth ()
+{
+	return health_;
+}
 
 Direction Object::getDir()
 	{
@@ -51,4 +55,14 @@ void Object::setPosition (int x, int y)
 		y_ = y;
 	}
 
-
+void Object::setHealth (int health)
+{
+	if(health >= 0)
+	{
+		health_ = health;
+	}
+	else
+	{
+		health_ = 0;
+	}
+}

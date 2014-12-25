@@ -13,13 +13,18 @@
 #define FIRE_CRYSTAL_RIGHT_COORD 80
 #define FIRE_CRYSTAL_BOTTOM_COORD 60
 
+//#define SCALE_RESIZE_FIRE_CRYSTAL 100 //échelle à laquelle agrandir un fire crystal
+
 //Sprite  water crystal
 #define WATER_CRYSTAL_LEFT_COORD 100
-#define WATER_CRYSTAL_TOP_COORD 30
-#define WATER_CRYSTAL_RIGHT_COORD 120
+#define WATER_CRYSTAL_TOP_COORD 20
+#define WATER_CRYSTAL_RIGHT_COORD 130
+
+//#define SCALE_RESIZE_WATER_CRYSTAL 100 //échelle à laquelle agrandir un water crystal
+
 #define WATER_CRYSTAL_BOTTOM_COORD 60
 
-#define CRYSTAL_HEALTH 3
+#define CRYSTAL_HEALTH 1
 
 typedef enum { Fire = 0, Water} CrystalAttribute;
 

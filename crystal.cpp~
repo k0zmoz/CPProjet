@@ -26,12 +26,20 @@ Crystal::Crystal (CrystalAttribute cryst_att)
 			crystal_sprite_->SetSubRect(sf::IntRect(
 			FIRE_CRYSTAL_LEFT_COORD, FIRE_CRYSTAL_TOP_COORD,
 			FIRE_CRYSTAL_RIGHT_COORD, FIRE_CRYSTAL_BOTTOM_COORD));
+			
+			/*crystal_sprite_->Resize(
+			(FIRE_CRYSTAL_RIGHT_COORD - FIRE_CRYSTAL_LEFT_COORD) * SCALE_RESIZE_FIRE_CRYSTAL,
+			(FIRE_CRYSTAL_TOP_COORD - FIRE_CRYSTAL_BOTTOM_COORD) * SCALE_RESIZE_FIRE_CRYSTAL);/*
 		break;
 		
 		case Water :
 			crystal_sprite_->SetSubRect(sf::IntRect(
 			WATER_CRYSTAL_LEFT_COORD, WATER_CRYSTAL_TOP_COORD,
 			WATER_CRYSTAL_RIGHT_COORD, WATER_CRYSTAL_BOTTOM_COORD));
+			
+			/*crystal_sprite_->Resize(
+			(WATER_CRYSTAL_RIGHT_COORD - WATER_CRYSTAL_LEFT_COORD) * SCALE_RESIZE_WATER_CRYSTAL,
+			(WATER_CRYSTAL_TOP_COORD - WATER_CRYSTAL_BOTTOM_COORD) * SCALE_RESIZE_WATER_CRYSTAL);*/
 		break;		
 			
 		
@@ -42,7 +50,7 @@ Crystal::Crystal (CrystalAttribute cryst_att)
 	
 }
 
-Crystal::Crystal (CrystalAttribute cryst_att)
+Crystal::Crystal (CrystalAttribute cryst_att, int x, int y)
 {
 	crystal_img_ = new sf::Image;
 	

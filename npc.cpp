@@ -224,29 +224,3 @@ Npc::~Npc ()
 
 
 }
-
-
-void Npc::move (Direction dir)
-	{
-		switch (dir) {
-			case Up:
-			  y_ -= NPC_SPEED;
-			  break;
-			case Down:
-			  y_ += NPC_SPEED;
-			  break;
-			case Left:
-			  x_ -= NPC_SPEED;
-			  break;
-			case Right:
-			  x_ += NPC_SPEED;
-			  break;
-		}
-
-		step_mov_++;
-		if(step_mov_ == MOV_AMNT_SPRITE_NPC || change_look_ == true){
-			step_mov_ = 0;
-			change_look_ = false;
-		}
-
-	}

@@ -28,18 +28,15 @@ int scan(char *,int);
 
 private:
   
-  	Sprite *map1_;
+  Sprite *map1_;
 	Image *imap_;
 	int w_ = 500, h_ = 502;
  	int pos_x_ = 0, pos_y_ = 0, pos_;
  	//char **walled_;
  	bool walled;
- 	char * array;
+ 	char * array_;
 	//std::list<std::pair<int, int>> walls_;
 	View *view_;
-	
-
-	//int pos;
 	
 };
 

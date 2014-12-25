@@ -1,5 +1,5 @@
-#ifndef PLAYABLE_CHAR_HPP
-#define PLAYABLE_CHAR_HPP
+#ifndef PLAYABLECHAR_HPP
+#define PLAYABLECHAR_HPP
 
 #include <SFML/Graphics.hpp>
 #include "character.hpp"
@@ -18,13 +18,14 @@
 
 #define ESCAPE_RANGE 100
 #define HEALTH_PC 20
+#define DAMAGE_PC 5
 
-class Playable_Char: public Character
+class PlayableChar: public Character
 {
 public:
   
-	Playable_Char ();
-	~Playable_Char ();
+	PlayableChar ();
+	~PlayableChar ();
 
 	void move (Direction dir);
 	void escape (Direction dir);
@@ -44,4 +45,4 @@ private:
 	bool escape_disabled_;
 
 };
-#endif // PLAYABLE_CHAR_HPP
+#endif // PLAYABLECHAR_HPP

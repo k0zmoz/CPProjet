@@ -19,9 +19,10 @@ public:
 	bool isAlive ();
 	int getX ();
 	int getY ();
+	int getHealth ();
 	Direction getDir ();
 	void setPosition (int x, int y);
-
+	void setHealth (int health);
 protected:
 
 	Direction dir_;	

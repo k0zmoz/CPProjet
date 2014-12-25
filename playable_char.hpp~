@@ -1,18 +1,17 @@
-#ifndef PLAYABLE_CHAR_HPP
-#define PLAYABLE_CHAR_HPP
+#ifndef PLAYABLECHAR_HPP
+#define PLAYABLECHAR_HPP
 
 #include <SFML/Graphics.hpp>
 #include "character.hpp"
 
 //Constantes d'initialisation des sprites de déplacements
-#define MOV_AMNT_SPRITE_PC 6 	//nombre de sprites synthétisant un déplacement
+
 #define MOV_CHAR_W 35 //largeur d'un sprite
 #define MOV_CHAR_H 67 //hauteur d'un sprite
 #define MOV_DIFF_CHAR_W 15 //largeur entre deux sprites
 #define MOV_DIFF_CHAR_H 35 //hauteur entre deux sprites
 
 //Constantes d'initialisation des sprites d'attaques
-#define ATK_AMNT_SPRITE_PC 4 	//nombre de sprites synthétisant une attaque
 #define ATK_CHAR_W 50 //largeur d'un sprite
 #define ATK_CHAR_H 67 //hauteur d'un sprite
 #define ATK_DIFF_CHAR_H 35 //hauteur entre deux sprites
@@ -20,12 +19,12 @@
 #define ESCAPE_RANGE 100
 #define HEALTH_PC 20
 
-class Playable_Char: public Character
+class PlayableChar: public Character
 {
 public:
   
-	Playable_Char ();
-	~Playable_Char ();
+	PlayableChar ();
+	~PlayableChar ();
 
 	void move (Direction dir);
 	void escape (Direction dir);
@@ -45,4 +44,4 @@ private:
 	bool escape_disabled_;
 
 };
-#endif // PLAYABLE_CHAR_HPP
+#endif // PLAYABLECHAR_HPP

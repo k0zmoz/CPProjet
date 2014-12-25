@@ -33,16 +33,22 @@ public:
 	~Character ();
 	
 	void look (Direction dir);
+	void move (Direction dir, int speed, int amnt_sprite);
 	void attack ();
-	void display(sf::RenderTarget &rt, bool is_playable, bool is_boss);
+	void display(sf::RenderTarget &rt, bool is_playable);
 	void display_attack (sf::RenderTarget &rt, bool is_playable);
 	bool isLooking (Direction dir);
 	bool isAlive ();
 	bool isAttacking ();
 	int getX ();
 	int getY ();
+	int getStepMov ();
+	int getStepAtk();
+	int getHealth();
+	
 	Direction getDir ();
 	void setPosition (int x, int y);
+	
 
 protected:
 	

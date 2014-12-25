@@ -10,8 +10,13 @@ using namespace std;
 Character::Character ()
   {
     dir_ = Down;
+<<<<<<< HEAD
     x_ = 159;
     y_ = 83;
+=======
+    x_ = 1500;
+    y_ = 1500;
+>>>>>>> combatmanager
     change_look_ = true;
     attacking_ = false;
     step_mov_ = 0;
@@ -34,6 +39,32 @@ void Character::look (Direction dir)
   	}
     dir_ = dir;
   }
+
+void Character::move (Direction dir, int speed, int amnt_sprite)
+{
+	switch (dir)
+	{
+		case Up:
+		  y_ -= speed;
+		  break;
+		case Down:
+		  y_ += speed;
+		  break;
+		case Left:
+		  x_ -= speed;
+		  break;
+		case Right:
+		  x_ += speed;
+		  break;
+	}
+
+	step_mov_++;
+	if(step_mov_ == amnt_sprite || change_look_ == true)
+	{
+		step_mov_ = 0;
+		change_look_ = false;
+	}
+}
 
 void Character::attack()
 	{
@@ -72,45 +103,59 @@ void Character::display_attack (sf::RenderTarget &rt, bool is_playable)
 }
 	
 void Character::display (sf::RenderTarget &rt, bool is_playable)
+{
+	if(!attacking_)
 	{
-		if(!attacking_)
-		{
 
-			directions_[dir_][step_mov_]->SetPosition(x_, y_);
-			
-			rt.Draw(*( directions_[dir_][step_mov_] ));
-		}
-		else
-		{
-			display_attack(rt, is_playable);
-		}
+		directions_[dir_][step_mov_]->SetPosition(x_, y_);
+		
+		rt.Draw(*( directions_[dir_][step_mov_] ));
 	}
+	else
+	{
+		display_attack(rt, is_playable);
+	}
+}
 
 bool Character::isLooking (Direction dir)
-	{
-		return dir == dir_;
-	}
+{
+	return dir == dir_;
+}
 
 bool Character::isAlive ()
-	{
-		return health_ > 0;
-	}
+{
+	return health_ > 0;
+}
 
 bool Character::isAttacking ()
-	{
-		return attacking_;
-	}
+{
+	return attacking_;
+}
 
 int Character::getX ()
-	{
-		return x_;
-	}
+{
+	return x_;
+}
 
 int Character::getY ()
-	{
-		return y_;
-	}
-  
+{
+	return y_;
+}
+int Character::getStepMov ()
+{
+	return step_mov_;
+}
+
+int Character::getStepAtk ()
+{
+	return step_atk_;
+}
+
+int Character::getHealth ()
+{
+	return health_;
+}
+
 Direction Character::getDir()
 	{
 		return dir_;
@@ -121,3 +166,8 @@ void Character::setPosition (int x, int y)
 		x_ = x;
 		y_ = y;
 	}
+	
+void Character::setHealth (int health)
+{
+	health_ = health;
+}
