@@ -170,12 +170,14 @@ Boss::Boss () : Character ()
 		}
 	}
 	
+	dir_ = Up;
 	health_ = HEALTH_BOSS;
 	x_ =  SPAWN_BOSS_X;
 	y_ =  SPAWN_BOSS_Y;
 	step_death_ = 0;
 	room_ = new Rect<int>(LEFT_COORD_ROOM, TOP_COORD_ROOM, RIGHT_COORD_ROOM, BOTTOM_COORD_ROOM);
 	clk_death_ = new Clock();
+	invincible_ = true;
 }
 
 	
@@ -300,6 +302,11 @@ bool Boss::isInRoom(int x, int y)
 	return room_->Contains(x, y);
 }
 
+bool Boss::isInvincible()
+{
+	return invincible_;
+}
+
 
 int Boss::getStepDeath ()
 {
@@ -336,6 +343,11 @@ int Boss::getSizeBossSprite(Sprite spr, bool width_requested)
 	{
 		return spr.GetSize().y;
 	}
+}
+
+void Boss::setInvincible(bool invi)
+{
+	invincible_ = invi;
 }
 
 /******************************************

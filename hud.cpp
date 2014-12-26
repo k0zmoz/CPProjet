@@ -78,7 +78,9 @@ void Hud::display (sf::RenderTarget &rt, PlayableChar *pc, Map *map)
 	{
 		if(pc->getHealth() < i * (HEALTH_PC / AMNT_SPR_SHADE_HEALTH))
 		{
-			shade_health_[i]->SetPosition(v.GetCenter().x,v.GetCenter().y);
+			shade_health_[i]->SetPosition(
+			v.GetRect().Left + OFFSET_SHADE_HEALTH_W + i * (OFFSET_SHADE_HEALTH_W + SHADE_HEALTH_W),
+			v.GetRect().Top + OFFSET_SHADE_HEALTH_H);
 			rt.Draw(*(shade_health_[i]));
 		}
 	}

@@ -20,6 +20,14 @@
 //temps (en s) pendant lequel est affiché l'écran de fin
 #define DISPLAY_FINISH 185
 
+
+//Taille du texte indiquant que la porte est ouverte
+#define TEXT_SIZE 50
+//Offset pour que le texte apparaisse centré
+#define OFFSET_TEXT 365
+//temps (en s) pendant lequel est affiché le texte indiquant que la porte est ouverte
+#define DISPLAY_DOOR_INFO 3.5
+
 //temps (en s) pendant lequel est affiché la mort du boss
 #define DELAY_VICTORY 0.4
 
@@ -42,7 +50,10 @@ private:
 	MusicManager *mm_;
 	Hud *hud_;
 	Menu *menu_start_, *menu_echap_, *menu_end_, *menu_go_;
-	sf::Clock *clk_display_finish_, *clk_delay_victory_;
+	sf::Clock *clk_display_finish_, *clk_delay_victory_, *clk_door_info_;
+	
+	sf::Font *font_text_;
+	sf::String *door_info_;
 
   Action current_action_;
 	GameState gs_;

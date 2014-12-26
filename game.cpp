@@ -22,6 +22,15 @@ Game::Game ()
 
 	clk_display_finish_ = new Clock();
 	clk_delay_victory_ = new Clock();
+	clk_door_info_ = new Clock();
+	
+	font_text_ = new Font();
+	if(!font_text_->LoadFromFile("./Font/stnicholas.ttf"))
+	{
+		cerr << "Error loading font file" << endl;
+		exit(EXIT_FAILURE);
+	}
+	door_info_ = new String("BOSS DOOR IS NOW OPEN", *font_text_, TEXT_SIZE);
 		
 	gs_ = Start;
 	current_action_ = NoAction;
@@ -46,6 +55,10 @@ Game::~Game ()
 	
 	delete clk_display_finish_;
 	delete clk_delay_victory_;
+	delete clk_door_info_;
+
+	delete font_text_;
+	delete door_info_;
 }
 
 void
@@ -307,7 +320,15 @@ Game::run ()
 			if(!door_opened && switch_door == true)
 			{
 				map_->switchDoor(switch_door);
+				clk_door_info_->Reset();
 				door_opened = true;
+			}
+			
+			if(door_opened && clk_door_info_->GetElapsedTime() < DISPLAY_DOOR_INFO)
+			{
+				door_info_->SetPosition(map_->getPosX() - OFFSET_TEXT, map_->getPosY());
+				door_info_->SetColor(Color(255, 140, 0, 255));
+				win_->Draw(*door_info_);
 			}
 		
 			switch_door = true;
@@ -338,6 +359,8 @@ Game::run ()
 	}
 	else if(gs_ == GameOver)
 	{
+		win_->Clear();
+		win_->SetView(sf::View(sf::FloatRect(0, 0, GAME_WIDTH, GAME_HEIGHT)));
 		menu_go_->display(win_, gs_);
 	}
 	else if(gs_ == Quit)

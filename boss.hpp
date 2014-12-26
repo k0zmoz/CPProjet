@@ -66,10 +66,13 @@ public:
 	void display (sf::RenderTarget &rt, bool is_playable);
 	void charge(Direction dir);
 	bool isInRoom(int x, int y);
+	bool isInvincible();
 	
 	int getStepDeath ();
 	sf::Sprite getSprite(TypeSprite typespr, Direction dir, int step);
 	int getSizeBossSprite(sf::Sprite spr, bool width_requested);
+	
+	void setInvincible(bool invi);
 	
 	sf::Sprite copyandflipSprite (sf::Sprite *sp);
 	
@@ -97,6 +100,7 @@ private:
 	sf::Clock *clk_death_;
 	
 	int step_death_;
+	bool invincible_;
 
 };
 #endif // BOSS_HPP

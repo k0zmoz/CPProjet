@@ -170,12 +170,14 @@ Boss::Boss () : Character ()
 		}
 	}
 	
+	dir_ = Up;
 	health_ = HEALTH_BOSS;
 	x_ =  SPAWN_BOSS_X;
 	y_ =  SPAWN_BOSS_Y;
 	step_death_ = 0;
 	room_ = new Rect<int>(LEFT_COORD_ROOM, TOP_COORD_ROOM, RIGHT_COORD_ROOM, BOTTOM_COORD_ROOM);
 	clk_death_ = new Clock();
+	invincible_ = true;
 }
 
 	
@@ -254,7 +256,7 @@ void Boss::displayDeath (sf::RenderTarget &rt)
 	deaths_[dir_][step_death_]->SetPosition(x_, y_);
 	rt.Draw(*( deaths_[dir_][step_death_] ));
 	
-	if(step_death_ < DEATH_AMNT_SPRITE_BOSS && elapsed_time > (1 / DEATH_SPEED))
+	if(step_death_ < DEATH_AMNT_SPRITE_BOSS - 1 && elapsed_time > (1 / DEATH_SPEED))
 	{
 		step_death_++;
 		clk_death_->Reset();
@@ -298,6 +300,11 @@ void Boss::display (sf::RenderTarget &rt, bool is_playable)
 bool Boss::isInRoom(int x, int y)
 {
 	return room_->Contains(x, y);
+}
+
+bool Boss::isInvincible()
+{
+	return invincible_;
 }
 
 

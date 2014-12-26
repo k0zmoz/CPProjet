@@ -26,5 +26,4 @@ typedef enum { Mov = 0, Atk, Death} TypeSprite;
 #define ATK_SPEED 11	 //nombre d'images à afficher par seconde pour une attaque
 #define DEATH_SPEED 10	 //nombre d'images à afficher par seconde pour une mort
 
-
 #endif // MAIN_HPP

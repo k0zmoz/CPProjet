@@ -62,10 +62,11 @@ public:
 	~Boss ();
 	
 	void displayDeath(sf::RenderTarget &rt);
-	void display_attack (sf::RenderTarget &rt, bool is_playable);
+	void displayAttack (sf::RenderTarget &rt, bool is_playable);
 	void display (sf::RenderTarget &rt, bool is_playable);
 	void charge(Direction dir);
 	bool isInRoom(int x, int y);
+	bool isInvincible();
 	
 	int getStepDeath ();
 	sf::Sprite getSprite(TypeSprite typespr, Direction dir, int step);
@@ -97,6 +98,7 @@ private:
 	sf::Clock *clk_death_;
 	
 	int step_death_;
+	bool invincible_;
 
 };
 #endif // BOSS_HPP

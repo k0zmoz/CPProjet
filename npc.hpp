@@ -23,7 +23,7 @@
 
 #define HEALTH_NPC 6
 #define HEALTH_MINIBOSS 1
-#define DAMAGE_NPC 1 //Dégâts d'un npc
+#define DAMAGE_NPC 3 //Dégâts d'un npc
 
 
 class Npc: public Character

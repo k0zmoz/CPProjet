@@ -17,7 +17,7 @@
 #define ATK_DIFF_CHAR_H 35 //hauteur entre deux sprites
 
 #define ESCAPE_RANGE 20
-#define HEALTH_PC 0
+#define HEALTH_PC 30
 #define DAMAGE_PC 5
 #define AMNT_ESCAPE_PC 2
 

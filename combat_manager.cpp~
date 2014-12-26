@@ -14,7 +14,7 @@ CombatManager::CombatManager ()
   npc_list_.push_back(trash_mob_);
   npc_list_.push_back(miniboss_);
   
-  cryst_mob_ = new Crystal(Fire, -30, -1000);
+  cryst_mob_ = new Crystal(Fire, -30, -900);
   cryst_trap1_ = new Crystal(Water, 30, -800);
   cryst_trap2_ = new Crystal(Water, 30, -850);
   
@@ -36,6 +36,8 @@ CombatManager::CombatManager ()
   clk_regen_health_ = new Clock();
   clk_regen_stamina_ = new Clock();
   clk_speed_regen_health_ = new Clock();
+  
+  boss_spawned_ = false;
 
 }
 
@@ -75,14 +77,17 @@ void CombatManager::run (PlayableChar *pc)
 	}
 	/*//Arrow
 	manageMovArrList(arr_list1_, SPAWN_LIST1_X, SPAWN_LIST1_Y, DIST_LIM_LIST1, LAUNCH_LIST1_DELAY);		
-		
+	*/
 	//Boss
 	if(!duneyrr_->isAttacking() && !miniboss_->isAlive())
 	{
+		while(!boss_spawned_)
+		{
+			spawnBoss(duneyrr_);
+		}
 		manageMovBoss(duneyrr_, pc);
 	}
-	}
-	//Gestions des attaques:
+	/*//Gestions des attaques:
 	
 	//IA
 	checkOpportunities(npc_list_, pc, duneyrr_);
@@ -342,6 +347,21 @@ void CombatManager::launchNextArrow(std::list<Arrow *> arr_list)
 	
 }
 
+void CombatManager::spawnBoss(Boss *boss)
+{
+	if(clk_mov_boss_->GetElapsedTime() > APPEARANCE_BOSS_DELAY)
+	{
+		moveChar(boss, CENTER_ROOM_BOSS_X, CENTER_ROOM_BOSS_Y, BOSS_SPEED, MOV_AMNT_SPRITE_BOSS);
+		clk_mov_boss_->Reset();
+	}
+	
+	if(isInRadius2D(boss, CENTER_ROOM_BOSS_X, CENTER_ROOM_BOSS_Y, RADIUS_LOCATE_COORD))
+	{
+		boss_spawned_ = true;
+		clk_mov_boss_->Reset();
+	}
+}
+
 void CombatManager::displayArrowList(sf::RenderTarget &rt, std::list<Arrow *> arr_list)
 {
 	std::list<Arrow *>::iterator it = arr_list.begin();
@@ -522,7 +542,7 @@ std::list<Crystal *> cryst_list, int range, int radius, int damage)
 			}
 			
 			if(isInRadius2D(boss, pc->getX(), pc->getY() + range, radius + HELP_RADIUS_BOSS
-			/*&& !miniboss_->isAlive()*/))
+			&& (!boss->isInvincible())))
 				{
 					boss->setHealth(boss->getHealth() - damage);
 				}
@@ -547,7 +567,7 @@ std::list<Crystal *> cryst_list, int range, int radius, int damage)
 			}
 			
 			if(isInRadius2D(boss, pc->getX(), pc->getY() - range, radius + HELP_RADIUS_BOSS
-			/*&& !miniboss_->isAlive()*/))
+			&& (!boss->isInvincible())))
 				{
 					boss->setHealth(boss->getHealth() - damage);
 				}
@@ -572,7 +592,7 @@ std::list<Crystal *> cryst_list, int range, int radius, int damage)
 			}
 			
 			if(isInRadius2D(boss, pc->getX() - range, pc->getY(), radius + HELP_RADIUS_BOSS
-			/*&& !miniboss_->isAlive()*/))
+			&& (!boss->isInvincible())))
 				{
 					boss->setHealth(boss->getHealth() - damage);
 				}
@@ -597,7 +617,7 @@ std::list<Crystal *> cryst_list, int range, int radius, int damage)
 			}
 			
 			if(isInRadius2D(boss, pc->getX() + range, pc->getY(), radius + HELP_RADIUS_BOSS
-			/*&& !miniboss_->isAlive()*/))
+			&& (!boss->isInvincible())))
 				{
 					boss->setHealth(boss->getHealth() - damage);
 				}

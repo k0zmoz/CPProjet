@@ -29,12 +29,12 @@
 //Rayon dans lequel un Npc essaye d'attaquer
 #define RADIUS_NPC_AGGRO 100
 //Distance à laquelle un npc touche le joueur
-#define RANGE_NPC_ATK 5
+#define RANGE_NPC_ATK 20
 //Rayon dans lequel une attaque de npc fait effet
-#define RADIUS_NPC_ATK 5
+#define RADIUS_NPC_ATK 100
 
 //Delai (en s) au delà duquel vérifier si un Npc peut attaquer
-#define CHK_OPPORT_NPC_DELAY 2 
+#define CHK_OPPORT_NPC_DELAY 3 
 
 //Constantes relatives aux Boss
 
@@ -52,7 +52,9 @@
 //Rayon dans lequel une attaque de npc fait effet
 #define RADIUS_BOSS_ATK 10
 //Delai (en s) au delà duquel vérifier si un Npc peut attaquer
-#define CHK_OPPORT_BOSS_DELAY 2 
+#define CHK_OPPORT_BOSS_DELAY 2
+ //temps (en s) entre deux mouvements lors de l'animation d'apparition du boss
+#define APPEARANCE_BOSS_DELAY 0.8
 
 //Constantes relatives aux Arrow
 #define AMNT_ARR_LIST1 1 //nombre de flèches dans list1
@@ -111,6 +113,7 @@ public:
 	(std::list<Arrow *> arr_list, int spawn_x, int spawn_y, int dist_lim, int launch_delay);
 	
 	void launchNextArrow(std::list<Arrow *> arr_list);
+	void spawnBoss(Boss *boss);
 	void displayArrowList(sf::RenderTarget &rt, std::list<Arrow *> arr_list);
 	void displayCrystalList(sf::RenderTarget &rt, std::list<Crystal *> cryst_list);
 	
@@ -156,6 +159,8 @@ private:
 	sf::Clock *clk_launch_arr_list1;
 	sf::Clock *clk_chk_opport_boss_, *clk_chk_opport_npc_;
 	sf::Clock *clk_regen_health_, *clk_regen_stamina_, *clk_speed_regen_health_;
+	
+	bool boss_spawned_;
 
 };
 
