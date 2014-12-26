@@ -3,8 +3,21 @@
 
 #include <list>
 #include <SFML/Graphics.hpp>
-
 #include "main.hpp"
+
+#define MAP_W 502
+#define MAP_H 500
+
+
+#define TILE_W 16
+#define TILE_H 16
+
+#define DOOR_W 25
+#define DOOR_H 7
+#define LEFT_COORD_DOOR 236
+#define TOP_COORD_DOOR 281
+#define RIGHT_COORD_DOOR 261
+#define BOTTOM_COORD_DOOR 287
 
 using namespace sf;
 
@@ -25,18 +38,18 @@ int getPosY ();
 int getPos();
 int isWall (int);
 int scan(char *,int);
+void switchDoor (bool open);
 
 private:
   
+  Image *imap_;
   Sprite *map1_;
-	Image *imap_;
-	int w_ = 500, h_ = 502;
- 	int pos_x_ = 0, pos_y_ = 0, pos_;
- 	//char **walled_;
- 	bool walled;
- 	char * array_;
-	//std::list<std::pair<int, int>> walls_;
 	View *view_;
+	
+ 	int pos_x_ = 0, pos_y_ = 0, pos_;
+ 	char * array_;
+	
+	bool walled_;
 	
 };
 

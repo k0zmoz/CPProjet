@@ -126,6 +126,9 @@ public:
 	
 	void checkDamages(PlayableChar *pc);
 	
+	//Gestion de la regen du PlayableChar
+	void regenPc(PlayableChar *pc);
+	
 	//Accesseurs
 	Npc *getNpc (std::string name);
 	Crystal *getCrystal (std::string epithet);
@@ -145,6 +148,7 @@ private:
 	sf::Clock *clk_mov_npc_, *clk_mov_boss_;
 	sf::Clock *clk_launch_arr_list1;
 	sf::Clock *clk_chk_opport_boss_, *clk_chk_opport_npc_;
+	sf::Clock *clk_regen_health_, *clk_regen_stamina_, *clk_speed_regen_health_;
 
 };
 

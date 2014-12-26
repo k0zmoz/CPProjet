@@ -63,7 +63,9 @@ PlayableChar::PlayableChar () : Character ()
 		
 		
 		health_ = HEALTH_PC;
-		escape_disabled_ = false;
+		hit_ = false;
+		stamina_ = AMNT_ESCAPE_PC;
+	
 	}
 
 	
@@ -102,7 +104,7 @@ void PlayableChar::move (Direction dir)
 
 void PlayableChar::escape (Direction dir)
 	{
-		switch (dir) {
+		/*switch (dir) {
 			case Up:
 			  y_ -= ESCAPE_RANGE;
 			  break;
@@ -115,5 +117,29 @@ void PlayableChar::escape (Direction dir)
 			case Right:
 			  x_ += ESCAPE_RANGE;
 			  break;
+		}*/
+		if(stamina_ != 0)
+		{
+			stamina_ -= 1;
 		}
 	}
+
+bool PlayableChar::isHit()
+{
+	return hit_;
+}
+
+int PlayableChar::getStamina()
+{
+	return stamina_;
+}
+
+void PlayableChar::setHit(bool hit)
+{
+	hit_ = hit;
+}
+
+void PlayableChar::setStamina(int stam)
+{
+	stamina_ = stam;
+}

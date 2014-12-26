@@ -19,6 +19,11 @@
 #define ESCAPE_RANGE 100
 #define HEALTH_PC 20
 #define DAMAGE_PC 5
+#define AMNT_ESCAPE_PC 2
+
+#define DELAY_REGEN_STAMINA 4
+#define DELAY_REGEN_HEALTH 20
+#define SPEED_REGEN_HEALTH 3
 
 class PlayableChar: public Character
 {
@@ -29,6 +34,13 @@ public:
 
 	void move (Direction dir);
 	void escape (Direction dir);
+	
+	bool isHit();
+	
+	int getStamina();
+	
+	void setHit(bool hit);
+	void setStamina(int stam);
   
 private:
 
@@ -42,7 +54,8 @@ private:
 	sf::Sprite *left_attacks_[ATK_AMNT_SPRITE_PC];
 	sf::Sprite *right_attacks_[ATK_AMNT_SPRITE_PC];
 	
-	bool escape_disabled_;
+	int stamina_;
+	bool hit_;
 
 };
 #endif // PLAYABLECHAR_HPP

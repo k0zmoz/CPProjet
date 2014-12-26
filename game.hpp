@@ -15,6 +15,7 @@
 #include "musique.hpp"
 #include "menu.hpp"
 #include "combat_manager.hpp"
+#include "hud.hpp"
 
 //temps (en s) pendant lequel est affiché l'écran de fin
 #define DISPLAY_FINISH 10
@@ -35,12 +36,15 @@ private:
 	PlayableChar *hero_;
 	Map *map_;
 	CombatManager *cm_;
+	Hud *hud_;
 	Menu *menu_start_, *menu_echap_, *menu_end_;
 	Musique *musique_;
 	sf::Clock *clk_finish_;
 
   Action current_action_;
 	GameState gs_;
+	
+	bool boss_door_;
 };
 
 #endif // GAME_HPP

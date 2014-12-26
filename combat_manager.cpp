@@ -33,6 +33,9 @@ CombatManager::CombatManager ()
   clk_launch_arr_list1 = new Clock();
   clk_chk_opport_npc_ = new Clock();
   clk_chk_opport_boss_ = new Clock();
+  clk_regen_health_ = new Clock();
+  clk_regen_stamina_ = new Clock();
+  clk_speed_regen_health_ = new Clock();
 
 }
 
@@ -56,6 +59,9 @@ CombatManager::~CombatManager()
 	delete clk_launch_arr_list1;
 	delete clk_chk_opport_npc_;
 	delete clk_chk_opport_boss_;
+	delete clk_regen_health_;
+	delete clk_regen_stamina_;
+	delete clk_speed_regen_health_;
 }
 
 void CombatManager::run (PlayableChar *pc)
@@ -82,6 +88,9 @@ void CombatManager::run (PlayableChar *pc)
 	*/
 	//Dégâts:
 	checkDamages(pc);
+	
+	//Régénération de la vie et de la santé
+	regenPc(pc);
 }
 
 
@@ -428,24 +437,28 @@ void CombatManager::checkDamageNPChara
 			if(isInRadius2D(pc, npchara->getX(), npchara->getY() + range, radius))
 			{
 				pc->setHealth(pc->getHealth() - damage);
+				pc->setHit(true);
 			}
 			break;
 		case Up:
 			if(isInRadius2D(pc, npchara->getX(), npchara->getY() -range, radius))
 			{
 				pc->setHealth(pc->getHealth() - damage);
+				pc->setHit(true);
 			}
 			break;
 		case Left:
 			if(isInRadius2D(pc, npchara->getX() - range, npchara->getY(), radius))
 			{
 				pc->setHealth(pc->getHealth() - damage);
+				pc->setHit(true);
 			}
 			break;
 		case Right:
 			if(isInRadius2D(pc, npchara->getX() + range, npchara->getY(), radius))
 			{
 				pc->setHealth(pc->getHealth() - damage);
+				pc->setHit(true);
 			}
 			break;
 		default : break;
@@ -586,6 +599,34 @@ void CombatManager::checkDamages(PlayableChar * pc)
 	
 	checkDamageArrow(arr_list1_, pc, ARROW_DAMAGE);
 }
+
+
+void CombatManager::regenPc(PlayableChar *pc)
+{
+	if(clk_regen_stamina_->GetElapsedTime() > DELAY_REGEN_STAMINA)
+	{
+		pc->setStamina(AMNT_ESCAPE_PC);
+		clk_regen_stamina_->Reset();
+	}
+	
+	if(pc->isHit())
+	{
+		clk_regen_health_->Reset();
+		pc->setHit(false);
+	}
+	else
+	{
+		if(clk_regen_health_->GetElapsedTime() > DELAY_REGEN_HEALTH)
+		{
+			if(clk_speed_regen_health_->GetElapsedTime() > SPEED_REGEN_HEALTH)
+			{
+				pc->setHealth(pc->getHealth() + 1);
+				clk_speed_regen_health_->Reset();
+			}
+		}
+	}
+}
+	
 
 Npc *CombatManager::getNpc (std::string name)
 {

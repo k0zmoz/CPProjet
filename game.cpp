@@ -17,6 +17,7 @@ Game::Game ()
   hero_ = new PlayableChar ();
   map_ = new Map();
   cm_ = new CombatManager();
+  hud_ = new Hud();
 
 	menu_start_ = new Menu(Start);
 	menu_echap_ = new Menu(Pause);
@@ -27,6 +28,8 @@ Game::Game ()
 		
 	gs_ = Start;
 	current_action_ = NoAction;
+	
+	boss_door_ = false;
 }
 
 Game::~Game ()
@@ -36,6 +39,7 @@ Game::~Game ()
   delete hero_;
  	delete map_;
   delete cm_;
+ // delete hud_;
   
 	delete menu_start_;
 	delete menu_echap_;
@@ -200,18 +204,32 @@ Game::run ()
 			map_->run();
 			map_initiated = true;
 		}
+		
 		map_->display(*win_);
+		hud_->display(*win_, hero_, map_);
 		hero_->setPosition(map_->getPosX(), map_->getPosY());
 		hero_->display(*win_, true);
 		cm_->run(hero_);
+		
 		if(cm_->getNpc("trash_mob")->isAlive())
 		{
 			cm_->getNpc("trash_mob")->display(*win_, false);
 		}
+		
+		else
+		{
+			if(!boss_door_)
+			{
+				map_->switchDoor(true);
+				boss_door_ = true;
+			}
+		}	
+		
 		if(cm_->getBoss()->isAlive())
 		{
 			cm_->getBoss()->display(*win_, true);
 		}
+		
 		else
 		{
 			gs_ = Finish;
@@ -220,17 +238,17 @@ Game::run ()
 		cm_->displayArrowList(*win_, cm_->getList1());
 		win_->SetView(map_->getView());
 	}
+	
 	else if(gs_ == Pause)
-	{  
-		//cout << "exit" << "\nTest";
+	{
 		win_->Clear();
-		win_->SetView(sf::View(sf::FloatRect(0, 0, 800, 600)));
+		win_->SetView(sf::View(sf::FloatRect(0, 0, GAME_WIDTH, GAME_HEIGHT)));
 		menu_echap_->display(win_, gs_);	
 	}
 	else if(gs_ == Finish)
 	{
 		win_->Clear();
-		win_->SetView(sf::View(sf::FloatRect(0, 0, 800, 600)));
+		win_->SetView(sf::View(sf::FloatRect(0, 0, GAME_WIDTH, GAME_HEIGHT)));
 		menu_end_->display(win_, gs_); 
 		if(clk_finish_->GetElapsedTime() > DISPLAY_FINISH)
 		{
