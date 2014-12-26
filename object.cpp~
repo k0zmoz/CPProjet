@@ -39,7 +39,7 @@ int Object::getY ()
 		return y_;
 	}
  
-int Character::getHealth ()
+int Object::getHealth ()
 {
 	return health_;
 }

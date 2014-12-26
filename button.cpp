@@ -20,11 +20,11 @@ Button::Button (Action action): action_(action)
 				zone_ = sf::FloatRect(371,426,515,518);
 				break;
 				
-		case Resume : 	cout << "premiere zone";
+		case Resume :
 				zone_ = sf::FloatRect(367,308,521,355);
 				break;
 				
-		case ExitThroughPause : cout << "deuxieme zone";
+		case ExitThroughPause :
 				zone_ = sf::FloatRect(384,419,483,465);
 				break;
 				

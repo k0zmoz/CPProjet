@@ -12,13 +12,16 @@
 #include "crystal.hpp"
 #include "boss.hpp"
 #include "map.hpp"
-#include "musique.hpp"
+#include "music_manager.hpp"
 #include "menu.hpp"
 #include "combat_manager.hpp"
 #include "hud.hpp"
 
 //temps (en s) pendant lequel est affiché l'écran de fin
-#define DISPLAY_FINISH 10
+#define DISPLAY_FINISH 185
+
+//temps (en s) pendant lequel est affiché la mort du boss
+#define DELAY_VICTORY 0.4
 
 class Game
 {
@@ -36,10 +39,10 @@ private:
 	PlayableChar *hero_;
 	Map *map_;
 	CombatManager *cm_;
+	MusicManager *mm_;
 	Hud *hud_;
 	Menu *menu_start_, *menu_echap_, *menu_end_;
-	Musique *musique_;
-	sf::Clock *clk_finish_;
+	sf::Clock *clk_display_finish_, *clk_delay_victory_;
 
   Action current_action_;
 	GameState gs_;

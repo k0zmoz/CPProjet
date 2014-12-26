@@ -65,9 +65,14 @@
 //Constantes relatives au PlayableChar (PC)
 
 //Distance à laquelle un pc touche le joueur
-#define RANGE_PC_ATK 50
+#define RANGE_PC_ATK 10
 //Rayon dans lequel une attaque de pc fait effet
-#define RADIUS_PC_ATK 100
+#define RADIUS_PC_ATK 28
+
+/*Le sprite du boss étant large mais sa hitbox étroite,
+on définit une aide pour augmenter le rayon d'action d'une attaque de pc
+sur le boss afin que le jeu ne soit pas trop frustrant*/
+#define HELP_RADIUS_BOSS 0
 
 
 
@@ -107,6 +112,7 @@ public:
 	
 	void launchNextArrow(std::list<Arrow *> arr_list);
 	void displayArrowList(sf::RenderTarget &rt, std::list<Arrow *> arr_list);
+	void displayCrystalList(sf::RenderTarget &rt, std::list<Crystal *> cryst_list);
 	
 	//Gestion des attaques
 	void checkOpportunityNpc(Npc *npc, PlayableChar *pc, int radius);
@@ -132,6 +138,7 @@ public:
 	//Accesseurs
 	Npc *getNpc (std::string name);
 	Crystal *getCrystal (std::string epithet);
+	std::list<Crystal *> getCrystalList ();
 	Boss *getBoss ();
 	std::list<Arrow *> getList1();
 

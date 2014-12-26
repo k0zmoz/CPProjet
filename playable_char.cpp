@@ -61,6 +61,7 @@ PlayableChar::PlayableChar () : Character ()
 			}
 		}
 		
+		clk_use_stamina_ = new Clock();
 		
 		health_ = HEALTH_PC;
 		hit_ = false;
@@ -87,10 +88,12 @@ PlayableChar::~PlayableChar ()
 		delete right_attacks_[i];
 	}
 	
+	delete clk_use_stamina_;
+	
 }
 
 
-void PlayableChar::move (Direction dir)
+void PlayableChar::move ()
 {
 
 	step_mov_++;
@@ -102,22 +105,9 @@ void PlayableChar::move (Direction dir)
 
 }
 
-void PlayableChar::escape (Direction dir)
+void PlayableChar::escape ()
 	{
-		/*switch (dir) {
-			case Up:
-			  y_ -= ESCAPE_RANGE;
-			  break;
-			case Down:
-			  y_ += ESCAPE_RANGE;
-			  break;
-			case Left:
-			  x_ -= ESCAPE_RANGE;
-			  break;
-			case Right:
-			  x_ += ESCAPE_RANGE;
-			  break;
-		}*/
+	
 		if(stamina_ != 0)
 		{
 			stamina_ -= 1;
@@ -127,6 +117,16 @@ void PlayableChar::escape (Direction dir)
 bool PlayableChar::isHit()
 {
 	return hit_;
+}
+
+bool PlayableChar::isStaminaUsable()
+{
+	if(clk_use_stamina_->GetElapsedTime())
+	{
+		clk_use_stamina_->Reset();
+		return true;
+	}
+	return false;
 }
 
 int PlayableChar::getStamina()

@@ -62,7 +62,7 @@ public:
 	~Boss ();
 	
 	void displayDeath(sf::RenderTarget &rt);
-	void display_attack (sf::RenderTarget &rt, bool is_playable);
+	void displayAttack (sf::RenderTarget &rt, bool is_playable);
 	void display (sf::RenderTarget &rt, bool is_playable);
 	void charge(Direction dir);
 	bool isInRoom(int x, int y);

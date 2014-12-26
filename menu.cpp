@@ -190,38 +190,31 @@ Menu::displayButtons (sf::RenderTarget *rt)
   for (auto b : buttons_) {
     if (current_button_ == b->getAction()) {
       shade = b->displayActive(rt);
-      cout << "shade : " << shade << endl;
       	
-      	switch (shade){	
-  		case -1 : 	rt->Draw(*background_spr_); break;
-      	      		      	
-      case 1 : 	
-	      //rt->Draw(*background_spr_);
-	     //rt->Draw(*play_exit_red_spr_);
-				rt->Draw(*startgame_playspr_);
-
-				break;
-
-      case 2 : 	
-	      //rt->Draw(*background_spr_);
-	      //rt->Draw(*play_exit_red_spr_);
-				rt->Draw(*startgame_exitspr_);
-
-				break;
+      switch (shade)
+      {	
+				case -1 :
+					rt->Draw(*background_spr_);
+					break;
+		    	      		      	
+		    case 1 : 	
+					rt->Draw(*startgame_playspr_);
+					break;
+		    case 2 : 	
+					rt->Draw(*startgame_exitspr_);
+					break;
 								
-		case 3 : 	//cout<<"33";
-	     // rt->Draw(*background_spr_);
-				rt->Draw(*echap_resumespr_);
+			case 3 :
+					rt->Draw(*echap_resumespr_);
+					break;
+				
+			case 4 :
+					rt->Draw(*echap_exitspr_);
+					break;
 
+			default : 
+				rt->Clear();
 				break;
-				
-		case 4 : 	//cout<<"44";
-	      //rt->Draw(*background_spr_);
-				rt->Draw(*echap_exitspr_);
-				break;
-				
-				
-		default : 	rt->Clear();break;
 	}
 	
     }

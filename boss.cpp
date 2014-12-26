@@ -254,14 +254,14 @@ void Boss::displayDeath (sf::RenderTarget &rt)
 	deaths_[dir_][step_death_]->SetPosition(x_, y_);
 	rt.Draw(*( deaths_[dir_][step_death_] ));
 	
-	if(step_death_ < DEATH_AMNT_SPRITE_BOSS && elapsed_time > (1 / DEATH_SPEED))
+	if(step_death_ < DEATH_AMNT_SPRITE_BOSS - 1 && elapsed_time > (1 / DEATH_SPEED))
 	{
 		step_death_++;
 		clk_death_->Reset();
 	}
 }
 
-void Boss::display_attack (sf::RenderTarget &rt, bool is_playable)
+void Boss::displayAttack (sf::RenderTarget &rt, bool is_playable)
 {		
 	float elapsed_time = clk_atk_->GetElapsedTime();
 	attacks_[dir_][step_atk_]->SetPosition(x_, y_);

@@ -1,11 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include "main.hpp"
 #include "game.hpp"
-#include "character.hpp"
-#include "map.hpp"
-#include "musique.hpp"
-#include "menu.hpp"
 
 using namespace sf;
 using namespace std;
@@ -17,14 +12,15 @@ Game::Game ()
   hero_ = new PlayableChar ();
   map_ = new Map();
   cm_ = new CombatManager();
+  mm_ = new MusicManager ();
   hud_ = new Hud();
 
 	menu_start_ = new Menu(Start);
 	menu_echap_ = new Menu(Pause);
 	menu_end_ = new Menu(Finish);
-	
-	//musique_ = new Musique();
-	clk_finish_ = new Clock();
+
+	clk_display_finish_ = new Clock();
+	clk_delay_victory_ = new Clock();
 		
 	gs_ = Start;
 	current_action_ = NoAction;
@@ -39,14 +35,15 @@ Game::~Game ()
   delete hero_;
  	delete map_;
   delete cm_;
- // delete hud_;
+  delete mm_;
+  delete hud_;
   
 	delete menu_start_;
 	delete menu_echap_;
 	delete menu_end_;
-
-	// delete musique_;
-	delete clk_finish_;
+	
+	delete clk_display_finish_;
+	delete clk_delay_victory_;
 }
 
 void
@@ -55,7 +52,9 @@ Game::run ()
 	Event event;
 	Color white(255, 255, 255);
 	bool map_initiated = false;
-//musique_->play();
+	bool switch_door = true, door_opened = false;
+	bool escape_disabled = false;
+
 
 	while (win_->IsOpened())
 	{
@@ -73,8 +72,14 @@ Game::run ()
 						switch(event.Key.Code)
 						{
 							case Key::LShift:
-								hero_->escape(hero_->getDir());
-								break;
+							
+							if(hero_->getStamina() != 0 && hero_->isStaminaUsable())
+							{
+									hero_->escape();
+									map_->movePos(hero_->getDir(), ESCAPE_RANGE);
+									escape_disabled = true;
+							}	
+							break;
 							case Key::Escape:
 								hero_->attack();
 								break;
@@ -97,33 +102,31 @@ Game::run ()
 						{
 							menu_start_->setCurrentButton(input.GetMouseX(), input.GetMouseY());
 						}
-						else if(gs_ == Pause )
+					}
+					else if(gs_ == Pause )
 						{
 							menu_echap_->setCurrentButton(input.GetMouseX(), input.GetMouseY());
 						}
-					}
 					break;
 				case sf::Event::MouseButtonPressed:
 					if(gs_ == Start)
 					{
-						if (current_action_ == NoAction)
+						switch (menu_start_->getAction())
 						{
-							switch (menu_start_->getAction())
-							{
-							case Play:
-							  current_action_ = Play;
-							  gs_ = Run;
-							  break;
-							case Exit:
-							 current_action_ = Exit;
-							 gs_ = Quit;
-							  break;
-							default: break;
-							}
+						case Play:
+						  current_action_ = Play;
+						  gs_ = Run;
+						  break;
+						case Exit:
+						 current_action_ = Exit;
+						 gs_ = Quit;
+						  break;
+						default: break;
 						}
 					}
-					else if(gs_ == Pause)
+					if(gs_ == Pause)
 					{
+						cout << "menu echap action: " << menu_echap_->getAction() <<endl;
 						switch (menu_echap_->getAction())
 						{
 							case Resume:
@@ -155,34 +158,38 @@ Game::run ()
 					
 							if(event.Key.Code == Key::LShift)
 							{
-								hero_->escape(hero_->getDir());
+								if(hero_->getStamina() != 0 && hero_->isStaminaUsable() && !escape_disabled)
+								{
+									hero_->escape();
+									map_->movePos(hero_->getDir(), ESCAPE_RANGE);
+								}
 							}
 			
 							if(event.Key.Code == Key::Z)
 							{
 						
 								hero_->look(Up);
-								hero_->move(Up);
-								map_->movePos(Up);
+								hero_->move();
+								map_->movePos(Up, 1);
 							}
 							if(event.Key.Code == Key::Q)
 							{
 								hero_->look(Left);
-								hero_->move(Left);
-								map_->movePos(Left);
+								hero_->move();
+								map_->movePos(Left, 1);
 							}
 							if(event.Key.Code == Key::S)
 							{
 								hero_->look(Down);
-								hero_->move(Down);
-								map_->movePos(Down);
+								hero_->move();
+								map_->movePos(Down, 1);
 							}
 					
 							if(event.Key.Code == Key::D)
 							{
 								hero_->look(Right);
-								hero_->move(Right);
-								map_->movePos(Right);
+								hero_->move();
+								map_->movePos(Right, 1);
 							}
 					}
 					break;
@@ -195,7 +202,7 @@ Game::run ()
 
 	if(gs_ == Start)
 	{
-			menu_start_->display(win_, gs_);
+		menu_start_->display(win_, gs_);
 	}
 	else if(gs_ == Run)
 	{
@@ -205,6 +212,7 @@ Game::run ()
 			map_initiated = true;
 		}
 		
+		win_->SetView(map_->getView());
 		map_->display(*win_);
 		hud_->display(*win_, hero_, map_);
 		hero_->setPosition(map_->getPosX(), map_->getPosY());
@@ -214,29 +222,66 @@ Game::run ()
 		if(cm_->getNpc("trash_mob")->isAlive())
 		{
 			cm_->getNpc("trash_mob")->display(*win_, false);
+			
+			if(!cm_->getCrystal("mob")->isInvincible())
+			{
+				cm_->getCrystal("mob")->setInvincible(true);
+			}
 		}
 		
 		else
 		{
-			if(!boss_door_)
+			if(cm_->getCrystal("mob")->isInvincible())
 			{
-				map_->switchDoor(true);
-				boss_door_ = true;
+				cm_->getCrystal("mob")->setInvincible(false);
 			}
 		}	
-		
-		if(cm_->getBoss()->isAlive())
+		if((!cm_->getNpc("miniboss")->isAlive()))
 		{
-			cm_->getBoss()->display(*win_, true);
+			if(cm_->getBoss()->isAlive())
+			{
+				cm_->getBoss()->display(*win_, true);
+				clk_delay_victory_->Reset();
+			}
+			else
+			{
+				if(clk_delay_victory_->GetElapsedTime() < DELAY_VICTORY)
+				{
+					cm_->getBoss()->displayDeath(*win_);
+					
+				}
+				else
+				{
+					if(clk_delay_victory_->GetElapsedTime() > 4 * DELAY_VICTORY)
+					{
+						gs_ = Finish;
+						clk_display_finish_->Reset();
+					}
+				}
+			}
 		}
-		
 		else
 		{
-			gs_ = Finish;
-			clk_finish_->Reset();
+			cm_->getNpc("miniboss")->display(*win_, false);
 		}
+	
 		cm_->displayArrowList(*win_, cm_->getList1());
-		win_->SetView(map_->getView());
+		cm_->displayCrystalList(*win_, cm_->getCrystalList());
+
+		for(auto cryst : cm_->getCrystalList())
+		{
+			switch_door = switch_door && (!cryst->isAlive());
+		}
+		
+		if(!door_opened && switch_door == true)
+		{
+			map_->switchDoor(switch_door);
+			door_opened = true;
+		}
+		
+		switch_door = true;
+		escape_disabled = false;
+		
 	}
 	
 	else if(gs_ == Pause)
@@ -250,7 +295,7 @@ Game::run ()
 		win_->Clear();
 		win_->SetView(sf::View(sf::FloatRect(0, 0, GAME_WIDTH, GAME_HEIGHT)));
 		menu_end_->display(win_, gs_); 
-		if(clk_finish_->GetElapsedTime() > DISPLAY_FINISH)
+		if(clk_display_finish_->GetElapsedTime() > DISPLAY_FINISH)
 		{
 			gs_ = Quit;
 		}
@@ -260,11 +305,8 @@ Game::run ()
 		win_->Close();
 	}
 	
-	/*cm_->getCrystal("mob")->display(*win_);
-	cm_->getCrystal("trap1")->display(*win_);
-	cm_->getCrystal("trap2")->display(*win_);
-	*/
-
+	mm_->run(gs_, cm_->getNpc("miniboss")->isAlive(), door_opened);
+	
 	win_->Display();
   }
 

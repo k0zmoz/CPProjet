@@ -67,7 +67,12 @@
 //Distance à laquelle un pc touche le joueur
 #define RANGE_PC_ATK 10
 //Rayon dans lequel une attaque de pc fait effet
-#define RADIUS_PC_ATK 100
+#define RADIUS_PC_ATK 28
+
+/*Le sprite du boss étant large mais sa hitbox étroite,
+on définit une aide pour augmenter le rayon d'action d'une attaque de pc
+sur le boss afin que le jeu ne soit pas trop frustrant*/
+#define HELP_RADIUS_BOSS 15
 
 
 
@@ -107,6 +112,7 @@ public:
 	
 	void launchNextArrow(std::list<Arrow *> arr_list);
 	void displayArrowList(sf::RenderTarget &rt, std::list<Arrow *> arr_list);
+	void displayCrystalList(sf::RenderTarget &rt, std::list<Crystal *> cryst_list);
 	
 	//Gestion des attaques
 	void checkOpportunityNpc(Npc *npc, PlayableChar *pc, int radius);
@@ -126,9 +132,13 @@ public:
 	
 	void checkDamages(PlayableChar *pc);
 	
+	//Gestion de la regen du PlayableChar
+	void regenPc(PlayableChar *pc);
+	
 	//Accesseurs
 	Npc *getNpc (std::string name);
 	Crystal *getCrystal (std::string epithet);
+	std::list<Crystal *> getCrystalList ();
 	Boss *getBoss ();
 	std::list<Arrow *> getList1();
 
@@ -145,6 +155,7 @@ private:
 	sf::Clock *clk_mov_npc_, *clk_mov_boss_;
 	sf::Clock *clk_launch_arr_list1;
 	sf::Clock *clk_chk_opport_boss_, *clk_chk_opport_npc_;
+	sf::Clock *clk_regen_health_, *clk_regen_stamina_, *clk_speed_regen_health_;
 
 };
 

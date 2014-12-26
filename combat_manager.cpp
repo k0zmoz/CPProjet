@@ -9,14 +9,14 @@ using namespace std;
 CombatManager::CombatManager ()
 {
   trash_mob_ = new Npc (0, -1472, false);
-  miniboss_ = new Npc(350, 250, true);
+  miniboss_ = new Npc(0, -1400, true);
   duneyrr_ = new Boss();
   npc_list_.push_back(trash_mob_);
   npc_list_.push_back(miniboss_);
   
-  cryst_mob_ = new Crystal(Fire, -30, -1000);
+  cryst_mob_ = new Crystal(Fire, -30, -900);
   cryst_trap1_ = new Crystal(Water, 30, -800);
-  cryst_trap2_ = new Crystal(Water, 30, -600);
+  cryst_trap2_ = new Crystal(Water, 30, -850);
   
   cryst_list_.push_back(cryst_mob_);
   cryst_list_.push_back(cryst_trap1_);
@@ -69,17 +69,18 @@ void CombatManager::run (PlayableChar *pc)
 	//Gestion des déplacements:
 	
 	//Npc
-	/*if(!trash_mob_->isAttacking())
+	if(!trash_mob_->isAttacking())
 	{
 		manageMovNpc(trash_mob_, pc);
 	}
-	//Arrow
+	/*//Arrow
 	manageMovArrList(arr_list1_, SPAWN_LIST1_X, SPAWN_LIST1_Y, DIST_LIM_LIST1, LAUNCH_LIST1_DELAY);		
 		
 	//Boss
-	if(!duneyrr_->isAttacking())
+	if(!duneyrr_->isAttacking() && !miniboss_->isAlive())
 	{
 		manageMovBoss(duneyrr_, pc);
+	}
 	}
 	//Gestions des attaques:
 	
@@ -344,13 +345,25 @@ void CombatManager::launchNextArrow(std::list<Arrow *> arr_list)
 void CombatManager::displayArrowList(sf::RenderTarget &rt, std::list<Arrow *> arr_list)
 {
 	std::list<Arrow *>::iterator it = arr_list.begin();
-	
 	while(it != arr_list.end() && (*it)->isLaunched())
 	{
 		(*it)->display(rt);
 		it++;
 	}
+}
 
+void CombatManager::displayCrystalList(sf::RenderTarget &rt, std::list<Crystal *> cryst_list)
+{
+	std::list<Crystal *>::iterator it = cryst_list.begin();
+
+	while(it != cryst_list.end())
+	{
+		if((*it)->isAlive())
+		{
+			(*it)->display(rt);
+		}
+		it++;
+	}
 }
 
 void CombatManager::checkOpportunityNpc(Npc * npc, PlayableChar *pc, int radius)
@@ -417,14 +430,14 @@ void CombatManager::checkOpportunities(std::list<Npc *> npc_list, PlayableChar *
 		clk_chk_opport_npc_->Reset();
 	}
 	
-	if(clk_chk_opport_boss_->GetElapsedTime() > CHK_OPPORT_BOSS_DELAY)
+	if(clk_chk_opport_boss_->GetElapsedTime() > CHK_OPPORT_BOSS_DELAY && (!miniboss_->isAlive()) )
 	{
-		checkOpportunityBoss(boss, pc, RADIUS_BOSS_AGGRO);
-		/*//largeur du sprite d'atk en cours
-		(boss->getSizeBossSprite(boss->getSprite(Atk, boss->getDir(), boss->getStepAtk()), true)),
-		//hauteur du sprite d'atk en cours
-		boss->getSizeBossSprite(boss->getSprite(Atk, boss->getDir(), boss->getStepAtk()), false));
-		clk_chk_opport_boss_->Reset();*/
+			checkOpportunityBoss(boss, pc, RADIUS_BOSS_AGGRO);	
+			/*//largeur du sprite d'atk en cours
+			(boss->getSizeBossSprite(boss->getSprite(Atk, boss->getDir(), boss->getStepAtk()), true)),
+			//hauteur du sprite d'atk en cours
+			boss->getSizeBossSprite(boss->getSprite(Atk, boss->getDir(), boss->getStepAtk()), false));
+			clk_chk_opport_boss_->Reset();*/
 	}
 }
 
@@ -499,13 +512,17 @@ std::list<Crystal *> cryst_list, int range, int radius, int damage)
 			}
 			for(auto cryst : cryst_list)
 			{
-				if(isInRadius2DObj(cryst, pc->getX(), pc->getY() + range, radius))
+				if(!cryst->isInvincible())
 				{
-					cryst->setHealth(cryst->getHealth() - damage);
+					if(isInRadius2DObj(cryst, pc->getX(), pc->getY() + range, radius))
+					{
+						cryst->setHealth(cryst->getHealth() - damage);
+					}
 				}
 			}
 			
-			if(isInRadius2D(boss, pc->getX(), pc->getY() + range, radius))
+			if(isInRadius2D(boss, pc->getX(), pc->getY() + range, radius + HELP_RADIUS_BOSS
+			/*&& !miniboss_->isAlive()*/))
 				{
 					boss->setHealth(boss->getHealth() - damage);
 				}
@@ -520,13 +537,17 @@ std::list<Crystal *> cryst_list, int range, int radius, int damage)
 			}
 			for(auto cryst : cryst_list)
 			{
-				if(isInRadius2DObj(cryst, pc->getX(), pc->getY() - range, radius))
+				if(!cryst->isInvincible())
 				{
-					cryst->setHealth(cryst->getHealth() - damage);
+					if(isInRadius2DObj(cryst, pc->getX(), pc->getY() - range, radius))
+					{
+						cryst->setHealth(cryst->getHealth() - damage);
+					}
 				}
 			}
 			
-			if(isInRadius2D(boss, pc->getX(), pc->getY() - range, radius))
+			if(isInRadius2D(boss, pc->getX(), pc->getY() - range, radius + HELP_RADIUS_BOSS
+			/*&& !miniboss_->isAlive()*/))
 				{
 					boss->setHealth(boss->getHealth() - damage);
 				}
@@ -541,13 +562,17 @@ std::list<Crystal *> cryst_list, int range, int radius, int damage)
 			}
 			for(auto cryst : cryst_list)
 			{
-				if(isInRadius2DObj(cryst, pc->getX() - range, pc->getY(), radius))
+				if(!cryst->isInvincible())
 				{
-					cryst->setHealth(cryst->getHealth() - damage);
+					if(isInRadius2DObj(cryst, pc->getX() - range, pc->getY(), radius))
+					{
+						cryst->setHealth(cryst->getHealth() - damage);
+					}
 				}
 			}
 			
-			if(isInRadius2D(boss, pc->getX() - range, pc->getY(), radius))
+			if(isInRadius2D(boss, pc->getX() - range, pc->getY(), radius + HELP_RADIUS_BOSS
+			/*&& !miniboss_->isAlive()*/))
 				{
 					boss->setHealth(boss->getHealth() - damage);
 				}
@@ -562,13 +587,17 @@ std::list<Crystal *> cryst_list, int range, int radius, int damage)
 			}
 			for(auto cryst : cryst_list)
 			{
-				if(isInRadius2DObj(cryst, pc->getX() + range, pc->getY(), radius))
+				if(!cryst->isInvincible())
 				{
-					cryst->setHealth(cryst->getHealth() - damage);
+					if(isInRadius2DObj(cryst, pc->getX() + range, pc->getY(), radius))
+					{
+						cryst->setHealth(cryst->getHealth() - damage);
+					}
 				}
 			}
 			
-			if(isInRadius2D(boss, pc->getX() + range, pc->getY(), radius))
+			if(isInRadius2D(boss, pc->getX() + range, pc->getY(), radius + HELP_RADIUS_BOSS
+			/*&& !miniboss_->isAlive()*/))
 				{
 					boss->setHealth(boss->getHealth() - damage);
 				}
@@ -665,6 +694,11 @@ Crystal *CombatManager::getCrystal (std::string epithet)
 		cerr << "Incorrect epithet for getCrystal()" << endl;
 		exit(EXIT_FAILURE);
 	}
+}
+
+std::list<Crystal *> CombatManager::getCrystalList ()
+{
+	return cryst_list_;
 }
 
 Boss *CombatManager::getBoss ()

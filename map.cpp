@@ -145,19 +145,19 @@ void Map::updateView ()
 	view_->SetCenter(x, y); // Centre la camera sur le personnage au centre de la fenetre
 }
 
-void Map::movePos (Direction dir)
+void Map::movePos (Direction dir, int mov_range)
 {
   	int ligne, colonne;
     switch (dir)
     {
 		  case Up:
-				if(scan(array_, pos_ - MAP_W) == 0)
+				if(scan(array_, pos_ - (mov_range * MAP_W)) == 0)
 				{
 					cout << "murUp\n";
 					break;
 				}
-				pos_ -= MAP_W; // deplacement tableau
-				pos_y_ -= TILE_H; // deplacement camera
+				pos_ -= mov_range * MAP_W; // deplacement tableau
+				pos_y_ -= mov_range * TILE_H; // deplacement camera
 		
 				ligne = pos_ / MAP_H;
 				colonne = pos_ % MAP_W;
@@ -167,13 +167,13 @@ void Map::movePos (Direction dir)
 		  	break;
 		  
 		  case Down:
-				if(scan(array_, pos_ + MAP_W) == 0)
+				if(scan(array_, pos_ + (mov_range * MAP_W)) == 0)
 				{
 					cout << "murDown\n";
 					break;
 				}
-				pos_ += MAP_W;
-				pos_y_ += TILE_H;
+				pos_ += mov_range * MAP_W;
+				pos_y_ += mov_range * TILE_H;
 			
 				ligne = pos_ / MAP_H;
 				colonne = pos_ % MAP_W;
@@ -183,13 +183,13 @@ void Map::movePos (Direction dir)
 		    break;
 		    
 		  case Left:
-				if(scan(array_, pos_ - 1) == 0)
+				if(scan(array_, pos_ - mov_range) == 0)
 				{
 					cout << "murLeft\n";
 					break;
 				}	
-		 		pos_ -= 1;
-		  	pos_x_ -= TILE_W;
+		 		pos_ -= mov_range;
+		  	pos_x_ -= mov_range * TILE_W;
 				ligne = pos_ / MAP_H;
 				colonne = pos_ % MAP_W;
 			
@@ -198,13 +198,13 @@ void Map::movePos (Direction dir)
 		    break;
 		  
 		  case Right:
-				if(scan(array_, pos_ + 1) == 0)
+				if(scan(array_, pos_ + mov_range) == 0)
 				{
 					cout << "murRight\n";
 					break;
 				}
-		 		pos_ += 1;
-		  	pos_x_ += TILE_W;
+		 		pos_ += mov_range;
+		  	pos_x_ += mov_range * TILE_W;
 		
 				ligne = pos_ / MAP_H;
 				colonne = pos_ % MAP_W;

@@ -37,12 +37,16 @@ public:
 	~Crystal ();
 
 	void display (sf::RenderTarget &rt);
-
+	
+	bool isInvincible();
+	void setInvincible(bool invi);
 
 protected:
 
 	sf::Image *crystal_img_;
 	sf::Sprite *crystal_sprite_;
+	
+	bool invincible_;
 	
 };
 

@@ -47,6 +47,7 @@ Crystal::Crystal (CrystalAttribute cryst_att)
 	}
 	
 	health_ = CRYSTAL_HEALTH;
+	invincible_ = false;
 	
 }
 
@@ -103,5 +104,12 @@ void Crystal::display (sf::RenderTarget &rt)
 		rt.Draw(*crystal_sprite_);
 	}
 	
+bool Crystal::isInvincible()
+{
+	return invincible_;
+}
 	
-	
+void Crystal::setInvincible(bool invi)
+{
+	invincible_ = invi;
+}

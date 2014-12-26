@@ -13,11 +13,11 @@
 #define TILE_H 16
 
 #define DOOR_W 25
-#define DOOR_H 7
+#define DOOR_H 25
 #define LEFT_COORD_DOOR 236
 #define TOP_COORD_DOOR 281
 #define RIGHT_COORD_DOOR 261
-#define BOTTOM_COORD_DOOR 287
+#define BOTTOM_COORD_DOOR 304
 
 using namespace sf;
 
@@ -32,7 +32,7 @@ void run ();
 void display(sf::RenderTarget &rt);
 sf::View getView ();
 void updateView ();
-void movePos (Direction dir);
+void movePos (Direction dir, int move_range);
 int getPosX ();
 int getPosY ();
 int getPos();

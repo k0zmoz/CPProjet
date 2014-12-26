@@ -261,7 +261,7 @@ void Boss::displayDeath (sf::RenderTarget &rt)
 	}
 }
 
-void Boss::display_attack (sf::RenderTarget &rt, bool is_playable)
+void Boss::displayAttack (sf::RenderTarget &rt, bool is_playable)
 {		
 	float elapsed_time = clk_atk_->GetElapsedTime();
 	attacks_[dir_][step_atk_]->SetPosition(x_, y_);
@@ -328,7 +328,7 @@ Sprite Boss::getSprite (TypeSprite typespr, Direction dir, int step)
 
 int Boss::getSizeBossSprite(Sprite spr, bool width_requested)
 {
-	if(absciss_requested)
+	if(width_requested)
 	{
 		return spr.GetSize().x;
 	}

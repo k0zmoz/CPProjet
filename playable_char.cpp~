@@ -61,9 +61,12 @@ PlayableChar::PlayableChar () : Character ()
 			}
 		}
 		
+		clk_use_stamina_ = new Clock();
 		
 		health_ = HEALTH_PC;
-		escape_disabled_ = false;
+		hit_ = false;
+		stamina_ = AMNT_ESCAPE_PC;
+	
 	}
 
 	
@@ -85,35 +88,58 @@ PlayableChar::~PlayableChar ()
 		delete right_attacks_[i];
 	}
 	
+	delete clk_use_stamina_;
+	
 }
 
 
-void PlayableChar::move (Direction dir)
-	{
+void PlayableChar::move ()
+{
 
-		step_mov_++;
-		if(step_mov_ == MOV_AMNT_SPRITE_PC || change_look_ == true)
+	step_mov_++;
+	if(step_mov_ == MOV_AMNT_SPRITE_PC || change_look_ == true)
+	{
+		step_mov_ = 0;
+		change_look_ = false;
+	}
+
+}
+
+void PlayableChar::escape ()
+	{
+	
+		if(stamina_ != 0)
 		{
-			step_mov_ = 0;
-			change_look_ = false;
+			stamina_ -= 1;
 		}
-
 	}
 
-void PlayableChar::escape (Direction dir)
+bool PlayableChar::isHit()
+{
+	return hit_;
+}
+
+bool PlayableChar::isStaminaUsable()
+{
+	if(clk_use_stamina_->GetElapsedTime())
 	{
-		switch (dir) {
-			case Up:
-			  y_ -= ESCAPE_RANGE;
-			  break;
-			case Down:
-			  y_ += ESCAPE_RANGE;
-			  break;
-			case Left:
-			  x_ -= ESCAPE_RANGE;
-			  break;
-			case Right:
-			  x_ += ESCAPE_RANGE;
-			  break;
-		}
+		clk_use_stamina_->Reset();
+		return true;
 	}
+	return false;
+}
+
+int PlayableChar::getStamina()
+{
+	return stamina_;
+}
+
+void PlayableChar::setHit(bool hit)
+{
+	hit_ = hit;
+}
+
+void PlayableChar::setStamina(int stam)
+{
+	stamina_ = stam;
+}

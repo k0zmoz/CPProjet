@@ -52,6 +52,8 @@
 //Distance parcourue entre deux changement de sprites lors d'une charge
 #define DIST_CHARGE 50
 
+#define DAMAGE_BOSS 3
+
 class Boss: public Character
 {
 public:

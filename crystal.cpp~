@@ -29,7 +29,7 @@ Crystal::Crystal (CrystalAttribute cryst_att)
 			
 			/*crystal_sprite_->Resize(
 			(FIRE_CRYSTAL_RIGHT_COORD - FIRE_CRYSTAL_LEFT_COORD) * SCALE_RESIZE_FIRE_CRYSTAL,
-			(FIRE_CRYSTAL_TOP_COORD - FIRE_CRYSTAL_BOTTOM_COORD) * SCALE_RESIZE_FIRE_CRYSTAL);/*
+			(FIRE_CRYSTAL_TOP_COORD - FIRE_CRYSTAL_BOTTOM_COORD) * SCALE_RESIZE_FIRE_CRYSTAL);*/
 		break;
 		
 		case Water :
@@ -47,6 +47,7 @@ Crystal::Crystal (CrystalAttribute cryst_att)
 	}
 	
 	health_ = CRYSTAL_HEALTH;
+	invincible_ = false;
 	
 }
 
@@ -103,5 +104,12 @@ void Crystal::display (sf::RenderTarget &rt)
 		rt.Draw(*crystal_sprite_);
 	}
 	
+void Crystal::isInvincible()
+{
+	return invincible_;
+}
 	
-	
+void Crystal::setInvincible(bool invi)
+{
+	invincible_ = invi;
+}
