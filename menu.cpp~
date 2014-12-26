@@ -14,84 +14,113 @@ Menu::Menu (GameState state)
   	
   background_img_ = new sf::Image;
 	background_spr_ = new sf::Sprite(*background_img_);
-	if (!background_img_->LoadFromFile("Menu/background.png")) // Si le chargement a échoué
+	
+	if(state != GameOver)
 	{
-		cout<<"Erreur durant le chargement du background"<<endl;
-		exit(EXIT_FAILURE); // On ferme le programme
+		if (!background_img_->LoadFromFile("Menu/background.png"))
+		{
+			cout<<"Erreur durant le chargement du background"<<endl;
+			exit(EXIT_FAILURE);
+		}
+			background_spr_->SetSubRect(IntRect(0, 0, 800, 600));
 	}
-  	background_spr_->SetSubRect(IntRect(0, 0, 800, 600));
-  	
-  	switch(state)
-  	{
-  		case Start:
-		  buttons_.push_front(new Button(Play));
+	else
+	{
+		if (!background_img_->LoadFromFile("Menu/Game_Over.png"))
+		{
+			cout<<"Erreur durant le chargement du background"<<endl;
+			exit(EXIT_FAILURE); // On ferme le programme
+		}
+			background_spr_->SetSubRect(IntRect(0, 0, 800, 600));
+	}
+	
+  switch(state)
+  {
+		case Start:
+			buttons_.push_front(new Button(Play));
 			buttons_.push_front(new Button(Exit));
-		
+	
 			play_exit_red_img_ = new sf::Image;
 			play_exit_red_spr_ = new sf::Sprite(*play_exit_red_img_);
-			if (!play_exit_red_img_->LoadFromFile("Menu/play_exitred.png")) // Si le chargement a échoué
+			if (!play_exit_red_img_->LoadFromFile("Menu/play_exitred.png"))
 			{
 				cout<<"Erreur durant le chargement de l'image play_exitred"<<endl;
-				exit(EXIT_FAILURE); // On ferme le programme
+				exit(EXIT_FAILURE);
 			}
-  		
-  		play_exit_red_spr_->SetSubRect(IntRect(0, 0, 800, 600));
 		
+			play_exit_red_spr_->SetSubRect(IntRect(0, 0, 800, 600));
+	
 			play_exit_violet_img_ = new sf::Image;
 			startgame_playspr_ = new sf::Sprite(*play_exit_violet_img_);
 			startgame_exitspr_ = new sf::Sprite(*play_exit_violet_img_);
-			if (!play_exit_violet_img_->LoadFromFile("Menu/play_exitviolet.png")) // Si le chargement a échoué
+			if (!play_exit_violet_img_->LoadFromFile("Menu/play_exitviolet.png"))
 			{
 				cout<<"Erreur durant le chargement de l'image play_exitviolet"<<endl;
-				exit(EXIT_FAILURE); // On ferme le programme
+				exit(EXIT_FAILURE);
 			}
-				startgame_playspr_->SetSubRect(IntRect(373, 288, 502, 374));	
-				startgame_playspr_->SetPosition(373,288);
-				startgame_exitspr_->SetSubRect(IntRect(371, 426, 515, 518));	
-				startgame_exitspr_->SetPosition(371,426);
-		cout << "CASE START OK\n";
+			startgame_playspr_->SetSubRect(IntRect(373, 288, 502, 374));	
+			startgame_playspr_->SetPosition(373,288);
+			startgame_exitspr_->SetSubRect(IntRect(371, 426, 515, 518));	
+			startgame_exitspr_->SetPosition(371,426);
 			break;
 			
-			case Pause :
+		case Pause :
 			buttons_.push_front(new Button(Resume));
 		  buttons_.push_front(new Button(ExitThroughPause));
 		  
 		  resume_exit_red_img_ = new sf::Image;
 			resume_exit_red_spr_ = new sf::Sprite(*resume_exit_red_img_);
-			if (!resume_exit_red_img_->LoadFromFile("Menu/resume_exitred.png")) // Si le chargement a échoué
+			if (!resume_exit_red_img_->LoadFromFile("Menu/resume_exitred.png"))
 			{
 				cout<<"Erreur durant le chargement de l'image resume_exitred"<<endl;
-				exit(EXIT_FAILURE); // On ferme le programme
+				exit(EXIT_FAILURE); 
 			}
-  		cout << "CASE ECHAP ENTER\n";
   		resume_exit_red_spr_->SetSubRect(IntRect(0, 0, 800, 600));
 		
 			resume_exit_violet_img_ = new sf::Image;
 			echap_resumespr_ = new sf::Sprite(*resume_exit_violet_img_);
 			echap_exitspr_ = new sf::Sprite(*resume_exit_violet_img_);
-			if (!resume_exit_violet_img_->LoadFromFile("Menu/resume_exitviolet.png")) // Si le chargement a échoué
+			if (!resume_exit_violet_img_->LoadFromFile("Menu/resume_exitviolet.png"))
 			{
 				cout<<"Erreur durant le chargement de l'image resume_exitviolet"<<endl;
-				exit(EXIT_FAILURE); // On ferme le programme
+				exit(EXIT_FAILURE);
 			}
-				echap_resumespr_->SetSubRect(IntRect(367, 305, 521, 355));	
-				echap_resumespr_->SetPosition(367,305);
-				echap_exitspr_->SetSubRect(IntRect(384, 419, 483, 465));	
-		  	echap_exitspr_->SetPosition(384,419);
-		  	cout << "CASE ECHAP OK";
+			echap_resumespr_->SetSubRect(IntRect(367, 305, 521, 355));	
+			echap_resumespr_->SetPosition(367,305);
+			echap_exitspr_->SetSubRect(IntRect(384, 419, 483, 465));	
+	  	echap_exitspr_->SetPosition(384,419);
 			break;
 			
-			case Finish :
+		case Finish :
 			
 			princess_img_ = new sf::Image;
 			princess_spr_ = new sf::Sprite(*princess_img_);
-			if (!princess_img_->LoadFromFile("Menu/urprincess.png")) // Si le chargement a échoué
+			if (!princess_img_->LoadFromFile("Menu/urprincess.png"))
 			{
 				cout<<"Erreur durant le chargement de l'image princess"<<endl;
-				exit(EXIT_FAILURE); // On ferme le programme
+				exit(EXIT_FAILURE);
 			}
   		princess_spr_->SetSubRect(IntRect(0, 0, 800, 600));
 		
+			break;
+			
+		case GameOver :
+			
+			buttons_.push_front(new Button(NewGame));
+		  buttons_.push_front(new Button(ExitThroughGameOver));
+			
+			newgame_nevermore_img_ = new sf::Image;
+			newgame_go_spr_ = new sf::Sprite(*newgame_nevermore_img_);
+			nevermore_go_spr_ = new sf::Sprite(*newgame_nevermore_img_);
+			if (!newgame_nevermore_img_->LoadFromFile("Menu/shade_game_over.png"))
+			{
+				cout<<"Erreur durant le chargement de l'image game over"<<endl;
+				exit(EXIT_FAILURE);
+			}
+  		newgame_go_spr_->SetSubRect(IntRect(80,480,350,520));
+  		newgame_go_spr_->SetPosition(80,480);
+  		nevermore_go_spr_->SetSubRect(IntRect(470,480,740,520));
+			nevermore_go_spr_->SetPosition(470,480);
 			break;
 
   	default : break;
@@ -129,6 +158,13 @@ Menu::~Menu ()
 			delete princess_img_;
 			delete princess_spr_;
 			break;
+		
+		case GameOver:
+			delete newgame_nevermore_img_;
+			delete newgame_go_spr_;
+			delete nevermore_go_spr_;
+			break;
+			
 		default : break;
 	}
 
@@ -141,21 +177,25 @@ Menu::display (sf::RenderTarget *rt, GameState gs)
 	switch(gs)
 	{
 		case Start :
-					rt->Draw(*background_spr_);
-					rt->Draw(*play_exit_red_spr_);
-					break;
+			rt->Draw(*background_spr_);
+			rt->Draw(*play_exit_red_spr_);
+			break;
 					
 		case Pause :
-					rt->Draw(*background_spr_);
-					rt->Draw(*resume_exit_red_spr_);				
-					break;
+			rt->Draw(*background_spr_);
+			rt->Draw(*resume_exit_red_spr_);				
+			break;
 					
 		case Finish :
-					rt->Draw(*background_spr_);
-					rt->Draw(*princess_spr_);
-					break;
+			rt->Draw(*background_spr_);
+			rt->Draw(*princess_spr_);
+			break;
+		
+		case GameOver :
+			rt->Draw(*background_spr_);
+			break;
 
-		default :   break;
+		default : break;
 	}
 												
 	displayButtons(rt);
@@ -204,15 +244,20 @@ Menu::displayButtons (sf::RenderTarget *rt)
 					rt->Draw(*startgame_exitspr_);
 					break;
 								
-			case 3 :
+				case 3 :
 					rt->Draw(*echap_resumespr_);
 					break;
 				
-			case 4 :
+				case 4 :
 					rt->Draw(*echap_exitspr_);
 					break;
-				
-				
+				case 5 :
+					rt->Draw(*nevermore_go_spr_);
+					break;
+				case 6 :
+					rt->Draw(*newgame_go_spr_);
+					break;
+
 			default : 
 				rt->Clear();
 				break;

@@ -18,7 +18,7 @@
 #include "hud.hpp"
 
 //temps (en s) pendant lequel est affiché l'écran de fin
-#define DISPLAY_FINISH 9
+#define DISPLAY_FINISH 185
 
 //temps (en s) pendant lequel est affiché la mort du boss
 #define DELAY_VICTORY 0.4
@@ -41,7 +41,7 @@ private:
 	CombatManager *cm_;
 	MusicManager *mm_;
 	Hud *hud_;
-	Menu *menu_start_, *menu_echap_, *menu_end_;
+	Menu *menu_start_, *menu_echap_, *menu_end_, *menu_go;
 	sf::Clock *clk_display_finish_, *clk_delay_victory_;
 
   Action current_action_;

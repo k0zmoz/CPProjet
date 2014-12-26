@@ -13,6 +13,7 @@ MusicManager::MusicManager ()
 	miniboss_music_ = new sf::Music;
 	boss_music_ = new sf::Music;
 	ending_music_ = new sf::Music;
+	game_over_music_ = new sf::Music;
 	
 	if (!menu_music_->OpenFromFile("./Audio/Musics/licorne.ogg"))
 	{
@@ -44,11 +45,18 @@ MusicManager::MusicManager ()
 		exit(EXIT_FAILURE);
 	}
 	
+	if (!game_over_music_->OpenFromFile("./Audio/Musics/nevermore.ogg"))
+	{
+    cerr << "Error Loading ending music" << endl;
+		exit(EXIT_FAILURE);
+	}
+	
 	menu_music_->SetVolume(50);
 	general_music_->SetVolume(50);
 	miniboss_music_->SetVolume(50);
 	boss_music_->SetVolume(50);
 	ending_music_->SetVolume(50);
+	game_over_music_->SetVolume(50);
 }
 
 MusicManager::~MusicManager ()
@@ -57,6 +65,7 @@ MusicManager::~MusicManager ()
 	delete general_music_;
 	delete boss_music_;
 	delete ending_music_;
+	delete game_over_music_;
 }
 
 
@@ -65,6 +74,10 @@ void MusicManager::run (GameState gs, bool miniboss_alive, bool door_opened)
 	switch(gs)
 	{
 		case Start:
+			if(game_over_music_->GetStatus() == 2)
+			{
+				game_over_music_->Stop();
+			}
 			if(menu_music_->GetStatus() != 2) //Playing <=> GetStatus = 2
 			{
 				menu_music_->Play();
@@ -155,11 +168,44 @@ void MusicManager::run (GameState gs, bool miniboss_alive, bool door_opened)
 			}
 				
 			break;
+		
+		case GameOver:
+			
+			if(menu_music_->GetStatus() == 2)
+			{
+				menu_music_->Stop();
+			}
+			
+			if(general_music_->GetStatus() == 2)
+			{
+				general_music_->Stop();
+			}
+			if(miniboss_music_->GetStatus() == 2)
+			{
+				miniboss_music_->Stop();
+			}
+			if(boss_music_->GetStatus() == 2)
+			{
+				boss_music_->Stop();
+			}
+			if(game_over_music_->GetStatus() != 2)
+			{
+				game_over_music_->Play();
+			}	
+			break;
 			
 		case Quit:
 			if(ending_music_->GetStatus() == 2)
 			{
 				ending_music_->Stop();
+			}
+			else if(menu_music_->GetStatus() == 2)
+			{
+				menu_music_->Stop();
+			}
+			else if(game_over_music_->GetStatus() == 2)
+			{
+				game_over_music_->Stop();
 			}
 		break;
 		

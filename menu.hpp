@@ -47,6 +47,10 @@ private:
 	Image *princess_img_;
 	Sprite *princess_spr_;
 	
+	Image *newgame_nevermore_img_;
+	Sprite *newgame_go_spr_;
+	Sprite *nevermore_go_spr_;
+	
 	GameState menu_state_;
 	
 };

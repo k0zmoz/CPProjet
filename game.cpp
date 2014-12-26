@@ -18,6 +18,7 @@ Game::Game ()
 	menu_start_ = new Menu(Start);
 	menu_echap_ = new Menu(Pause);
 	menu_end_ = new Menu(Finish);
+	menu_go_ = new Menu(GameOver);
 
 	clk_display_finish_ = new Clock();
 	clk_delay_victory_ = new Clock();
@@ -41,6 +42,7 @@ Game::~Game ()
 	delete menu_start_;
 	delete menu_echap_;
 	delete menu_end_;
+	delete menu_go_;
 	
 	delete clk_display_finish_;
 	delete clk_delay_victory_;
@@ -51,7 +53,7 @@ Game::run ()
 {
 	Event event;
 	Color white(255, 255, 255);
-	bool map_initiated = false;
+	bool map_initiated = false, new_game = false;
 	bool switch_door = true, door_opened = false;
 	bool escape_disabled = false;
 
@@ -107,6 +109,10 @@ Game::run ()
 						{
 							menu_echap_->setCurrentButton(input.GetMouseX(), input.GetMouseY());
 						}
+					else if(gs_ == GameOver )
+						{
+							menu_go_->setCurrentButton(input.GetMouseX(), input.GetMouseY());
+						}
 					break;
 				case sf::Event::MouseButtonPressed:
 					if(gs_ == Start)
@@ -124,9 +130,8 @@ Game::run ()
 						default: break;
 						}
 					}
-					if(gs_ == Pause)
+					else if(gs_ == Pause)
 					{
-						cout << "menu echap action: " << menu_echap_->getAction() <<endl;
 						switch (menu_echap_->getAction())
 						{
 							case Resume:
@@ -140,11 +145,27 @@ Game::run ()
 							default : break;
 						}
 					}
+					else if(gs_ == GameOver)
+					{
+						switch (menu_go_->getAction())
+						{
+							case NewGame:
+								current_action_ = NewGame;
+								gs_ = Quit;
+								new_game = true;
+							  break;
+							case ExitThroughGameOver:
+								current_action_ = ExitThroughGameOver;
+								gs_ = Quit;
+								break;
+							default : break;
+						}
+					}
 					break;
 				case Event::KeyPressed :					
 					
 					if(event.Key.Code == Key::Escape
-					&& gs_ != Start && gs_ != Finish && gs_ != Quit)
+					&& gs_ != Start && gs_ != Finish && gs_ != Quit && gs_ != GameOver)
 					{
 						gs_ = Pause;
 					}	
@@ -202,7 +223,15 @@ Game::run ()
 
 	if(gs_ == Start)
 	{
-		menu_start_->display(win_, gs_);
+		if(!new_game)
+		{
+			menu_start_->display(win_, gs_);
+		}
+		else
+		{
+			//reset le jeu ici
+			new_game = false;
+		}
 	}
 	else if(gs_ == Run)
 	{
@@ -212,37 +241,39 @@ Game::run ()
 			map_initiated = true;
 		}
 		
-		win_->SetView(map_->getView());
-		map_->display(*win_);
-		hud_->display(*win_, hero_, map_);
-		hero_->setPosition(map_->getPosX(), map_->getPosY());
-		hero_->display(*win_, true);
-		cm_->run(hero_);
-		
-		if(cm_->getNpc("trash_mob")->isAlive())
+		if(hero_->isAlive())
 		{
-			cm_->getNpc("trash_mob")->display(*win_, false);
+			win_->SetView(map_->getView());
+			map_->display(*win_);
+			hud_->display(*win_, hero_, map_);
+			hero_->setPosition(map_->getPosX(), map_->getPosY());
+			hero_->display(*win_, true);
+			cm_->run(hero_);
+		
+			if(cm_->getNpc("trash_mob")->isAlive())
+			{
+				cm_->getNpc("trash_mob")->display(*win_, false);
 			
-			if(!cm_->getCrystal("mob")->isInvincible())
-			{
-				cm_->getCrystal("mob")->setInvincible(true);
+				if(!cm_->getCrystal("mob")->isInvincible())
+				{
+					cm_->getCrystal("mob")->setInvincible(true);
+				}
 			}
-		}
-		
-		else
-		{
-			if(cm_->getCrystal("mob")->isInvincible())
+			else
 			{
-				cm_->getCrystal("mob")->setInvincible(false);
-			}
-		}	
-		if((!cm_->getNpc("miniboss")->isAlive()))
-		{
-			if(cm_->getBoss()->isAlive())
+				if(cm_->getCrystal("mob")->isInvincible())
+				{
+					cm_->getCrystal("mob")->setInvincible(false);
+				}
+			}	
+			
+			if((!cm_->getNpc("miniboss")->isAlive()))
 			{
-				cm_->getBoss()->display(*win_, true);
-				clk_delay_victory_->Reset();
-			}
+				if(cm_->getBoss()->isAlive())
+				{
+					cm_->getBoss()->display(*win_, true);
+					clk_delay_victory_->Reset();
+				}
 			else
 			{
 				if(clk_delay_victory_->GetElapsedTime() < DELAY_VICTORY)
@@ -259,29 +290,34 @@ Game::run ()
 					}
 				}
 			}
+			}
+			else
+			{
+				cm_->getNpc("miniboss")->display(*win_, false);
+			}
+	
+			cm_->displayArrowList(*win_, cm_->getList1());
+			cm_->displayCrystalList(*win_, cm_->getCrystalList());
+
+			for(auto cryst : cm_->getCrystalList())
+			{
+				switch_door = switch_door && (!cryst->isAlive());
+			}
+		
+			if(!door_opened && switch_door == true)
+			{
+				map_->switchDoor(switch_door);
+				door_opened = true;
+			}
+		
+			switch_door = true;
+			escape_disabled = false;
+		
 		}
 		else
 		{
-			cm_->getNpc("miniboss")->display(*win_, false);
+			gs_ = GameOver;
 		}
-	
-		cm_->displayArrowList(*win_, cm_->getList1());
-		cm_->displayCrystalList(*win_, cm_->getCrystalList());
-
-		for(auto cryst : cm_->getCrystalList())
-		{
-			switch_door = switch_door && (!cryst->isAlive());
-		}
-		
-		if(!door_opened && switch_door == true)
-		{
-			map_->switchDoor(switch_door);
-			door_opened = true;
-		}
-		
-		switch_door = true;
-		escape_disabled = false;
-		
 	}
 	
 	else if(gs_ == Pause)
@@ -299,6 +335,10 @@ Game::run ()
 		{
 			gs_ = Quit;
 		}
+	}
+	else if(gs_ == GameOver)
+	{
+		menu_go_->display(win_, gs_);
 	}
 	else if(gs_ == Quit)
 	{

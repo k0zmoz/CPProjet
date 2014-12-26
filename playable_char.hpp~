@@ -61,7 +61,6 @@ private:
 	
 	int stamina_;
 	bool hit_;
-	bool escaping_;
 
 };
 #endif // PLAYABLECHAR_HPP

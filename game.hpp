@@ -41,7 +41,7 @@ private:
 	CombatManager *cm_;
 	MusicManager *mm_;
 	Hud *hud_;
-	Menu *menu_start_, *menu_echap_, *menu_end_;
+	Menu *menu_start_, *menu_echap_, *menu_end_, *menu_go_;
 	sf::Clock *clk_display_finish_, *clk_delay_victory_;
 
   Action current_action_;

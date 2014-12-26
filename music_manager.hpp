@@ -20,8 +20,8 @@ public:
 private:
 
 	sf::RenderWindow *win_;
-	sf::Music *menu_music_, *general_music_,
-	*miniboss_music_, *boss_music_, *ending_music_;
+	sf::Music *menu_music_, *general_music_, *miniboss_music_,
+	*boss_music_, *ending_music_, *game_over_music_;
   
   
 };

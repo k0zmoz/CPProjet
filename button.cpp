@@ -14,19 +14,28 @@ Button::Button (Action action): action_(action)
 	switch (action)
 	{
 		case Play :	
-				zone_ = sf::FloatRect(373,288,502,374);
-				break;
+			zone_ = sf::FloatRect(373,288,502,374);
+			break;
+		
 		case Exit : 	
-				zone_ = sf::FloatRect(371,426,515,518);
-				break;
+			zone_ = sf::FloatRect(371,426,515,518);
+			break;
 				
 		case Resume :
-				zone_ = sf::FloatRect(367,308,521,355);
-				break;
+			zone_ = sf::FloatRect(367,308,521,355);
+			break;
 				
 		case ExitThroughPause :
-				zone_ = sf::FloatRect(384,419,483,465);
-				break;
+			zone_ = sf::FloatRect(384,419,483,465);
+			break;
+		
+		case ExitThroughGameOver :
+			zone_ = sf::FloatRect(470,480,740,520);
+			break;
+		
+		case NewGame :
+			zone_ = sf::FloatRect(80,480,350,520);
+			break;		
 				
 								
 		default : break;
@@ -58,15 +67,27 @@ int Button::displayActive (sf::RenderTarget *rt)
 		case Play :
 			return 1;
 			break;
+			
 		case Exit : 
 			return 2;
 			break;
+			
 		case Resume :
 			return 3;
 			break;
+			
 		case ExitThroughPause :
-		return 4;
-		break;
+			return 4;
+			break;
+			
+		case ExitThroughGameOver :
+			return 5;
+			break;
+			
+		case NewGame :
+			return 6;
+			break;
+		
 		default :
 			return -1;
 			break;
