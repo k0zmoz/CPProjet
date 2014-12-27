@@ -19,6 +19,7 @@ Game::Game ()
 	menu_echap_ = new Menu(Pause);
 	menu_end_ = new Menu(Finish);
 	menu_go_ = new Menu(GameOver);
+	menu_controls_ = new Menu(ControlPanel);
 
 	clk_display_finish_ = new Clock();
 	clk_delay_victory_ = new Clock();
@@ -52,6 +53,7 @@ Game::~Game ()
 	delete menu_echap_;
 	delete menu_end_;
 	delete menu_go_;
+	delete menu_controls_;
 	
 	delete clk_display_finish_;
 	delete clk_delay_victory_;
@@ -126,7 +128,6 @@ Game::run ()
 						}
 					break;
 				case sf::Event::MouseButtonPressed:
-					cout << "MM curr act: " << current_action_ << endl;
 					if(gs_ == Start)
 					{
 						switch (menu_start_->getAction())
@@ -155,13 +156,13 @@ Game::run ()
 								current_action_ = Resume;
 								gs_ = Run;
 							  break;
-							case ControlsThroughPause:
-						  	current_action_ = ControlsThroughPause;
+							case Controls:
+						  	current_action_ = Controls;
 						  	 save_gs = gs_;
 						  	gs_ = ControlPanel;
 						  	break;
-							case ExitThroughPause:
-								current_action_ = ExitThroughPause;
+							case Exit:
+								current_action_ = Exit;
 								gs_ = Quit;
 								break;
 							default : break;
@@ -197,7 +198,7 @@ Game::run ()
 							gs_ =  save_gs;
 						}
 					}
-					
+						
 					if(!hero_->isAttacking())
 					{
 							if(event.Key.Code == Key::Space)
@@ -213,7 +214,12 @@ Game::run ()
 									map_->movePos(hero_->getDir(), ESCAPE_RANGE);
 								}
 							}
-			
+							
+							if(event.Key.Code == Key::X)
+							{
+								cm_->setCheatMode(!cm_->getCheatMode());
+							}
+							
 							if(event.Key.Code == Key::Z)
 							{
 						
@@ -253,7 +259,7 @@ Game::run ()
 	{
 		if(!new_game)
 		{
-			menu_start_->display(win_, gs_);
+			menu_start_->display(win_);
 		}
 		else
 		{
@@ -293,7 +299,7 @@ Game::run ()
 				{
 					cm_->getCrystal("mob")->setInvincible(false);
 				}
-			}	
+			}
 			
 			if((!cm_->getNpc("miniboss")->isAlive()))
 			{
@@ -302,22 +308,21 @@ Game::run ()
 					cm_->getBoss()->display(*win_, true);
 					clk_delay_victory_->Reset();
 				}
-			else
-			{
-				if(clk_delay_victory_->GetElapsedTime() < DELAY_VICTORY)
-				{
-					cm_->getBoss()->displayDeath(*win_);
-					
-				}
 				else
 				{
-					if(clk_delay_victory_->GetElapsedTime() > 4 * DELAY_VICTORY)
+					if(clk_delay_victory_->GetElapsedTime() < DELAY_VICTORY)
 					{
-						gs_ = Finish;
-						clk_display_finish_->Reset();
+						cm_->getBoss()->displayDeath(*win_);	
+					}
+					else
+					{
+						if(clk_delay_victory_->GetElapsedTime() > 4 * DELAY_VICTORY)
+						{
+							gs_ = Finish;
+							clk_display_finish_->Reset();
+						}
 					}
 				}
-			}
 			}
 			else
 			{
@@ -360,13 +365,13 @@ Game::run ()
 	{
 		win_->Clear();
 		win_->SetView(sf::View(sf::FloatRect(0, 0, GAME_WIDTH, GAME_HEIGHT)));
-		menu_echap_->display(win_, gs_);	
+		menu_echap_->display(win_);	
 	}
 	else if(gs_ == Finish)
 	{
 		win_->Clear();
 		win_->SetView(sf::View(sf::FloatRect(0, 0, GAME_WIDTH, GAME_HEIGHT)));
-		menu_end_->display(win_, gs_); 
+		menu_end_->display(win_); 
 		if(clk_display_finish_->GetElapsedTime() > DISPLAY_FINISH)
 		{
 			gs_ = Quit;
@@ -376,13 +381,13 @@ Game::run ()
 	{
 		win_->Clear();
 		win_->SetView(sf::View(sf::FloatRect(0, 0, GAME_WIDTH, GAME_HEIGHT)));
-		menu_start_->displayControls(win_);
+		menu_controls_->display(win_);
 	}
 	else if(gs_ == GameOver)
 	{
 		win_->Clear();
 		win_->SetView(sf::View(sf::FloatRect(0, 0, GAME_WIDTH, GAME_HEIGHT)));
-		menu_go_->display(win_, gs_);
+		menu_go_->display(win_);
 	}
 	else if(gs_ == Quit)
 	{

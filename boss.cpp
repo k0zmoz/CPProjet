@@ -56,7 +56,7 @@ Boss::Boss () : Character ()
 		}
 	}
 	
-	if(! general_atks_->LoadFromFile("./sprite/boss/Duneyrr_atking2.png")){
+	if(! general_atks_->LoadFromFile("./sprite/boss/Duneyrr_atking.png")){
 		cerr << "Error Loading boss walk Image" << endl;
 		exit(EXIT_FAILURE);
 	}
@@ -129,7 +129,7 @@ Boss::Boss () : Character ()
 		}
 	}
 	
-	if(! general_deaths_->LoadFromFile("./sprite/boss/Duneyrr_dying2.png")){
+	if(! general_deaths_->LoadFromFile("./sprite/boss/Duneyrr_dying.png")){
 		cerr << "Error Loading boss walk Image" << endl;
 		exit(EXIT_FAILURE);
 	}
@@ -177,7 +177,7 @@ Boss::Boss () : Character ()
 	step_death_ = 0;
 	room_ = new Rect<int>(LEFT_COORD_ROOM, TOP_COORD_ROOM, RIGHT_COORD_ROOM, BOTTOM_COORD_ROOM);
 	clk_death_ = new Clock();
-	invincible_ = true;
+	invincible_ = false;
 }
 
 	

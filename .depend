@@ -18,5 +18,5 @@ combat_manager.o: combat_manager.cpp combat_manager.hpp map.hpp main.hpp \
  character.hpp playable_char.hpp npc.hpp boss.hpp arrow.hpp object.hpp \
  crystal.hpp
 button.o: button.cpp main.hpp menu.hpp button.hpp
-menu.o: menu.cpp main.hpp menu.hpp button.hpp
+menu.o: menu.cpp menu.hpp main.hpp button.hpp
 hud.o: hud.cpp main.hpp hud.hpp playable_char.hpp character.hpp map.hpp

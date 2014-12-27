@@ -14,23 +14,19 @@ Button::Button (Action action): action_(action)
 	switch (action)
 	{
 		case Play :	
-			zone_ = sf::FloatRect(373,288,502,374);
+			zone_ = sf::FloatRect(375, 285, 500, 370);
 			break;
 		
 		case Exit : 	
-			zone_ = sf::FloatRect(371,426,515,518);
+			zone_ = sf::FloatRect(375, 430, 510, 510);
 			break;
 				
 		case Resume :
-			zone_ = sf::FloatRect(367,308,521,355);
+			zone_ = sf::FloatRect(340, 310, 540, 370);
 			break;
-				
-		case ExitThroughPause :
-			zone_ = sf::FloatRect(384,419,483,465);
-			break;
-		
+			
 		case ExitThroughGameOver :
-			zone_ = sf::FloatRect(470,480,740,520);
+			zone_ = sf::FloatRect(470,480,750,520);
 			break;
 		
 		case NewGame :
@@ -40,10 +36,7 @@ Button::Button (Action action): action_(action)
 		case Controls :
 			zone_ = sf::FloatRect(5, 40, 240, 110);
 			break;
-		case ControlsThroughPause :
-			zone_ = sf::FloatRect(5, 40, 240, 110);
-			break;					
-								
+			
 		default : break;
 	}
 }
@@ -59,52 +52,4 @@ bool Button::contains (int mouse_x, int mouse_y)
 Action Button::getAction ()
 {
   return action_;
-}
-
-void Button::display (sf::RenderTarget *rt)
-{
-  rt->Draw(text_);
-}
-
-int Button::displayActive (sf::RenderTarget *rt)
-{
-	switch (getAction())
-	{
-		case Play :
-			return 1;
-			break;
-			
-		case Exit : 
-			return 2;
-			break;
-			
-		case Resume :
-			return 3;
-			break;
-			
-		case ExitThroughPause :
-			return 4;
-			break;
-			
-		case ExitThroughGameOver :
-			return 5;
-			break;
-			
-		case NewGame :
-			return 6;
-			break;
-		
-		case Controls :
-			return 7;
-			break;
-			
-		case ControlsThroughPause :
-			return 8;
-			break;
-		
-		default :
-			return -1;
-			break;
-	}
-	return -1;
 }

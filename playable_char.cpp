@@ -17,7 +17,7 @@ PlayableChar::PlayableChar () : Character ()
 
 		//instanciation des sprites de déplacement
 	  
-		if(! general_dir_->LoadFromFile("./sprite/walk/general_walk.png")){
+		if(! general_dir_->LoadFromFile("./sprite/hero/general_walk.png")){
 			cerr << "Error Loading Walk Image" << endl;
 			exit(EXIT_FAILURE);
 		}
@@ -40,7 +40,7 @@ PlayableChar::PlayableChar () : Character ()
 	
 		//instanciation des sprites d'attaques
 	
-		 if(! general_atks_->LoadFromFile("./sprite/attack/general_atcks.png")){
+		 if(! general_atks_->LoadFromFile("./sprite/hero/general_atcks.png")){
 			cerr << "Error Loading Atk Image" << endl;
 			exit(EXIT_FAILURE);
 		}

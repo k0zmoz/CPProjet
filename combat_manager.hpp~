@@ -110,7 +110,9 @@
 /*Le sprite du boss étant large mais sa hitbox étroite,
 on définit une aide pour augmenter le rayon d'action d'une attaque de pc
 sur le boss afin que le jeu ne soit pas trop frustrant*/
-#define HELP_RADIUS_BOSS 0
+#define HELP_RADIUS_BOSS 100
+
+#define HELP_CHEAT_MODE 1000
 
 
 
@@ -182,6 +184,10 @@ public:
 	std::list<Crystal *> getCrystalList ();
 	Boss *getBoss ();
 	std::list<std::list<Arrow *> > getGeneralList();
+	bool getCheatMode ();
+	
+	//Mutateur
+	void setCheatMode (bool cheat);
 
 private:
 	
@@ -201,7 +207,7 @@ private:
 	sf::Clock *clk_chk_opport_boss_, *clk_chk_opport_npc_;
 	sf::Clock *clk_regen_health_, *clk_regen_stamina_, *clk_speed_regen_health_;
 	
-	bool boss_spawned_;
+	bool boss_spawned_, cheat_mode_;
 
 };
 

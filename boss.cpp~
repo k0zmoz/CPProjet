@@ -177,7 +177,7 @@ Boss::Boss () : Character ()
 	step_death_ = 0;
 	room_ = new Rect<int>(LEFT_COORD_ROOM, TOP_COORD_ROOM, RIGHT_COORD_ROOM, BOTTOM_COORD_ROOM);
 	clk_death_ = new Clock();
-	invincible_ = true;
+	invincible_ = false;
 }
 
 	
@@ -343,6 +343,11 @@ int Boss::getSizeBossSprite(Sprite spr, bool width_requested)
 	{
 		return spr.GetSize().y;
 	}
+}
+
+void Boss::setInvincible(bool invi)
+{
+	invincible_ = invi;
 }
 
 /******************************************

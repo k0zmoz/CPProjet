@@ -49,7 +49,7 @@ private:
 	CombatManager *cm_;
 	MusicManager *mm_;
 	Hud *hud_;
-	Menu *menu_start_, *menu_echap_, *menu_end_, *menu_go_;
+	Menu *menu_start_, *menu_echap_, *menu_end_, *menu_go_, *menu_controls_;
 	sf::Clock *clk_display_finish_, *clk_delay_victory_, *clk_door_info_;
 	
 	sf::Font *font_text_;

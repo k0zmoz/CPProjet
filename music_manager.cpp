@@ -56,7 +56,7 @@ MusicManager::MusicManager ()
 	miniboss_music_->SetVolume(50);
 	boss_music_->SetVolume(50);
 	ending_music_->SetVolume(50);
-	game_over_music_->SetVolume(50);
+	game_over_music_->SetVolume(100);
 }
 
 MusicManager::~MusicManager ()

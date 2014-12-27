@@ -80,6 +80,7 @@ CombatManager::CombatManager ()
   clk_speed_regen_health_ = new Clock();
   
   boss_spawned_ = false;
+  cheat_mode_ = false;
 
 }
 
@@ -126,11 +127,14 @@ void CombatManager::run (PlayableChar *pc)
 	//Boss
 	if(!duneyrr_->isAttacking() && !miniboss_->isAlive())
 	{
-		while(!boss_spawned_)
+		/*if(!boss_spawned_)
 		{
 			spawnBoss(duneyrr_);
 		}
-		manageMovBoss(duneyrr_, pc);
+		else
+		{
+			//manageMovBoss(duneyrr_, pc);
+		}*/
 	}
 	/*//Gestions des attaques:
 	
@@ -612,6 +616,7 @@ void CombatManager::checkDamagePc
 (PlayableChar *pc, std::list<Npc *> npc_list, Boss *boss,
 std::list<Crystal *> cryst_list, int range, int radius, int damage)
 {
+	
 	switch(pc->getDir())
 	{
 		case Down:
@@ -633,12 +638,24 @@ std::list<Crystal *> cryst_list, int range, int radius, int damage)
 				}
 			}
 			
-			if(isInRadius2D(boss, pc->getX(), pc->getY() + range, radius + HELP_RADIUS_BOSS
-			&& (!boss->isInvincible())))
+			if(!cheat_mode_)
+			{
+				if(isInRadius2D(boss, pc->getX(), pc->getY() + range, radius + HELP_RADIUS_BOSS)
+				&& (!boss->isInvincible()) && (!miniboss_->isAlive()))
 				{
 					boss->setHealth(boss->getHealth() - damage);
 				}
+			}
+			else
+			{
+				if(isInRadius2D(boss, pc->getX(), pc->getY() + range, radius + HELP_RADIUS_CHEAT)
+				&& (!boss->isInvincible()) && (!miniboss_->isAlive()))
+				{
+					boss->setHealth(boss->getHealth() - damage);
+				}
+			}
 			break;
+		
 		case Up:
 			for(auto npc : npc_list)
 			{
@@ -658,11 +675,22 @@ std::list<Crystal *> cryst_list, int range, int radius, int damage)
 				}
 			}
 			
-			if(isInRadius2D(boss, pc->getX(), pc->getY() - range, radius + HELP_RADIUS_BOSS
-			&& (!boss->isInvincible())))
+			if(!cheat_mode_)
+			{
+				if(isInRadius2D(boss, pc->getX(), pc->getY() - range, radius + HELP_RADIUS_BOSS)
+				&& (!boss->isInvincible()) && (!miniboss_->isAlive()))
 				{
 					boss->setHealth(boss->getHealth() - damage);
 				}
+			}
+			else
+			{
+				if(isInRadius2D(boss, pc->getX(), pc->getY() - range, radius + HELP_RADIUS_CHEAT)
+				&& (!boss->isInvincible()) && (!miniboss_->isAlive()))
+				{
+					boss->setHealth(boss->getHealth() - damage);
+				}
+			}
 			break;
 		case Left:
 			for(auto npc : npc_list)
@@ -683,13 +711,26 @@ std::list<Crystal *> cryst_list, int range, int radius, int damage)
 				}
 			}
 			
-			if(isInRadius2D(boss, pc->getX() - range, pc->getY(), radius + HELP_RADIUS_BOSS
-			&& (!boss->isInvincible())))
+			if(!cheat_mode_)
+			{
+				if(isInRadius2D(boss, pc->getX() - range, pc->getY(), radius + HELP_RADIUS_BOSS)
+				&& (!boss->isInvincible()) && (!miniboss_->isAlive()))
 				{
 					boss->setHealth(boss->getHealth() - damage);
 				}
+			}
+			else
+			{
+				if(isInRadius2D(boss, pc->getX() - range, pc->getY(), radius + HELP_RADIUS_CHEAT)
+				&& (!boss->isInvincible()) && (!miniboss_->isAlive()))
+				{
+					boss->setHealth(boss->getHealth() - damage);
+				}
+			}
+				
 			break;
 		case Right:
+		cout << "boss in radius righ: " << isInRadius2D(boss, pc->getX() + range, pc->getY(), radius + HELP_RADIUS_BOSS) << endl;
 			for(auto npc : npc_list)
 			{
 				if(isInRadius2D(npc, pc->getX() + range, pc->getY(), radius))
@@ -708,12 +749,25 @@ std::list<Crystal *> cryst_list, int range, int radius, int damage)
 				}
 			}
 			
-			if(isInRadius2D(boss, pc->getX() + range, pc->getY(), radius + HELP_RADIUS_BOSS
-			&& (!boss->isInvincible())))
+			if(!cheat_mode_)
+			{
+				if(isInRadius2D(boss, pc->getX() + range, pc->getY(), radius + HELP_RADIUS_BOSS)
+				&& (!boss->isInvincible()) && (!miniboss_->isAlive()))
 				{
 					boss->setHealth(boss->getHealth() - damage);
 				}
+			}
+			else
+			{
+				if(isInRadius2D(boss, pc->getX() + range, pc->getY(), radius + HELP_RADIUS_CHEAT)
+				&& (!boss->isInvincible()) && (!miniboss_->isAlive()))
+				{
+					boss->setHealth(boss->getHealth() - damage);
+				}
+			}
 			break;
+			
+			default : break;
 	}
 } 
 	
@@ -829,5 +883,15 @@ Boss *CombatManager::getBoss ()
 std::list<std::list<Arrow *> >CombatManager::getGeneralList ()
 {
 	return arr_general_list_;
+}
+
+bool CombatManager::getCheatMode ()
+{
+	return cheat_mode_;
+}
+
+void CombatManager::setCheatMode (bool cheat)
+{
+	cheat_mode_ = cheat;
 }
 
