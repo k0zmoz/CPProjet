@@ -6,7 +6,7 @@
 #include "main.hpp"
 
 #define MAP_W 502
-#define MAP_H 500
+#define MAP_H 510
 
 
 #define TILE_W 16

@@ -13,7 +13,7 @@
 #define TILE_H 16
 
 #define DOOR_W 25
-#define DOOR_H 7
+#define DOOR_H 25
 #define LEFT_COORD_DOOR 236
 #define TOP_COORD_DOOR 281
 #define RIGHT_COORD_DOOR 261
