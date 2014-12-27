@@ -36,7 +36,6 @@ void movePos (Direction dir, int move_range);
 int getPosX ();
 int getPosY ();
 int getPos();
-int isWall (int);
 int scan(char *,int);
 void switchDoor (bool open);
 
@@ -49,7 +48,7 @@ private:
  	int pos_x_ = 0, pos_y_ = 0, pos_;
  	char * array_;
 	
-	bool walled_;
+	//bool walled_;
 	
 };
 

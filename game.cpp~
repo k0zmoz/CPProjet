@@ -326,7 +326,7 @@ Game::run ()
 			
 			if(door_opened && clk_door_info_->GetElapsedTime() < DISPLAY_DOOR_INFO)
 			{
-				door_info_->SetPosition(map_->getPosX() - 365, map_->getPosY());
+				door_info_->SetPosition(map_->getPosX() - OFFSET_TEXT, map_->getPosY()- OFFSET_TEXT);
 				door_info_->SetColor(Color(255, 140, 0, 255));
 				win_->Draw(*door_info_);
 			}

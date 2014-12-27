@@ -14,6 +14,7 @@ Map::Map()
 	map1_ = new sf::Sprite(*imap_);
   view_ = new sf::View(sf::FloatRect(0, 0, 1, 1)); // rectangle dont le coin en haut à gauche est en (0,0), de taille 1x1
 	
+	int i = 0;
 	int array_size = MAP_W * MAP_H; // define the size of character array (502x500)
 	array_ = new char[array_size]; // allocating an array 
 	int position = 0; //this will be used incremently to fill characters in the array 
@@ -21,7 +22,7 @@ Map::Map()
   
 	if (!imap_->LoadFromFile("map2test.JPG")) // Si le chargement a échoué
 	{
-		cout<<"Erreur durant le chargement de l'image"<<endl;
+		cerr << "Could not loas map2test.JPG" << endl;
 		exit(EXIT_FAILURE); // On ferme le programme
 	}
 
@@ -42,39 +43,24 @@ Map::Map()
 	//ofstream fichier ("test.txt", ios::out);
 
 	//this loop display all the charaters in array_ till \0 
-		for(int i = 0; array_[i] != '\0'; i++)
+		while(array_[i] != '\0' && array_[i] != '@')
 		{			
-			switch (array_[i])
-			{
-			//	int ligne, colonne;
-				
-				case '@' : 
-          ligne = i / MAP_H;
-					colonne = i %MAP_W;
-					cout << "i = " << i << "col = "<< colonne << "ligne = "<< ligne<< endl;
-			
-
-					map1_->SetPosition(-(colonne * TILE_W), -(ligne * TILE_H));
-					walled_ = false;
-					pos_ = i;
-         break;
-				case '1' : 
-					walled_ = false;
-					break;
-				case '0' : 					
-					walled_ = true;
-					break;
-				case '2' : 					
-					walled_ = true;
-					break;
-				default : break;
-			}
-			
+			i++;
 		}
+		
+		if(array_[i] == '@')
+		{
+			ligne = i / MAP_H;
+			colonne = i % MAP_W;
+			map1_->SetPosition(-(colonne * TILE_W), -(ligne * TILE_H));
+			pos_ = i;
+		}
+		//cout << "i = " << i << "col = "<< colonne << "ligne = "<< ligne<< endl;
 	}
 	else // Le fichier ne peut pas etre ouvert
 	{
-		cout << "File (.txt) could not be opened." << endl;
+		cerr << "Carte23.txt could not be opened." << endl;
+		exit(EXIT_FAILURE);
 	}
 
 }
@@ -92,15 +78,6 @@ void Map::run ()
 	//view_ = new sf::View(sf::FloatRect(0, 0, TILE_W * w_, TILE_H * h_));
 	view_->SetHalfSize(25 * TILE_W, 25 * TILE_H); // Zoom cadre camera
 	updateView();
-}
-
-int Map::isWall (int array_)
-{
-	if(walled_ == true)
-	{
-		return 1;
-	}
-	return 0;
 }
 
 int Map::scan(char * tab, int pos)
@@ -240,18 +217,14 @@ void Map::switchDoor (bool open)
 	
 	for(j = 0; j < DOOR_H; j++)
 	{
-		cout << "j: " << j;
 		for(i = 0; i < DOOR_W; i++)
 		{
-			cout << " i: " << i;
 			if(open)
 			{
-				cout << " open -> "<< "pos: " << pos << endl;
 				array_[pos] = 1;
 			}
 			else
 			{
-				cout << " close -> "<< "pos: " << pos << endl;
 				array_[pos] = 2;
 			}
 			pos++;

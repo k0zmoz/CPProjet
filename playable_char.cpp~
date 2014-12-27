@@ -121,7 +121,7 @@ bool PlayableChar::isHit()
 
 bool PlayableChar::isStaminaUsable()
 {
-	if(clk_use_stamina_->GetElapsedTime())
+	if(clk_use_stamina_->GetElapsedTime() > DELAY_USE_ESCAPE)
 	{
 		clk_use_stamina_->Reset();
 		return true;
