@@ -309,7 +309,7 @@ Game::run ()
 				cm_->getNpc("miniboss")->display(*win_, false);
 			}
 	
-			cm_->displayArrowList(*win_, cm_->getList1());
+			cm_->displayAllArrowList(*win_);
 			cm_->displayCrystalList(*win_, cm_->getCrystalList());
 
 			for(auto cryst : cm_->getCrystalList())

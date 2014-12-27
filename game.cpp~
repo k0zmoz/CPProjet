@@ -309,7 +309,7 @@ Game::run ()
 				cm_->getNpc("miniboss")->display(*win_, false);
 			}
 	
-			cm_->displayArrowList(*win_, cm_->getList1());
+			cm_->displayAllArrowList(*win_, cm_->getGeneralList());
 			cm_->displayCrystalList(*win_, cm_->getCrystalList());
 
 			for(auto cryst : cm_->getCrystalList())
@@ -326,7 +326,7 @@ Game::run ()
 			
 			if(door_opened && clk_door_info_->GetElapsedTime() < DISPLAY_DOOR_INFO)
 			{
-				door_info_->SetPosition(map_->getPosX() - OFFSET_TEXT, map_->getPosY()- OFFSET_TEXT);
+				door_info_->SetPosition(map_->getPosX() - OFFSET_TEXT, map_->getPosY());
 				door_info_->SetColor(Color(255, 140, 0, 255));
 				win_->Draw(*door_info_);
 			}

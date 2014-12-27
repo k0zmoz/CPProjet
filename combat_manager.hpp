@@ -57,12 +57,48 @@
 #define APPEARANCE_BOSS_DELAY 0.8
 
 //Constantes relatives aux Arrow
+
+//Nombre de flèches dans une liste courte et longue distance
+#define AMNT_ARR_SHORT 1
+#define AMNT_ARR_LONG 2
+
+//délai (en s) avant de lancer une autre flèche
+#define LAUNCH_DELAY_SHORT 1
+#define LAUNCH_DELAY_LONG 2
+
+//Distance qu'une flèche doit parcourir avant de respawn
+#define DIST_LIM_SHORT 10
+#define DIST_LIM_LONG 20
+
+//Offset de décalage pour le spawn d'une flèche
+#define OFFSET_ARR_SHORT_W 10
+#define OFFSET_ARR_SHORT_H 10
+#define OFFSET_ARR_LONG_W 10
+#define OFFSET_ARR_LONG_H 10
+
+//Coordonnées du centre de chaque point de spawn de flèche
+#define CENTER_SPAWN_NE_X 10
+#define CENTER_SPAWN_NE_Y 10
+
+#define CENTER_SPAWN_NW_X 20
+#define CENTER_SPAWN_NW_Y 20
+
+#define CENTER_SPAWN_SE_X 30
+#define CENTER_SPAWN_SE_Y 30
+
+#define CENTER_SPAWN_SW_X 40
+#define CENTER_SPAWN_SW_Y 40
+
+#define CENTER_SPAWN_MID_X 50
+#define CENTER_SPAWN_MID_Y 50
+
+/*
 #define AMNT_ARR_LIST1 1 //nombre de flèches dans list1
 #define SPAWN_LIST1_X 0 // abscisse du spawn des flèches de list1
 #define SPAWN_LIST1_Y -1472 //ordonnée du spawn des flèches de list1
 #define LAUNCH_LIST1_DELAY 2 //délai (en s) avant de lancer une autre flèche de list1
-#define DIST_LIM_LIST1 100 //Distance qu'un objet de list1 doit parcourir avant de respawn
-
+#define DIST_LIM_LIST1 100 //Distance qu'un objet de list3 doit parcourir avant de respawn
+*/
 
 //Constantes relatives au PlayableChar (PC)
 
@@ -100,7 +136,6 @@ public:
 	
 	//Gestion des déplacements
 	void wander (Character *chara);
-	//void lookToCoord (Character *chara, int x, int y);
 	void headToCoord (Character *chara, int x, int y);
 	
 	void moveChar(Character *chara, int x, int y, int speed, int amnt_sprite);
@@ -111,10 +146,12 @@ public:
 	void manageMovBoss(Boss *boss, PlayableChar *pc);
 	void manageMovArrList
 	(std::list<Arrow *> arr_list, int spawn_x, int spawn_y, int dist_lim, int launch_delay);
+	void manageMovAllArrList ();
 	
 	void launchNextArrow(std::list<Arrow *> arr_list);
 	void spawnBoss(Boss *boss);
 	void displayArrowList(sf::RenderTarget &rt, std::list<Arrow *> arr_list);
+	void displayAllArrowList(sf::RenderTarget &rt);
 	void displayCrystalList(sf::RenderTarget &rt, std::list<Crystal *> cryst_list);
 	
 	//Gestion des attaques
@@ -131,7 +168,8 @@ public:
 	void checkDamagePc
 	(PlayableChar *pc, std::list<Npc *> npc_list, Boss *boss,
 	std::list<Crystal *> cryst_list, int range, int radius, int damage);
-	void checkDamageArrow(std::list<Arrow *> arr_list, PlayableChar *pc, int damage);	
+	void checkDamageArrow(std::list<Arrow *> arr_list, PlayableChar *pc, int damage);
+	void checkDamageAllArrowList(PlayableChar *pc, int damage);
 	
 	void checkDamages(PlayableChar *pc);
 	
@@ -143,7 +181,7 @@ public:
 	Crystal *getCrystal (std::string epithet);
 	std::list<Crystal *> getCrystalList ();
 	Boss *getBoss ();
-	std::list<Arrow *> getList1();
+	std::list<std::list<Arrow *> > getGeneralList();
 
 private:
 	
@@ -153,7 +191,10 @@ private:
 	
 	Crystal *cryst_mob_, *cryst_trap1_, *cryst_trap2_;
 	std::list<Crystal *> cryst_list_;
-	std::list<Arrow *> arr_list1_;
+	std::list<Arrow *> arr_short_list1_, arr_short_list2_, arr_short_list3_, arr_short_list4_,
+	arr_short_list5_, arr_short_list6_, arr_short_list7_, arr_short_list8_;
+	std::list<Arrow *> arr_long_list1_, arr_long_list2_;
+	std::list<std::list<Arrow *> > arr_general_list_;
 	
 	sf::Clock *clk_mov_npc_, *clk_mov_boss_;
 	sf::Clock *clk_launch_arr_list1;

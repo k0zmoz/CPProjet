@@ -20,9 +20,9 @@ Map::Map()
 	int position = 0; //this will be used incremently to fill characters in the array 
 	int ligne = 0, colonne = 0;
   
-	if (!imap_->LoadFromFile("map2test.JPG")) // Si le chargement a échoué
+	if (!imap_->LoadFromFile("map_trapped.png")) // Si le chargement a échoué
 	{
-		cerr << "Could not loas map2test.JPG" << endl;
+		cerr << "Could not load map_trapped.png" << endl;
 		exit(EXIT_FAILURE); // On ferme le programme
 	}
 

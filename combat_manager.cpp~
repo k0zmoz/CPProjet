@@ -23,10 +23,52 @@ CombatManager::CombatManager ()
   cryst_list_.push_back(cryst_trap2_);
   
   
-  for (int i = 0; i < AMNT_ARR_LIST1; i++)
+  for (int i = 0; i < AMNT_ARR_SHORT; i++)
   {
-		arr_list1_.push_front(new Arrow(Right, SPAWN_LIST1_X, SPAWN_LIST1_Y));
+		arr_short_list1_.push_front(new Arrow(Left,
+		CENTER_SPAWN_NE_X - OFFSET_ARR_SHORT_W, CENTER_SPAWN_NE_Y + OFFSET_ARR_SHORT_H));
+		
+		arr_short_list2_.push_front(new Arrow(Right,
+		CENTER_SPAWN_NE_X + OFFSET_ARR_SHORT_W, CENTER_SPAWN_NE_Y + OFFSET_ARR_SHORT_H));
+		
+		arr_short_list3_.push_front(new Arrow(Left,
+		CENTER_SPAWN_NW_X - OFFSET_ARR_SHORT_W, CENTER_SPAWN_NW_Y + OFFSET_ARR_SHORT_H));
+		
+		arr_short_list4_.push_front(new Arrow(Right,
+		CENTER_SPAWN_NW_X + OFFSET_ARR_SHORT_W, CENTER_SPAWN_NW_Y + OFFSET_ARR_SHORT_H));
+		
+		arr_short_list5_.push_front(new Arrow(Left,
+		CENTER_SPAWN_SE_X - OFFSET_ARR_SHORT_W, CENTER_SPAWN_SE_Y + OFFSET_ARR_SHORT_H));
+		
+		arr_short_list6_.push_front(new Arrow(Right,
+		CENTER_SPAWN_SE_X + OFFSET_ARR_SHORT_W, CENTER_SPAWN_SE_Y + OFFSET_ARR_SHORT_H));
+		
+		arr_short_list7_.push_front(new Arrow(Left,
+		CENTER_SPAWN_SW_X - OFFSET_ARR_SHORT_W, CENTER_SPAWN_SW_Y + OFFSET_ARR_SHORT_H));
+		
+		arr_short_list8_.push_front(new Arrow(Right,
+		CENTER_SPAWN_SW_X + OFFSET_ARR_SHORT_W, CENTER_SPAWN_SW_Y + OFFSET_ARR_SHORT_H));
 	}
+	
+	for (int j = 0; j < AMNT_ARR_LONG; j++)
+  {
+  	arr_long_list1_.push_front(new Arrow(Up,
+		CENTER_SPAWN_MID_X + OFFSET_ARR_LONG_W, CENTER_SPAWN_MID_Y - OFFSET_ARR_LONG_H));
+		
+		arr_long_list2_.push_front(new Arrow(Down,
+		CENTER_SPAWN_MID_X + OFFSET_ARR_LONG_W, CENTER_SPAWN_MID_Y + OFFSET_ARR_LONG_H));
+	}
+	
+	arr_general_list_.push_front(arr_short_list1_);
+	arr_general_list_.push_front(arr_short_list2_);
+	arr_general_list_.push_front(arr_short_list3_);
+	arr_general_list_.push_front(arr_short_list4_);
+	arr_general_list_.push_front(arr_short_list5_);
+	arr_general_list_.push_front(arr_short_list6_);
+	arr_general_list_.push_front(arr_short_list7_);
+	arr_general_list_.push_front(arr_short_list8_);
+	arr_general_list_.push_front(arr_long_list1_);
+	arr_general_list_.push_front(arr_long_list2_);
 	
 	clk_mov_npc_ = new Clock();
   clk_mov_boss_ = new Clock();
@@ -51,9 +93,12 @@ CombatManager::~CombatManager()
 	delete cryst_trap1_;
 	delete cryst_trap2_;
 
-	for(auto arr : arr_list1_)
+	for(auto list_arr : arr_general_list_)
 	{
-		delete arr;
+		for(auto arr : list_arr)
+		{
+			delete arr;
+		}
 	}
 	
 	delete clk_mov_npc_;
@@ -75,9 +120,9 @@ void CombatManager::run (PlayableChar *pc)
 	{
 		manageMovNpc(trash_mob_, pc);
 	}
-	/*//Arrow
-	manageMovArrList(arr_list1_, SPAWN_LIST1_X, SPAWN_LIST1_Y, DIST_LIM_LIST1, LAUNCH_LIST1_DELAY);		
-	*/
+	//Arrow
+	manageMovAllArrList();		
+	
 	//Boss
 	if(!duneyrr_->isAttacking() && !miniboss_->isAlive())
 	{
@@ -218,11 +263,6 @@ void CombatManager::headToCoord (Character *chara, int x, int y)
 			chara->look(Down);
 		}
 	}
-/*	else
-	{
-		lookToCoord(chara, x, y);
-	}
-*/
 }
 
 void CombatManager::moveChar (Character *chara, int x, int y, int speed, int amnt_sprite)
@@ -333,6 +373,49 @@ void CombatManager::manageMovArrList
 	}
 }
 
+void CombatManager::manageMovAllArrList()
+{
+	manageMovArrList(arr_short_list1_,
+	CENTER_SPAWN_NE_X - OFFSET_ARR_SHORT_W, CENTER_SPAWN_NE_Y + OFFSET_ARR_SHORT_H,
+	DIST_LIM_SHORT,  LAUNCH_DELAY_SHORT);
+	
+	manageMovArrList(arr_short_list2_,
+	CENTER_SPAWN_NE_X + OFFSET_ARR_SHORT_W, CENTER_SPAWN_NE_Y + OFFSET_ARR_SHORT_H,
+	DIST_LIM_SHORT,  LAUNCH_DELAY_SHORT);
+	
+	manageMovArrList(arr_short_list3_,
+	CENTER_SPAWN_NW_X - OFFSET_ARR_SHORT_W, CENTER_SPAWN_NW_Y + OFFSET_ARR_SHORT_H,
+	DIST_LIM_SHORT,  LAUNCH_DELAY_SHORT);
+	
+	manageMovArrList(arr_short_list4_,
+	CENTER_SPAWN_NW_X + OFFSET_ARR_SHORT_W, CENTER_SPAWN_NW_Y + OFFSET_ARR_SHORT_H,
+	DIST_LIM_SHORT,  LAUNCH_DELAY_SHORT);
+	
+	manageMovArrList(arr_short_list5_,
+	CENTER_SPAWN_SE_X - OFFSET_ARR_SHORT_W, CENTER_SPAWN_SE_Y + OFFSET_ARR_SHORT_H,
+	DIST_LIM_SHORT,  LAUNCH_DELAY_SHORT);
+	
+	manageMovArrList(arr_short_list6_,
+	CENTER_SPAWN_SE_X + OFFSET_ARR_SHORT_W, CENTER_SPAWN_SE_Y + OFFSET_ARR_SHORT_H,
+	DIST_LIM_SHORT,  LAUNCH_DELAY_SHORT);
+	
+	manageMovArrList(arr_short_list7_,
+	CENTER_SPAWN_SW_X - OFFSET_ARR_SHORT_W, CENTER_SPAWN_SW_Y + OFFSET_ARR_SHORT_H,
+	DIST_LIM_SHORT,  LAUNCH_DELAY_SHORT);
+	
+	manageMovArrList(arr_short_list8_,
+	CENTER_SPAWN_SW_X + OFFSET_ARR_SHORT_W, CENTER_SPAWN_SW_Y + OFFSET_ARR_SHORT_H,
+	DIST_LIM_SHORT,  LAUNCH_DELAY_SHORT);
+	
+	manageMovArrList(arr_long_list1_,
+	CENTER_SPAWN_MID_X + OFFSET_ARR_LONG_W, CENTER_SPAWN_MID_Y - OFFSET_ARR_LONG_H,
+	DIST_LIM_LONG,  LAUNCH_DELAY_LONG);
+	
+	manageMovArrList(arr_long_list2_,
+	CENTER_SPAWN_MID_X + OFFSET_ARR_LONG_W, CENTER_SPAWN_MID_Y + OFFSET_ARR_LONG_H,
+	DIST_LIM_LONG,  LAUNCH_DELAY_LONG);
+}
+
 void CombatManager::launchNextArrow(std::list<Arrow *> arr_list)
 {
 	std::list<Arrow *>::iterator it = arr_list.begin();
@@ -357,6 +440,7 @@ void CombatManager::spawnBoss(Boss *boss)
 	
 	if(isInRadius2D(boss, CENTER_ROOM_BOSS_X, CENTER_ROOM_BOSS_Y, RADIUS_LOCATE_COORD))
 	{
+		boss->setInvincible(false);
 		boss_spawned_ = true;
 		clk_mov_boss_->Reset();
 	}
@@ -369,6 +453,14 @@ void CombatManager::displayArrowList(sf::RenderTarget &rt, std::list<Arrow *> ar
 	{
 		(*it)->display(rt);
 		it++;
+	}
+}
+
+void CombatManager::displayAllArrowList(sf::RenderTarget &rt)
+{
+	for(auto arr_list : arr_general_list_)
+	{
+		displayArrowList(rt, arr_list);
 	}
 }
 
@@ -629,10 +721,18 @@ void CombatManager::checkDamageArrow(std::list<Arrow *> arr_list, PlayableChar *
 {
 	for(auto arr : arr_list)
 	{
-		if(isInRadius2D(pc, arr->getX(), arr->getY(), 1))
+		if(isInRadius2D(pc, arr->getX(), arr->getY(), 10))
 		{
 			pc->setHealth(pc->getHealth() - damage);
 		}
+	}
+}
+
+void CombatManager::checkDamageAllArrowList(PlayableChar *pc, int damage)
+{
+	for(auto arr_list : arr_general_list_)
+	{
+		checkDamageArrow(arr_list, pc, damage);
 	}
 }
 
@@ -646,7 +746,7 @@ void CombatManager::checkDamages(PlayableChar * pc)
 		RANGE_PC_ATK, RADIUS_PC_ATK, DAMAGE_PC);
 	}
 	
-	checkDamageArrow(arr_list1_, pc, ARROW_DAMAGE);
+	checkDamageAllArrowList(pc, ARROW_DAMAGE);
 }
 
 
@@ -726,8 +826,8 @@ Boss *CombatManager::getBoss ()
 	return duneyrr_;
 }
 
-std::list<Arrow *>CombatManager::getList1 ()
+std::list<std::list<Arrow *> >CombatManager::getGeneralList ()
 {
-	return arr_list1_;
+	return arr_general_list_;
 }
 
