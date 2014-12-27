@@ -3,7 +3,6 @@
 
 #include <SFML/Graphics.hpp>
 #include "main.hpp"
-//#include <Vector>
 
 //Constantes définissant le nombre de sprites pour chaque type de character
 

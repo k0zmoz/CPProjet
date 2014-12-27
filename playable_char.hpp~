@@ -12,19 +12,20 @@
 #define MOV_DIFF_CHAR_H 35 //hauteur entre deux sprites
 
 //Constantes d'initialisation des sprites d'attaques
-#define ATK_CHAR_W 50 //largeur d'un sprite
-#define ATK_CHAR_H 67 //hauteur d'un sprite
-#define ATK_DIFF_CHAR_H 35 //hauteur entre deux sprites
+#define ATK_CHAR_W 50
+#define ATK_CHAR_H 67
+#define ATK_DIFF_CHAR_H 35
 
-#define ESCAPE_RANGE 20
-#define HEALTH_PC 20
-#define DAMAGE_PC 5
-#define AMNT_ESCAPE_PC 2
 
-#define DELAY_USE_ESCAPE 1
-#define DELAY_REGEN_STAMINA 4
-#define DELAY_REGEN_HEALTH 20
-#define SPEED_REGEN_HEALTH 3
+#define ESCAPE_RANGE 20 //Distance parcourue par un pc lors d'une esquive
+#define HEALTH_PC 30 //Vie totale d'un pc
+#define DAMAGE_PC 5 //Dommages portés lors d'une attaque de pc
+#define AMNT_ESCAPE_PC 2 //Nombre d'esquives disponibles pour un pc
+
+#define DELAY_USE_ESCAPE 1 //temps (en s) entre deux utilisations de l'esquive 
+#define DELAY_REGEN_STAMINA 4 //temps (en s) avant de régénérer l'endurance
+#define DELAY_REGEN_HEALTH 12 //temps (en s) avant de régénérer la vie
+#define SPEED_REGEN_HEALTH 3 //Nombre de points de vie rendus par tick de régénération
 
 class PlayableChar: public Character
 {

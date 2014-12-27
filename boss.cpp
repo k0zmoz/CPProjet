@@ -170,7 +170,7 @@ Boss::Boss () : Character ()
 		}
 	}
 	
-	dir_ = Up;
+	dir_ = Right;
 	health_ = HEALTH_BOSS;
 	x_ =  SPAWN_BOSS_X;
 	y_ =  SPAWN_BOSS_Y;

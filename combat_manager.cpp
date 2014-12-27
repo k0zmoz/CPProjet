@@ -8,15 +8,15 @@ using namespace std;
 
 CombatManager::CombatManager ()
 {
-  trash_mob_ = new Npc (0, -1472, false);
-  miniboss_ = new Npc(0, -1400, true);
+  trash_mob_ = new Npc (CENTER_ROOM_NPC_X, CENTER_ROOM_NPC_Y, false);
+  miniboss_ = new Npc(CENTER_ROOM_MINIBOSS_X, CENTER_ROOM_MINIBOSS_Y, true);
   duneyrr_ = new Boss();
   npc_list_.push_back(trash_mob_);
   npc_list_.push_back(miniboss_);
   
-  cryst_mob_ = new Crystal(Fire, -30, -900);
-  cryst_trap1_ = new Crystal(Water, 30, -800);
-  cryst_trap2_ = new Crystal(Water, 30, -850);
+  cryst_mob_ = new Crystal(Fire, SPAWN_CRYST_FIR_X, SPAWN_CRYST_FIR_Y);
+  cryst_trap1_ = new Crystal(Water, SPAWN_CRYST_WAT1_X, SPAWN_CRYST_WAT1_Y);
+  cryst_trap2_ = new Crystal(Water, SPAWN_CRYST_WAT2_X, SPAWN_CRYST_WAT2_Y);
   
   cryst_list_.push_back(cryst_mob_);
   cryst_list_.push_back(cryst_trap1_);
@@ -127,20 +127,20 @@ void CombatManager::run (PlayableChar *pc)
 	//Boss
 	if(!duneyrr_->isAttacking() && !miniboss_->isAlive())
 	{
-		/*if(!boss_spawned_)
+		if(!boss_spawned_)
 		{
 			spawnBoss(duneyrr_);
 		}
 		else
 		{
-			//manageMovBoss(duneyrr_, pc);
-		}*/
+			manageMovBoss(duneyrr_, pc);
+		}
 	}
-	/*//Gestions des attaques:
+	//Gestions des attaques:
 	
 	//IA
 	checkOpportunities(npc_list_, pc, duneyrr_);
-	*/
+	
 	//Dégâts:
 	checkDamages(pc);
 	
@@ -154,11 +154,11 @@ bool CombatManager::isInRadius1D (Character *chara, int coord, int radius, bool 
 {
 	if(test_absciss)
 	{
-		return ( (chara->getX() > coord - radius) && (chara->getX() < coord + radius) );
+		return ( (chara->getX() > (coord - radius)) && (chara->getX() < (coord + radius)) );
 	}
 	else
 	{
-		return ( (chara->getY() > coord - radius) && (chara->getY() < coord + radius) );
+		return ( (chara->getY() > (coord - radius)) && (chara->getY() < (coord + radius)) );
 	}
 }
 
@@ -218,8 +218,7 @@ void CombatManager::headToCoord (Character *chara, int x, int y)
 		/*Si Character au Sud Est du point on aligne son abscisse en 1er
 		(déplacement à gauche)*/
 		if(chara->getX() > x && chara->getY() > y
-		&& !isInRadius1D(chara, x, RADIUS_LOCATE_COORD, true)
-		&& !isInRadius1D(chara, y, RADIUS_LOCATE_COORD, false))
+		&& (!isInRadius1D(chara, x, RADIUS_LOCATE_COORD, true)))
 		{
 			chara->look(Left);
 		}
@@ -227,16 +226,15 @@ void CombatManager::headToCoord (Character *chara, int x, int y)
 		/*Si Character au Sud Ouest du point on aligne son abscisse en 1er
 		(déplacement à droite)*/
 		else if(chara->getX() < x && chara->getY() > y
-		&& !isInRadius1D(chara, x, RADIUS_LOCATE_COORD, true)
-		&& !isInRadius1D(chara, y, RADIUS_LOCATE_COORD, false))
+		&& (!isInRadius1D(chara, x, RADIUS_LOCATE_COORD, true)))
 		{
 			chara->look(Right);
 		}
 		
 		//Si Character au Sud du point on le déplace vers le Nord
 		else if(chara->getY() > y
-		&& isInRadius1D(chara, x, RADIUS_LOCATE_COORD, true)
-		&& !isInRadius1D(chara, y, RADIUS_LOCATE_COORD, false))
+		&& (isInRadius1D(chara, x, RADIUS_LOCATE_COORD, true))
+		&& (!isInRadius1D(chara, y, RADIUS_LOCATE_COORD, false)))
 		{
 			chara->look(Up);
 		}
@@ -244,8 +242,7 @@ void CombatManager::headToCoord (Character *chara, int x, int y)
 		/*Si Character au Nord Est du point on aligne son abscisse en 1er
 		(déplacement à gauche)*/
 		else if(chara->getX() > x && chara-> getY() < y
-		&& !isInRadius1D(chara, x, RADIUS_LOCATE_COORD, true)
-		&& !isInRadius1D(chara, y, RADIUS_LOCATE_COORD, false))
+		&& (!isInRadius1D(chara, x, RADIUS_LOCATE_COORD, true)))
 		{
 			chara->look(Left);
 		}
@@ -253,16 +250,15 @@ void CombatManager::headToCoord (Character *chara, int x, int y)
 		/*Si Character au Nord Ouest du point on aligne son abscisse en 1er
 		(déplacement à droite)*/
 		else if(chara->getX() < x && chara-> getY() < y
-		&& !isInRadius1D(chara, x, RADIUS_LOCATE_COORD, true)
-		&& !isInRadius1D(chara, y, RADIUS_LOCATE_COORD, false))
+		&& (!isInRadius1D(chara, x, RADIUS_LOCATE_COORD, true)))
 		{
 			chara->look(Right);
 		}
 		
 		//Si Character au Nord du point on le déplace vers le Sud
 		else if(chara->getY() < y
-		&& isInRadius1D(chara, x, RADIUS_LOCATE_COORD, true)
-		&& !isInRadius1D(chara, y, RADIUS_LOCATE_COORD, false))
+		&& (isInRadius1D(chara, x, RADIUS_LOCATE_COORD, true)
+		&& !isInRadius1D(chara, y, RADIUS_LOCATE_COORD, false)))
 		{
 			chara->look(Down);
 		}
@@ -321,6 +317,7 @@ void CombatManager::manageMovNpc(Npc *npc, PlayableChar *pc)
 	//Sinon le mob retourne au centre de la salle
 	else
 	{
+		cout << "retourne au centre" << "x: " << npc->getX() << " y: " << npc->getY() << endl;
 		moveChar(npc, CENTER_ROOM_NPC_X, CENTER_ROOM_NPC_Y, NPC_SPEED, MOV_AMNT_SPRITE_NPC);
 	}
 }
@@ -355,7 +352,6 @@ void CombatManager::manageMovBoss(Boss *boss, PlayableChar *pc)
 	//Sinon le boss retourne au centre de la salle
 	else
 	{
-		//cout << "boss go middle" << endl;
 		moveChar(boss, CENTER_ROOM_BOSS_X, CENTER_ROOM_BOSS_Y, BOSS_SPEED, MOV_AMNT_SPRITE_BOSS);
 	}
 }
@@ -640,7 +636,7 @@ std::list<Crystal *> cryst_list, int range, int radius, int damage)
 			
 			if(!cheat_mode_)
 			{
-				if(isInRadius2D(boss, pc->getX(), pc->getY() + range, radius + HELP_RADIUS_BOSS)
+				if(isInRadius2D(boss, pc->getX(), pc->getY() + range, radius + HELP_RADIUS_REGULAR)
 				&& (!boss->isInvincible()) && (!miniboss_->isAlive()))
 				{
 					boss->setHealth(boss->getHealth() - damage);
@@ -677,7 +673,7 @@ std::list<Crystal *> cryst_list, int range, int radius, int damage)
 			
 			if(!cheat_mode_)
 			{
-				if(isInRadius2D(boss, pc->getX(), pc->getY() - range, radius + HELP_RADIUS_BOSS)
+				if(isInRadius2D(boss, pc->getX(), pc->getY() - range, radius + HELP_RADIUS_REGULAR)
 				&& (!boss->isInvincible()) && (!miniboss_->isAlive()))
 				{
 					boss->setHealth(boss->getHealth() - damage);
@@ -713,7 +709,7 @@ std::list<Crystal *> cryst_list, int range, int radius, int damage)
 			
 			if(!cheat_mode_)
 			{
-				if(isInRadius2D(boss, pc->getX() - range, pc->getY(), radius + HELP_RADIUS_BOSS)
+				if(isInRadius2D(boss, pc->getX() - range, pc->getY(), radius + HELP_RADIUS_REGULAR)
 				&& (!boss->isInvincible()) && (!miniboss_->isAlive()))
 				{
 					boss->setHealth(boss->getHealth() - damage);
@@ -730,7 +726,6 @@ std::list<Crystal *> cryst_list, int range, int radius, int damage)
 				
 			break;
 		case Right:
-		cout << "boss in radius righ: " << isInRadius2D(boss, pc->getX() + range, pc->getY(), radius + HELP_RADIUS_BOSS) << endl;
 			for(auto npc : npc_list)
 			{
 				if(isInRadius2D(npc, pc->getX() + range, pc->getY(), radius))
@@ -751,7 +746,7 @@ std::list<Crystal *> cryst_list, int range, int radius, int damage)
 			
 			if(!cheat_mode_)
 			{
-				if(isInRadius2D(boss, pc->getX() + range, pc->getY(), radius + HELP_RADIUS_BOSS)
+				if(isInRadius2D(boss, pc->getX() + range, pc->getY(), radius + HELP_RADIUS_REGULAR)
 				&& (!boss->isInvincible()) && (!miniboss_->isAlive()))
 				{
 					boss->setHealth(boss->getHealth() - damage);

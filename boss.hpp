@@ -40,8 +40,8 @@
 #define HEALTH_BOSS 10
 
 //Point de spawn
-#define SPAWN_BOSS_X 0
-#define SPAWN_BOSS_Y -1000
+#define SPAWN_BOSS_X -800
+#define SPAWN_BOSS_Y 4544
 
 //Coordonnées de la salle du boss (rectangulaire)
 #define LEFT_COORD_ROOM -1150

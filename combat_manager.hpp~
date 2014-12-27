@@ -20,27 +20,29 @@
 //Vitesse à laquelle un Npc change de direction aléatoirement
 #define SWITCH_DIR_SPEED_NPC 0.5
 //Centre de la salle du NPC
-#define CENTER_ROOM_NPC_X 0
-#define CENTER_ROOM_NPC_Y -1388
+#define CENTER_ROOM_NPC_X 436
+#define CENTER_ROOM_NPC_Y 2400
+//Centre de la salle du miniboss
+#define CENTER_ROOM_MINIBOSS_X 32
+#define CENTER_ROOM_MINIBOSS_Y 4528
 //Rayon dans lequel un Npc peut se déplacer aléatoirement au centre de sa salle
-#define RADIUS_ROOM_NPC 200
+#define RADIUS_ROOM_NPC 100
 //Rayon dans lequel un Npc peut trouver un Playable_char
 #define RADIUS_NPC_LOCATE_PC 50
 //Rayon dans lequel un Npc essaye d'attaquer
-#define RADIUS_NPC_AGGRO 100
+#define RADIUS_NPC_AGGRO 20
 //Distance à laquelle un npc touche le joueur
 #define RANGE_NPC_ATK 20
 //Rayon dans lequel une attaque de npc fait effet
 #define RADIUS_NPC_ATK 100
-
 //Delai (en s) au delà duquel vérifier si un Npc peut attaquer
-#define CHK_OPPORT_NPC_DELAY 3 
+#define CHK_OPPORT_NPC_DELAY 2 
 
 //Constantes relatives aux Boss
 
 //Centre de la salle du Boss
-#define CENTER_ROOM_BOSS_X 0
-#define CENTER_ROOM_BOSS_Y -1000
+#define CENTER_ROOM_BOSS_X 32
+#define CENTER_ROOM_BOSS_Y 4528
 //Rayon dans lequel un Boss peut se déplacer aléatoirement au centre de sa salle
 #define RADIUS_ROOM_BOSS 200
 //Rayon dans lequel un Boss peut trouver un Playable_char
@@ -54,51 +56,43 @@
 //Delai (en s) au delà duquel vérifier si un Npc peut attaquer
 #define CHK_OPPORT_BOSS_DELAY 2
  //temps (en s) entre deux mouvements lors de l'animation d'apparition du boss
-#define APPEARANCE_BOSS_DELAY 0.8
+#define APPEARANCE_BOSS_DELAY 0.4
 
 //Constantes relatives aux Arrow
 
 //Nombre de flèches dans une liste courte et longue distance
-#define AMNT_ARR_SHORT 1
-#define AMNT_ARR_LONG 2
-
+#define AMNT_ARR_SHORT 5
+#define AMNT_ARR_LONG 10
 //délai (en s) avant de lancer une autre flèche
 #define LAUNCH_DELAY_SHORT 1
 #define LAUNCH_DELAY_LONG 2
-
 //Distance qu'une flèche doit parcourir avant de respawn
-#define DIST_LIM_SHORT 10
-#define DIST_LIM_LONG 20
-
+#define DIST_LIM_SHORT 400
+#define DIST_LIM_LONG 1600
 //Offset de décalage pour le spawn d'une flèche
-#define OFFSET_ARR_SHORT_W 10
-#define OFFSET_ARR_SHORT_H 10
-#define OFFSET_ARR_LONG_W 10
-#define OFFSET_ARR_LONG_H 10
-
+#define OFFSET_ARR_SHORT_W 80
+#define OFFSET_ARR_SHORT_H 48
+#define OFFSET_ARR_LONG_W 48
+#define OFFSET_ARR_LONG_H 96
 //Coordonnées du centre de chaque point de spawn de flèche
-#define CENTER_SPAWN_NE_X 10
-#define CENTER_SPAWN_NE_Y 10
+#define CENTER_SPAWN_NE_X -2864
+#define CENTER_SPAWN_NE_Y 1136
+#define CENTER_SPAWN_NW_X 2272
+#define CENTER_SPAWN_NW_Y 1136
+#define CENTER_SPAWN_SE_X -2864
+#define CENTER_SPAWN_SE_Y 1712
+#define CENTER_SPAWN_SW_X -2272
+#define CENTER_SPAWN_SW_Y 1712
+#define CENTER_SPAWN_MID_X -2576
+#define CENTER_SPAWN_MID_Y 2416
 
-#define CENTER_SPAWN_NW_X 20
-#define CENTER_SPAWN_NW_Y 20
-
-#define CENTER_SPAWN_SE_X 30
-#define CENTER_SPAWN_SE_Y 30
-
-#define CENTER_SPAWN_SW_X 40
-#define CENTER_SPAWN_SW_Y 40
-
-#define CENTER_SPAWN_MID_X 50
-#define CENTER_SPAWN_MID_Y 50
-
-/*
-#define AMNT_ARR_LIST1 1 //nombre de flèches dans list1
-#define SPAWN_LIST1_X 0 // abscisse du spawn des flèches de list1
-#define SPAWN_LIST1_Y -1472 //ordonnée du spawn des flèches de list1
-#define LAUNCH_LIST1_DELAY 2 //délai (en s) avant de lancer une autre flèche de list1
-#define DIST_LIM_LIST1 100 //Distance qu'un objet de list3 doit parcourir avant de respawn
-*/
+//Constantes relatives aux cristaux
+#define SPAWN_CRYST_WAT1_X -3264
+#define SPAWN_CRYST_WAT1_Y 736
+#define SPAWN_CRYST_WAT2_X -3264
+#define SPAWN_CRYST_WAT2_Y 4080
+#define SPAWN_CRYST_FIR_X 3424
+#define SPAWN_CRYST_FIR_Y 2416
 
 //Constantes relatives au PlayableChar (PC)
 
@@ -110,10 +104,8 @@
 /*Le sprite du boss étant large mais sa hitbox étroite,
 on définit une aide pour augmenter le rayon d'action d'une attaque de pc
 sur le boss afin que le jeu ne soit pas trop frustrant*/
-#define HELP_RADIUS_BOSS 100
-
-#define HELP_CHEAT_MODE 1000
-
+#define HELP_RADIUS_REGULAR 100
+#define HELP_RADIUS_CHEAT 1000
 
 
 using namespace sf;

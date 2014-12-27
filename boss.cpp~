@@ -56,7 +56,7 @@ Boss::Boss () : Character ()
 		}
 	}
 	
-	if(! general_atks_->LoadFromFile("./sprite/boss/Duneyrr_atking2.png")){
+	if(! general_atks_->LoadFromFile("./sprite/boss/Duneyrr_atking.png")){
 		cerr << "Error Loading boss walk Image" << endl;
 		exit(EXIT_FAILURE);
 	}
@@ -129,7 +129,7 @@ Boss::Boss () : Character ()
 		}
 	}
 	
-	if(! general_deaths_->LoadFromFile("./sprite/boss/Duneyrr_dying2.png")){
+	if(! general_deaths_->LoadFromFile("./sprite/boss/Duneyrr_dying.png")){
 		cerr << "Error Loading boss walk Image" << endl;
 		exit(EXIT_FAILURE);
 	}
