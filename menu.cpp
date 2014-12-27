@@ -15,6 +15,17 @@ Menu::Menu (GameState state)
   background_img_ = new sf::Image;
 	background_spr_ = new sf::Sprite(*background_img_);
 	
+	controls_img_ = new sf::Image;
+	controls_spr_ = new sf::Sprite(*controls_img_);
+	
+	if (!controls_img_->LoadFromFile("Menu/controls.png"))
+	{
+		cout<< "Erreur durant le chargement de l'image controls" << endl;
+		exit(EXIT_FAILURE);
+	}
+
+	controls_spr_->SetSubRect(IntRect(0, 0, 800, 600));
+
 	if(state != GameOver)
 	{
 		if (!background_img_->LoadFromFile("Menu/background.png"))
@@ -39,9 +50,12 @@ Menu::Menu (GameState state)
 		case Start:
 			buttons_.push_front(new Button(Play));
 			buttons_.push_front(new Button(Exit));
+			buttons_.push_front(new Button(Controls));
 	
+			
 			play_exit_red_img_ = new sf::Image;
 			play_exit_red_spr_ = new sf::Sprite(*play_exit_red_img_);
+			
 			if (!play_exit_red_img_->LoadFromFile("Menu/play_exitred.png"))
 			{
 				cout<<"Erreur durant le chargement de l'image play_exitred"<<endl;
@@ -53,20 +67,36 @@ Menu::Menu (GameState state)
 			play_exit_violet_img_ = new sf::Image;
 			startgame_playspr_ = new sf::Sprite(*play_exit_violet_img_);
 			startgame_exitspr_ = new sf::Sprite(*play_exit_violet_img_);
+			startgame_controlsspr_ = new sf::Sprite(*play_exit_violet_img_);
+			
 			if (!play_exit_violet_img_->LoadFromFile("Menu/play_exitviolet.png"))
 			{
-				cout<<"Erreur durant le chargement de l'image play_exitviolet"<<endl;
+				cout << "Erreur durant le chargement de l'image play_exitviolet" << endl;
 				exit(EXIT_FAILURE);
 			}
 			startgame_playspr_->SetSubRect(IntRect(373, 288, 502, 374));	
 			startgame_playspr_->SetPosition(373,288);
 			startgame_exitspr_->SetSubRect(IntRect(371, 426, 515, 518));	
 			startgame_exitspr_->SetPosition(371,426);
+			startgame_controlsspr_->SetSubRect(IntRect(5, 40, 240, 110));	
+			startgame_controlsspr_->SetPosition(5,40);
 			break;
 			
 		case Pause :
 			buttons_.push_front(new Button(Resume));
 		  buttons_.push_front(new Button(ExitThroughPause));
+		  buttons_.push_front(new Button(ControlsThroughPause));
+		  
+		  controls_img_ = new sf::Image;
+			controls_spr_ = new sf::Sprite(*controls_img_);
+		  
+		  if (!controls_img_->LoadFromFile("Menu/controls.png"))
+			{
+				cout<< "Erreur durant le chargement de l'image controls" << endl;
+				exit(EXIT_FAILURE);
+			}
+		
+			controls_spr_->SetSubRect(IntRect(0, 0, 800, 600));
 		  
 		  resume_exit_red_img_ = new sf::Image;
 			resume_exit_red_spr_ = new sf::Sprite(*resume_exit_red_img_);
@@ -80,6 +110,7 @@ Menu::Menu (GameState state)
 			resume_exit_violet_img_ = new sf::Image;
 			echap_resumespr_ = new sf::Sprite(*resume_exit_violet_img_);
 			echap_exitspr_ = new sf::Sprite(*resume_exit_violet_img_);
+			echap_controlsspr_ = new sf::Sprite(*resume_exit_violet_img_);
 			if (!resume_exit_violet_img_->LoadFromFile("Menu/resume_exitviolet.png"))
 			{
 				cout<<"Erreur durant le chargement de l'image resume_exitviolet"<<endl;
@@ -89,6 +120,8 @@ Menu::Menu (GameState state)
 			echap_resumespr_->SetPosition(367,305);
 			echap_exitspr_->SetSubRect(IntRect(384, 419, 483, 465));	
 	  	echap_exitspr_->SetPosition(384,419);
+	  	echap_controlsspr_->SetSubRect(IntRect(5, 40, 240, 110));	
+			echap_controlsspr_->SetPosition(5,40);
 			break;
 			
 		case Finish :
@@ -128,6 +161,7 @@ Menu::Menu (GameState state)
   	
   	menu_state_ = state;
   	current_button_ = NoAction;
+  	display_controls_ = false;
 }
 
 Menu::~Menu ()
@@ -135,6 +169,8 @@ Menu::~Menu ()
 
 	delete background_img_;
 	delete background_spr_;
+	delete controls_img_;
+	delete controls_spr_;
 	
 	switch(menu_state_)
 	{
@@ -144,6 +180,7 @@ Menu::~Menu ()
 			delete play_exit_violet_img_;
 			delete startgame_playspr_;
 			delete startgame_exitspr_;
+			delete startgame_controlsspr_;
 			break;
 		case Pause:
 			delete resume_exit_red_img_;
@@ -151,6 +188,7 @@ Menu::~Menu ()
 			delete resume_exit_violet_img_;
 			delete echap_resumespr_;
 			delete echap_exitspr_;
+			delete echap_controlsspr_;
 			break;
 		case Finish:
 			delete princess_img_;
@@ -178,10 +216,10 @@ Menu::display (sf::RenderTarget *rt, GameState gs)
 			rt->Draw(*background_spr_);
 			rt->Draw(*play_exit_red_spr_);
 			break;
-					
+				
 		case Pause :
 			rt->Draw(*background_spr_);
-			rt->Draw(*resume_exit_red_spr_);				
+			rt->Draw(*resume_exit_red_spr_);
 			break;
 					
 		case Finish :
@@ -200,7 +238,11 @@ Menu::display (sf::RenderTarget *rt, GameState gs)
   
 }
 
-
+void
+Menu::displayControls (sf::RenderTarget *rt)
+{ 
+	rt->Draw(*controls_spr_);
+}
 
 void
 Menu::setCurrentButton (int mouse_x, int mouse_y)
@@ -220,6 +262,18 @@ Menu::getAction ()
   return current_button_;
 }
 
+void
+Menu::setDisplayControls(bool control)
+{
+	display_controls_ = control;
+}
+ 
+ 
+bool
+Menu::getDisplayControls()
+{
+	return display_controls_;
+}
 
 void
 Menu::displayButtons (sf::RenderTarget *rt)
@@ -255,15 +309,22 @@ Menu::displayButtons (sf::RenderTarget *rt)
 				case 6 :
 					rt->Draw(*newgame_go_spr_);
 					break;
-
-			default : 
-				rt->Clear();
-				break;
-	}
+				case 7 :
+					rt->Draw(*startgame_controlsspr_);
+					break;
+				case 8 :
+					rt->Draw(*echap_controlsspr_);
+					break;
+			
+				default : 
+					rt->Clear();
+					break;
+		}
 	
-    }
-    else {
-      b->display(rt);
-    }
-  }
+   }
+   else
+   {
+     b->display(rt);
+   }
+ }
 }

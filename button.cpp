@@ -35,8 +35,14 @@ Button::Button (Action action): action_(action)
 		
 		case NewGame :
 			zone_ = sf::FloatRect(80,480,350,520);
-			break;		
-				
+			break;
+		
+		case Controls :
+			zone_ = sf::FloatRect(5, 40, 240, 110);
+			break;
+		case ControlsThroughPause :
+			zone_ = sf::FloatRect(5, 40, 240, 110);
+			break;					
 								
 		default : break;
 	}
@@ -86,6 +92,14 @@ int Button::displayActive (sf::RenderTarget *rt)
 			
 		case NewGame :
 			return 6;
+			break;
+		
+		case Controls :
+			return 7;
+			break;
+			
+		case ControlsThroughPause :
+			return 8;
 			break;
 		
 		default :

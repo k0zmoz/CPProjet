@@ -15,9 +15,14 @@ public:
   ~Menu ();
 
   void display (sf::RenderTarget *rt, GameState gs);
+  void displayControls(sf::RenderTarget *rt);
+
 
   void setCurrentButton (int mouse_x, int mouse_y);
   Action getAction ();
+  
+  void setDisplayControls(bool control);
+  bool getDisplayControls();
   
   void displayButtons (sf::RenderTarget *rt);
 
@@ -30,12 +35,17 @@ private:
   Image *background_img_;
   Sprite *background_spr_;
 	
+	Image *controls_img_;
+	Sprite *controls_spr_;
+	
 	Image *play_exit_red_img_;
 	Sprite *play_exit_red_spr_;
+	
 	
 	Image *play_exit_violet_img_;
 	Sprite *startgame_playspr_;
 	Sprite *startgame_exitspr_;
+	Sprite *startgame_controlsspr_;
 	
 	Image *resume_exit_red_img_;
 	Sprite *resume_exit_red_spr_;
@@ -43,6 +53,7 @@ private:
 	Image *resume_exit_violet_img_;
 	Sprite *echap_resumespr_;
 	Sprite *echap_exitspr_;
+	Sprite *echap_controlsspr_;
 	
 	Image *princess_img_;
 	Sprite *princess_spr_;
@@ -52,6 +63,7 @@ private:
 	Sprite *nevermore_go_spr_;
 	
 	GameState menu_state_;
+	bool display_controls_;
 	
 };
 

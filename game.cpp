@@ -69,6 +69,7 @@ Game::run ()
 	bool map_initiated = false, new_game = false;
 	bool switch_door = true, door_opened = false;
 	bool escape_disabled = false;
+	GameState save_gs;
 
 
 	while (win_->IsOpened())
@@ -111,13 +112,10 @@ Game::run ()
 					win_->Close();
 					break;
 				case sf::Event::MouseMoved:
-					if (current_action_ == NoAction)
-					{
 						if(gs_ == Start)
 						{
 							menu_start_->setCurrentButton(input.GetMouseX(), input.GetMouseY());
 						}
-					}
 					else if(gs_ == Pause )
 						{
 							menu_echap_->setCurrentButton(input.GetMouseX(), input.GetMouseY());
@@ -128,6 +126,7 @@ Game::run ()
 						}
 					break;
 				case sf::Event::MouseButtonPressed:
+					cout << "MM curr act: " << current_action_ << endl;
 					if(gs_ == Start)
 					{
 						switch (menu_start_->getAction())
@@ -135,6 +134,11 @@ Game::run ()
 						case Play:
 						  current_action_ = Play;
 						  gs_ = Run;
+						  break;
+						case Controls:
+						  current_action_ = Controls;
+						  save_gs = gs_;
+						 	gs_ = ControlPanel;
 						  break;
 						case Exit:
 						 current_action_ = Exit;
@@ -151,6 +155,11 @@ Game::run ()
 								current_action_ = Resume;
 								gs_ = Run;
 							  break;
+							case ControlsThroughPause:
+						  	current_action_ = ControlsThroughPause;
+						  	 save_gs = gs_;
+						  	gs_ = ControlPanel;
+						  	break;
 							case ExitThroughPause:
 								current_action_ = ExitThroughPause;
 								gs_ = Quit;
@@ -176,12 +185,18 @@ Game::run ()
 					}
 					break;
 				case Event::KeyPressed :					
-					
 					if(event.Key.Code == Key::Escape
 					&& gs_ != Start && gs_ != Finish && gs_ != Quit && gs_ != GameOver)
 					{
-						gs_ = Pause;
-					}	
+						if(gs_ == Run)
+						{
+							gs_ = Pause;
+						}
+						else
+						{
+							gs_ =  save_gs;
+						}
+					}
 					
 					if(!hero_->isAttacking())
 					{
@@ -356,6 +371,12 @@ Game::run ()
 		{
 			gs_ = Quit;
 		}
+	}
+	else if(gs_ == ControlPanel)
+	{
+		win_->Clear();
+		win_->SetView(sf::View(sf::FloatRect(0, 0, GAME_WIDTH, GAME_HEIGHT)));
+		menu_start_->displayControls(win_);
 	}
 	else if(gs_ == GameOver)
 	{
